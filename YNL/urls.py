@@ -39,7 +39,7 @@ urlpatterns = [
     #change password urls
     url(r'^reset/form/$', TemplateView.as_view(template_name = 'registration/password_reset_email.html')),
     url(r'^resetpassword/passwordsent/$', password_reset_done, name="password_reset_done"),
-    #url(r'^resetpassword/$', password_reset, name="password_reset"), custom_password_reset
+    url(r'^resetpassword/$', password_reset, name="password_reset"),
     # url(r'^resetpassword/$', custom_password_reset, name="password_reset"),
     url(r'^reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', password_reset_confirm, name="password_reset_confirm"),
     url(r'^reset/done/$', password_reset_complete, name="password_reset_complete"),

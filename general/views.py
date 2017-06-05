@@ -40,23 +40,27 @@ def homepage(request):
 
 def user_login(request):
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(username=username, password=password)
-        if user:
-            # Is the account active? It could have been disabled.
-            if user.is_active:
-                # If the account is valid and active, we can log the user in.
-                # We'll send the user back to the homepage.
-                login(request, user)
-                return redirect(reverse('homepage'))
-            else:
-                # An inactive account was used - no logging in!
-                return HttpResponse("Your account is disabled.")
-        else:
-            # Bad login details were provided. So we can't log the user in.
-            print "Invalid login details: {0}, {1}".format(username, password)
-            return HttpResponse("Invalid login details supplied.")
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		if '@' in username :
+			username = User.objects.get(email=username).username
+		else:
+			username = username
+		user = authenticate(username=username, password=password)
+		if user:
+			# Is the account active? It could have been disabled.
+			if user.is_active:
+				# If the account is valid and active, we can log the user in.
+				# We'll send the user back to the homepage.
+				login(request, user)
+				return redirect(reverse('general:homepage'))
+			else:
+				# An inactive account was used - no logging in!
+				return HttpResponse("Your account is disabled.")
+		else:
+			# Bad login details were provided. So we can't log the user in.
+			print "Invalid login details: {0}, {1}".format(username, password)
+			return HttpResponse("Invalid login details supplied.")
 
     # The request is not a HTTP POST, so display the login form.
     # This scenario would most likely be a HTTP GET.
@@ -72,7 +76,7 @@ def user_logout(request):
     logout(request)
 
     # Take the user back to the homepage.
-    return redirect(reverse('homepage'))
+    return redirect(reverse('general:homepage'))
 
 def register(request):
 	if request.method == "POST":
@@ -81,10 +85,10 @@ def register(request):
         #print "form", form
 		if User.objects.filter(username = rp.get('username')).exists():
 			print 'username exists'
-			(request, 'general/registration.html', {'form': form,'username_is_taken':True})                
+			return render(request, 'general/registration.html', {'form': form,'username_is_taken':True})                
 		if User.objects.filter(email = rp.get('email')).exists():
 			print 'email exists'                
-			(request, 'general/registration.html', {'form': form,'email_taken':True})                
+			return render(request, 'general/registration.html', {'form': form,'email_taken':True})                
 		else:
 			if form.is_valid():
 				user = form.save(commit=False)
@@ -94,8 +98,8 @@ def register(request):
 					return render(request, 'general/registration.html', {'form': form,'password_mismatch':True})
 				if len(password) < 8:
 					return render(request, 'general/registration.html', {'form': form,'password_too_short':True})
-				if password == rp.get('first_name'):
-					return render(request, 'general/registration.html', {'form': form,'password_same_as_first_name':True})
+				# if password == rp.get('first_name'):
+				# 	return render(request, 'general/registration.html', {'form': form,'password_same_as_first_name':True})
 				if password.isalpha():
 					return render(request, 'general/registration.html', {'form': form,'password_should_be_alphanumeric':True})
 				# user = User.objects.create(username = rp.get('username'), email = rp.get('email').lower(),

@@ -48,13 +48,29 @@
 							<div class="col-md-12">
 								<input name="email" type="text" placeholder="E-mail">
 								<!--<input name="text" type="text" placeholder="Confirm E-mail">-->
+								{% if email_taken %}
+								<span style="color:red; position:relative; left:6px;">This email address is already attached to an account </span>
+								{% endif %}
 								<input name="username" type="text"  placeholder="Username">
 								{% if username_is_taken %}
 								<span style="color:red; position:relative; left:6px;">This username is taken</span>
 								{% endif %}
 								<input name="password" id="password" type="password" placeholder="Password">
+								{% if password_mismatch %}
+								<span style="color:red; position:relative; left:6px;">The passwords do not match...Please try again</span>
+								{% elif password_too_short %}
+								<span style="color:red; position:relative; left:6px;">The password is too short...Password must be at least 8 characters in length</span>
+								{% elif password_should_be_alphanumeric %}
+								<span style="color:red; position:relative; left:6px;">The password needs to be Alphanumeric</span>
+								{% endif %}
 								<input name="password1" id="password1" type="password" placeholder="Confirm Password">
-								
+								{% if password_mismatch %}
+								<span style="color:red; position:relative; left:6px;">The passwords do not match...Please try again</span>
+								{% elif password_too_short %}
+								<span style="color:red; position:relative; left:6px;">The password is too short...Password must be at least 8 characters in length</span>
+								{% elif password_should_be_alphanumeric %}
+								<span style="color:red; position:relative; left:6px;">The password needs to be Alphanumeric</span>
+								{% endif %}
 							</div> <!-- end col -->
 
 							<div class="col-md-12">
