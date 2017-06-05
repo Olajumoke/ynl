@@ -28,45 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
 
-
-
-
-DJANGO_APPS = (
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-)
-
-
-YNL_APPS= (
-    'general',
-    'wallet',
-    'ynladmin',
-    'gameplay',
-)
-
-
-INSTALLED_APPS = DJANGO_APPS + YNL_APPS
-
-if not os.environ.get('RDS_DB_NAME'):
-    YNL_APPS+=('debug_toolbar',)
-
-
-
-MIDDLEWARE_CLASSES = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
 
 ROOT_URLCONF = 'YNL.urls'
 
@@ -93,6 +55,39 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'YNL.wsgi.application'
 
+DJANGO_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+)
+
+
+YNL_APPS= (
+    'general',
+    'wallet',
+    'ynladmin',
+    'gameplay',
+    'django.contrib.admin',
+)
+
+
+INSTALLED_APPS = DJANGO_APPS + YNL_APPS
+
+if not os.environ.get('RDS_DB_NAME'):
+    YNL_APPS+=('debug_toolbar',)
+ 
+    
+MIDDLEWARE_CLASSES = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]    
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -111,6 +106,15 @@ DATABASES = {
             # },                  # Set to empty string for default. Not used with sqlite3.
         },
 }
+
+
+EMAIL_USE_TLS = True
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.zoho.com'
+EMAIL_HOST_PASSWORD = '6xqnap01d0i2' #my gmail password
+EMAIL_HOST_USER = 'olaoguns@zoho.com' #my gmail username
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # Password validation

@@ -9,4 +9,6 @@ urlpatterns = [
 			url(r'^login/Page/$', views.user_login,  name="login"),
 			url(r'^user-logout/$', views.user_logout,  name="logout"),
 
-		]
+
+]
+
