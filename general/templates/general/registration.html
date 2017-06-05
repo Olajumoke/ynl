@@ -47,9 +47,13 @@
 
 							<div class="col-md-12">
 								<input name="email" type="text" placeholder="E-mail">
-								<input name="text" type="text" placeholder="Confirm E-mail">
+								<!--<input name="text" type="text" placeholder="Confirm E-mail">-->
 								<input name="username" type="text"  placeholder="Username">
+								{% if username_is_taken %}
+								<span style="color:red; position:relative; left:6px;">This username is taken</span>
+								{% endif %}
 								<input name="password" id="password" type="password" placeholder="Password">
+								<input name="password1" id="password1" type="password" placeholder="Confirm Password">
 								
 							</div> <!-- end col -->
 
@@ -62,7 +66,7 @@
 										
 										<div class="form-group"> 
 											<div class="col-md-12">
-												<button class="btn btn-lg btn-color">Sign Up</button>
+												<button type="submit" class="btn btn-lg btn-color">Sign Up</button>
 											</div>
 										</div>
 									</div>					

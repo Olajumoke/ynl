@@ -77,15 +77,35 @@ def user_logout(request):
 def register(request):
 	if request.method == "POST":
 		form = UserForm(request.POST)
+		rp = request.POST
         #print "form", form
-		if form.is_valid():
-			user = form.save(commit=False)
-			user.set_password(user.password)
-			user.save()
-			
-			return redirect('general:login')
+		if User.objects.filter(username = rp.get('username')).exists():
+			print 'username exists'
+			(request, 'general/registration.html', {'form': form,'username_is_taken':True})                
+		if User.objects.filter(email = rp.get('email')).exists():
+			print 'email exists'                
+			(request, 'general/registration.html', {'form': form,'email_taken':True})                
 		else:
-			print form.errors
+			if form.is_valid():
+				user = form.save(commit=False)
+				password  = rp.get('password')
+				password1   = rp.get('password1')
+				if password != password1:
+					return render(request, 'general/registration.html', {'form': form,'password_mismatch':True})
+				if len(password) < 8:
+					return render(request, 'general/registration.html', {'form': form,'password_too_short':True})
+				if password == rp.get('first_name'):
+					return render(request, 'general/registration.html', {'form': form,'password_same_as_first_name':True})
+				if password.isalpha():
+					return render(request, 'general/registration.html', {'form': form,'password_should_be_alphanumeric':True})
+				# user = User.objects.create(username = rp.get('username'), email = rp.get('email').lower(),
+				# 	first_name = rp.get('first_name'), last_name = rp.get('last_name'))
+				user.set_password(user.password)
+				user.save()
+				
+				return redirect('general:login')
+			else:
+				print form.errors
 	else:
 		form = UserForm()
 	return render(request, 'general/registration.html', {'form': form})
