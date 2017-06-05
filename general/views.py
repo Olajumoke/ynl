@@ -49,7 +49,7 @@ def user_login(request):
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
                 login(request, user)
-                return redirect(reverse('homepage'))
+                return redirect(reverse('general:homepage'))
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your account is disabled.")
@@ -72,7 +72,7 @@ def user_logout(request):
     logout(request)
 
     # Take the user back to the homepage.
-    return redirect(reverse('homepage'))
+    return redirect(reverse('general:homepage'))
 
 def register(request):
 	if request.method == "POST":
@@ -81,10 +81,10 @@ def register(request):
         #print "form", form
 		if User.objects.filter(username = rp.get('username')).exists():
 			print 'username exists'
-			(request, 'general/registration.html', {'form': form,'username_is_taken':True})                
+			return render (request, 'general/registration.html', {'form': form,'username_is_taken':True})                
 		if User.objects.filter(email = rp.get('email')).exists():
 			print 'email exists'                
-			(request, 'general/registration.html', {'form': form,'email_taken':True})                
+			return render(request, 'general/registration.html', {'form': form,'email_taken':True})                
 		else:
 			if form.is_valid():
 				user = form.save(commit=False)
