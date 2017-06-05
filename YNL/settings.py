@@ -30,20 +30,35 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+
+
+
+DJANGO_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+)
+
+
+YNL_APPS= (
     'general',
     'wallet',
     'ynladmin',
     'gameplay',
-]
+)
 
-MIDDLEWARE = [
+
+INSTALLED_APPS = DJANGO_APPS + YNL_APPS
+
+if not os.environ.get('RDS_DB_NAME'):
+    YNL_APPS+=('debug_toolbar',)
+
+
+
+MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

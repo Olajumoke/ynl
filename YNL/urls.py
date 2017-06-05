@@ -24,14 +24,27 @@ from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from django.views.static import serve
 from django.contrib.sitemaps.views import sitemap
-
+from general.views import homepage
 from django.contrib.auth.views import password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 
 
 urlpatterns = [
+
+    url(r'^$', homepage, name='homepage'),
+
     url(r'^admin/', admin.site.urls),
     url(r'^', include("general.urls", namespace="general")),
     url(r'^', include("ynladmin.urls", namespace="ynladmin")),
+
+
+    #change password urls
+    url(r'^reset/form/$', TemplateView.as_view(template_name = 'registration/password_reset_email.html')),
+    url(r'^resetpassword/passwordsent/$', password_reset_done, name="password_reset_done"),
+    #url(r'^resetpassword/$', password_reset, name="password_reset"), custom_password_reset
+    # url(r'^resetpassword/$', custom_password_reset, name="password_reset"),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', password_reset_confirm, name="password_reset_confirm"),
+    url(r'^reset/done/$', password_reset_complete, name="password_reset_complete"),
+
 
 ]
 
