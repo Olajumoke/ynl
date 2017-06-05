@@ -143,8 +143,11 @@
 						<form action="{% url 'general:login' %}" method="POST">
 						{% csrf_token %}
 						<div class="row">
-
+						
 							<div class="col-md-12">
+								{% if error_msg %}
+								<p style="color: red; text-align: center;">{{ error_msg }}</p>
+								{% endif %}
 								<input name="username" type="text" placeholder="Username or E-mail">
 								<input name="password" id="password" type="password" placeholder="Password">
 								
