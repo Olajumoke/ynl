@@ -30,8 +30,7 @@ from django.contrib.auth.views import password_reset, password_reset_done, passw
 
 urlpatterns = [
 
-    url(r'^$', homepage, name='homepage'),
-
+    
     url(r'^admin/', admin.site.urls),
     url(r'^', include("general.urls", namespace="general")),
     url(r'^', include("ynladmin.urls", namespace="ynladmin")),

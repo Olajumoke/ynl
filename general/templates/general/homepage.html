@@ -1,3 +1,5 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,24 +15,24 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,600,800,400,300%7CMontserrat:400,700%7CRaleway:600,400' rel='stylesheet'>
 
 	<!-- Css -->
-	<link rel="stylesheet" href="css/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/magnific-popup.css" />
-	<link rel="stylesheet" href="revolution/css/settings.css" />
-	<link rel="stylesheet" href="css/rev-slider.css" />
-	<link rel="stylesheet" href="css/font-icons.css" />
-	<link rel="stylesheet" href="css/sliders.css" /> 
-	<link rel="stylesheet" href="css/style.css" />
-	<link rel="stylesheet" href="css/responsive.css" />
-	<link rel="stylesheet" href="css/spacings.css" />
-	<link rel="stylesheet" href="css/animate.min.css" />
-	<link rel="stylesheet" href="css/weather-icons.min.css" />
-	<link rel="stylesheet" href="css/color.css" />
+	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" />
+	<link rel="stylesheet" href="{% static 'revolution/css/settings.css' %}" />
+	<link rel="stylesheet" href="{% static 'css/rev-slider.css' %}" />
+	<link rel="stylesheet" href="{% static 'css/font-icons.css' %}" />
+	<link rel="stylesheet" href="{% static 'css/sliders.css' %}" /> 
+	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+	<link rel="stylesheet" href="{% static 'css/responsive.css' %}" />
+	<link rel="stylesheet" href="{% static 'css/spacings.css' %}" />
+	<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'css/weather-icons.min.css' %}" />
+	<link rel="stylesheet" href="{% static 'css/color.css' %}" />
 
 	<!-- Favicons -->
-	<link rel="shortcut icon" href="img/favicon.ico">
-	<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+	<link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+	<link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
+	<link rel="apple-touch-icon" sizes="72x72" href="{% static 'img/apple-touch-icon-72x72.png' %}">
+	<link rel="apple-touch-icon" sizes="114x114" href="{% static 'img/apple-touch-icon-114x114.png' %}">
 
 </head>
 
@@ -54,13 +56,24 @@
 							<li class="top-bar-date">
 								<span>Thursday, December 26, 2015</span>
 							</li>
+
 							<li class="top-bar-link">
 								<a href="#">advertise</a>
 							</li>
+
 							<li class="top-bar-link">
 								<a href="#">career</a>
 							</li>
+
+							{% if request.user.is_authenticated and request.user.is_staff %}
+							<li class="top-bar-link pull-right">
+								<a>Hi, Isaiah</a>
+							</li>
+							{% endif %}
+
 						</ul>
+
+						
 
 						<ul class="col-sm-6 top-bar-acc text-right">
 							<li class="social-icons dark">
@@ -104,8 +117,8 @@
 									<!-- Logo -->
 									<div class="logo-container">
 										<div class="logo-wrap text-center">
-											<a href="index.html">
-												<img class="logo" src="img/logo_dark.png" alt="logo">
+											<a href="#">
+												<img class="logo" src="{% static 'img/logo_dark.png' %}" alt="logo">
 											</a>
 										</div>
 									</div>
@@ -113,7 +126,7 @@
 									<!-- Banner Ad -->
 									<div class="header-ad hidden-sm hidden-xs">
 										<a href="http://deothemes.com">
-											<img src="img/magazine/728_ad.jpg" alt="">
+											<img src="{% static 'img/magazine/728_ad.jpg' %}" alt="">
 										</a>				        		        	
 									</div>
 
@@ -234,7 +247,7 @@
 						<article class="post-1">
 							<div class="entry-img hover-scale">
 								<a href="magazine-single-article.html" class="gradient">
-									<img src="img/magazine/hero_1.jpg" alt="">
+									<img src="{% static 'img/magazine/hero_1.jpg' %}" alt="">
 								</a>
 								<div class="entry-inner">
 									<div class="entry">
@@ -275,7 +288,7 @@
 						<article class="post-2">
 							<div class="entry-img hover-scale">
 								<a href="magazine-single-article.html" class="gradient">
-									<img src="img/magazine/hero_2.jpg" alt="">
+									<img src="{% static 'img/magazine/hero_2.jpg' %}" alt="">
 								</a>
 								<div class="entry-inner small">
 									<div class="entry">
@@ -306,7 +319,7 @@
 								<article class="post-3">
 									<div class="entry-img hover-scale">
 										<a href="magazine-single-article.html" class="gradient">
-											<img src="img/magazine/hero_3.jpg" alt="">
+											<img src="{% static 'img/magazine/hero_3.jpg' %}" alt="">
 										</a>
 										<div class="entry-inner small">
 											<div class="entry">
@@ -334,7 +347,7 @@
 								<article class="post-4">
 									<div class="entry-img hover-scale">
 										<a href="magazine-single-article.html" class="gradient">
-											<img src="img/magazine/hero_4.jpg" alt="">
+											<img src="{% static 'img/magazine/hero_4.jpg' %}" alt="">
 										</a>
 										<div class="entry-inner small">
 											<div class="entry">
@@ -395,7 +408,7 @@
 											<div class="entry-img hover-scale">
 												<a href="magazine-single-article.html" class="entry-category-label blue">Sport</a>
 												<a href="magazine-single-article.html">
-													<img src="img/magazine/1.jpg" alt="">
+													<img src="{% static 'img/magazine/1.jpg' %}" alt="">
 												</a>
 												<div class="entry-inner-bottom">
 													<div class="entry">
@@ -433,7 +446,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_1.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_1.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -453,7 +466,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_2.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_2.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -478,7 +491,7 @@
 											<div class="entry-img hover-scale">
 												<a href="magazine-single-article.html" class="entry-category-label gold">Politics</a>
 												<a href="magazine-single-article.html">
-													<img src="img/magazine/2.jpg" alt="">
+													<img src="{% static 'img/magazine/2.jpg' %}" alt="">
 												</a>
 												<div class="entry-inner-bottom">
 													<div class="entry">
@@ -516,7 +529,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_3.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_3.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -536,7 +549,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_4.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_4.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -564,7 +577,7 @@
 										<article>
 											<div class="entry-img hover-scale">
 												<a href="magazine-single-article.html">
-													<img src="img/magazine/3.jpg" alt="">
+													<img src="{% static 'img/magazine/3.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
@@ -589,7 +602,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_6.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -609,7 +622,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_7.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -633,7 +646,7 @@
 										<article>
 											<div class="entry-img hover-scale">
 												<a href="magazine-single-article.html">
-													<img src="img/magazine/4.jpg" alt="">
+													<img src="{% static 'img/magazine/4.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
@@ -658,7 +671,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_9.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_9.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -678,7 +691,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_8.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_8.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -706,7 +719,7 @@
 										<article>
 											<div class="entry-img hover-scale">
 												<a href="magazine-single-article.html">
-													<img src="img/magazine/5.jpg" alt="">
+													<img src="{% static 'img/magazine/5.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
@@ -731,7 +744,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_10.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_10.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -751,7 +764,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_11.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_11.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -775,7 +788,7 @@
 										<article>
 											<div class="entry-img hover-scale">
 												<a href="magazine-single-article.html">
-													<img src="img/magazine/6.jpg" alt="">
+													<img src="{% static 'img/magazine/6.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
@@ -800,7 +813,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_12.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_12.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -820,7 +833,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_4.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_4.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -848,7 +861,7 @@
 										<article>
 											<div class="entry-img hover-scale">
 												<a href="magazine-single-article.html">
-													<img src="img/magazine/7.jpg" alt="">
+													<img src="{% static 'img/magazine/7.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
@@ -873,7 +886,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_3.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_3.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -893,7 +906,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_7.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -917,7 +930,7 @@
 										<article>
 											<div class="entry-img hover-scale">
 												<a href="magazine-single-article.html">
-													<img src="img/magazine/8.jpg" alt="">
+													<img src="{% static 'img/magazine/8.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
@@ -942,7 +955,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_6.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -962,7 +975,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_2.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_2.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -990,7 +1003,7 @@
 										<article>
 											<div class="entry-img hover-scale">
 												<a href="magazine-single-article.html">
-													<img src="img/magazine/9.jpg" alt="">
+													<img src="{% static 'img/magazine/9.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
@@ -1015,7 +1028,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_8.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_8.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -1035,7 +1048,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_1.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_1.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -1059,7 +1072,7 @@
 										<article>
 											<div class="entry-img hover-scale">
 												<a href="magazine-single-article.html">
-													<img src="img/magazine/10.jpg" alt="">
+													<img src="{% static 'img/magazine/10.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
@@ -1084,7 +1097,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_10.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_10.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -1104,7 +1117,7 @@
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
 														<a href="magazine-single-article.html">
-															<img src="img/magazine/thumb_9.jpg" alt="">
+															<img src="{% static 'img/magazine/thumb_9.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -1142,7 +1155,7 @@
 									<div class="entry-img hover-scale">
 										<a href="magazine-single-article.html" class="entry-category-label green">Sport</a>
 										<a href="magazine-single-article.html">
-											<img src="img/magazine/11.jpg" alt="">
+											<img src="{% static 'img/magazine/11.jpg' %}" alt="">
 										</a>
 										<div class="entry-inner-bottom">
 											<div class="entry">
@@ -1272,7 +1285,7 @@
 									<div class="entry-img hover-scale">
 										<a href="magazine-single-article.html" class="entry-category-label green">Politics</a>
 										<a href="magazine-single-article.html">
-											<img src="img/magazine/11.jpg" alt="">
+											<img src="{% static 'img/magazine/11.jpg' %}" alt="">
 										</a>
 										<div class="entry-inner-bottom">
 											<div class="entry">
@@ -1394,7 +1407,7 @@
 					<!-- Banner Ad -->
 					<div class="hidden-sm hidden-xs text-center pb-50">
 						<a href="http://deothemes.com">
-							<img src="img/magazine/728_ad.jpg" alt="">
+							<img src="{% static 'img/magazine/728_ad.jpg' %}" alt="">
 						</a>				        		        	
 					</div>
 
@@ -1409,7 +1422,7 @@
 								<article>
 									<div class="entry-img hover-scale">
 										<a href="magazine-single-article.html">
-											<img src="img/magazine/12.jpg" alt="">
+											<img src="{% static 'img/magazine/12.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry mb-0">
@@ -1486,7 +1499,7 @@
 								<article>
 									<div class="entry-img hover-scale">
 										<a href="magazine-single-article.html">
-											<img src="img/magazine/13.jpg" alt="">
+											<img src="{% static 'img/magazine/13.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry mb-0">
@@ -1563,7 +1576,7 @@
 								<article>
 									<div class="entry-img hover-scale">
 										<a href="magazine-single-article.html">
-											<img src="img/magazine/14.jpg" alt="">
+											<img src="{% static 'img/magazine/14.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry mb-0">
@@ -1679,7 +1692,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_5.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -1699,7 +1712,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_6.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -1719,7 +1732,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_7.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -1739,7 +1752,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_5.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -1759,7 +1772,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_6.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -1784,7 +1797,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_5.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -1804,7 +1817,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_6.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -1824,7 +1837,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_7.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -1844,7 +1857,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_5.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -1864,7 +1877,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_6.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -1892,7 +1905,7 @@
 					<!-- Ad 336x280 -->
 					<div class="widget ad-336x280 text-center">
 						<a href="#">
-							<img src="img/magazine/336_ad.jpg" alt="">
+							<img src="{% static 'img/magazine/336_ad.jpg' %}" alt="">
 						</a>
 					</div> <!-- end ad 336x280 -->
 
@@ -1905,7 +1918,7 @@
 								<article class="post-small clearfix">
 									<div class="entry-img hover-scale">
 										<a href="magazine-single-article.html">
-											<img src="img/magazine/thumb_8.jpg" alt="">
+											<img src="{% static 'img/magazine/thumb_8.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry">
@@ -1923,7 +1936,7 @@
 								<article class="post-small clearfix">
 									<div class="entry-img hover-scale">
 										<a href="magazine-single-article.html">
-											<img src="img/magazine/thumb_9.jpg" alt="">
+											<img src="{% static 'img/magazine/thumb_9.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry">
@@ -1941,7 +1954,7 @@
 								<article class="post-small clearfix">
 									<div class="entry-img hover-scale">
 										<a href="magazine-single-article.html">
-											<img src="img/magazine/thumb_10.jpg" alt="">
+											<img src="{% static 'img/magazine/thumb_10.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry">
@@ -1959,7 +1972,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_5.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -1979,7 +1992,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_6.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -2065,7 +2078,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_11.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_11.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -2085,7 +2098,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_12.jpg" alt="">
+														<img src="{% static 'img/magazine/thumb_12.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
@@ -2163,23 +2176,33 @@
 	</div> <!-- end main-wrapper -->
 
 	<!-- jQuery Scripts -->		
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/plugins.js"></script>
-	<script type="text/javascript" src="revolution/js/jquery.themepunch.tools.min.js"></script>
-	<script type="text/javascript" src="revolution/js/jquery.themepunch.revolution.min.js"></script>
-	<script type="text/javascript" src="js/rev-slider.js"></script>
-	<script type="text/javascript" src="js/scripts.js"></script>
+	<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
+	<script type="text/javascript" src="{% static 'revolution/js/jquery.themepunch.tools.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'revolution/js/jquery.themepunch.revolution.min.js' %}">
+		
+	</script>
+	<script type="text/javascript" src="{% static 'js/rev-slider.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
 
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.video.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.carousel.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.actions.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.migration.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.parallax.min.js"></script>
+	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.video.min.js' %}"></script>
+
+	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.carousel.min.js' %}"></script>
+
+	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.slideanims.min.js' %}"></script>
+
+	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.actions.min.js' %}"></script>
+
+	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.layeranimation.min.js' %}"></script>
+
+	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.kenburn.min.js' %}"></script>
+
+	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.navigation.min.js' %}"></script>
+
+	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.migration.min.js' %}"></script>
+
+	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.parallax.min.js' %}"></script>
 	  
 </body>
 </html>
