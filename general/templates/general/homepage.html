@@ -79,12 +79,14 @@
 								<a href="#"><i class="fa fa-vimeo"></i></a> -->
 								<a href="#"><i class="fa fa-instagram"></i></a>
 							</li>
-							<li class="top-bar-link"><a href="{% url 'general:register' %}">Join</a></li>
+							
 
 							{% if request.user.is_authenticated %}
+							<li class="top-bar-link"><a>Hi, {{request.user}}</a></li>
 							<li class="top-bar-link"><a href="{% url 'general:logout' %}">Logout</a></li>
-							<li class="top-bar-link"><a>Hi, {{request.user}}</a></li>	
+								
 							{% else %}
+							<li class="top-bar-link"><a href="{% url 'general:register' %}">Join</a></li>
 							<li class="top-bar-link"><a href="{% url 'general:login' %}">Login</a></li>
 							{% endif %}
 
