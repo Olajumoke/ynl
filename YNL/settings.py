@@ -77,8 +77,8 @@ INSTALLED_APPS = DJANGO_APPS + YNL_APPS
 
 if not os.environ.get('RDS_DB_NAME'):
     YNL_APPS+=('debug_toolbar',)
- 
-    
+
+
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -87,7 +87,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]    
+]
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -95,10 +95,10 @@ MIDDLEWARE_CLASSES = [
 DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'ynl_db',
-            'USER': 'root',                      # Not used with sqlite3.
-            'PASSWORD': 'root',                  # Not used with sqlite3.
-            'HOST': '127.0.0.1',                 # Set to empty string for localhost. Not used with sqlite3.
+            'NAME': 'yesnolive$default',
+            'USER': 'yesnolive',                      # Not used with sqlite3.
+            'PASSWORD': 'ebrootuser@101',                  # Not used with sqlite3.
+            'HOST': 'yesnolive.mysql.pythonanywhere-services.com',                 # Set to empty string for localhost. Not used with sqlite3.
             'PORT': '3306',
 
             # 'OPTIONS': {
@@ -155,10 +155,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-        'static',
+        '',
         # Put strings here, like "/home/html/static" or "C:/www/django/static".
         # Always use forward slashes, even on Windows.
         # Don't forget to use absolute paths, not relative paths.
