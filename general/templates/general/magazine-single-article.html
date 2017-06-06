@@ -1,225 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>YesorNoLIVE.com | Single Post</title>
+{% extends 'general/homepage.html' %}
+{% load staticfiles %}
 
-	<meta charset="utf-8">
-	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta name="description" content="">
-	<link rel="author" href="https://plus.google.com/u/0/104296509460513856975" />
-	
-	<!-- Google Fonts -->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,600,800,400,300%7CMontserrat:400,700%7CRaleway:600,400' rel='stylesheet'>
-
-	<!-- Css -->
-	<link rel="stylesheet" href="css/bootstrap.min.css" />
-	<link rel="stylesheet" href="css/magnific-popup.css" />
-	<link rel="stylesheet" href="revolution/css/settings.css" />
-	<link rel="stylesheet" href="css/rev-slider.css" />
-	<link rel="stylesheet" href="css/font-icons.css" />
-	<link rel="stylesheet" href="css/sliders.css" /> 
-	<link rel="stylesheet" href="css/style.css" />
-	<link rel="stylesheet" href="css/responsive.css" />
-	<link rel="stylesheet" href="css/spacings.css" />
-	<link rel="stylesheet" href="css/animate.min.css" />
-	<link rel="stylesheet" href="css/weather-icons.min.css" />
-	<link rel="stylesheet" href="css/color.css" />
-
-	<!-- Favicons -->
-	<link rel="shortcut icon" href="img/favicon.ico">
-	<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
-
-</head>
-
-<body>
-
-	<!-- Preloader -->
-	<div class="loader-mask">
-		<div class="loader">
-			"Loading..."
-		</div>
-	</div>
-
-	<header class="nav-type-4">
-
-		<div class="top-bar hidden-xs">
-			<div class="container">
-				<div class="row">
-					<div class="top-bar-links">
-
-						<ul class="col-sm-6">
-							<li class="top-bar-date">
-								<span>Thursday, December 26, 2015</span>
-							</li>
-							<li class="top-bar-link">
-								<a href="#">advertise</a>
-							</li>
-							<li class="top-bar-link">
-								<a href="#">buy now</a>
-							</li>
-						</ul>
-
-						<ul class="col-sm-6 top-bar-acc text-right">
-							<li class="social-icons dark">
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-facebook"></i></a>				
-								<a href="#"><i class="fa fa-google-plus"></i></a>
-								<a href="#"><i class="fa fa-vimeo"></i></a>
-								<a href="#"><i class="fa fa-instagram"></i></a>
-							</li>
-							<li class="top-bar-link"><a href="#">Join</a></li>
-							<li class="top-bar-link"><a href="#">Login</a></li>						
-						</ul>
-
-					</div>
-				</div>
-			</div>
-		</div> <!-- end top bar -->
-	
-		<nav class="navbar navbar-static-top">
-			<div class="navigation">
-				<div class="container-fluid relative">
-
-					<div class="row">
-
-						<div class="navbar-header container">
-							<div class="row">
-								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-									<span class="sr-only">Toggle navigation</span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-								</button>
-							</div>
-						</div> <!-- end navbar-header -->
-
-						<div class="header-wrap">
-
-							<div class="container">
-								<div class="row">
-
-									<!-- Logo -->
-									<div class="logo-container">
-										<div class="logo-wrap text-center">
-											<a href="index.html">
-												<img class="logo" src="img/logo_dark.png" alt="logo">
-											</a>
-										</div>
-									</div>
-
-									<!-- Banner Ad -->
-									<div class="header-ad hidden-sm hidden-xs">
-										<a href="#">
-											<img src="img/magazine/728_ad.jpg" alt="">
-										</a>				        		        	
-									</div>
-
-								</div>
-							</div>
-
-						</div> <!-- end header wrap -->
-
-						<div class="nav-wrap">
-							<div class="container">
-								<div class="row">
-									<div class="collapse navbar-collapse" id="navbar-collapse">
-							  
-										<ul class="nav navbar-nav">
-
-											<li id="mobile-search" class="hidden-lg hidden-md">
-												<form method="get" class="mobile-search relative">
-													<input type="search" class="form-control" placeholder="Search...">
-													<button type="submit" class="search-button">
-														<i class="icon icon_search"></i>
-													</button>
-												</form>
-											</li>
-
-											<li class="nav-home hidden-sm hidden-xs">
-												<a href="index-magazine.html"><i class="icon_house"></i></a>
-											</li>
-
-											<li class="dropdown-toggle">
-												<a href="index.html">Home</a>
-											</li>
-
-											<li class="dropdown">
-												<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages</a>
-												<ul class="dropdown-menu">
-													<li><a href="services.html">Services</a></li>
-													<li><a href="about-us.html">About Us</a></li>
-													<li><a href="magazine-categories.html">Magazine Categories</a></li>
-													<li><a href="magazine-single-article.html">Magazine Single Article</a></li>
-													<li><a href="contact.html">Contact</a></li>
-													<li><a href="faq.html">F.A.Q</a></li>
-													<li><a href="404.html">404</a></li>
-												</ul>
-											</li>
-
-											<li class="dropdown-toggle">
-												<a href="#">Politics</a>
-											</li> <!-- end portfolio -->
-
-											<li class="dropdown-toggle">
-												<a href="#">Sport</a>
-											</li>
-
-											<li class="dropdown-toggle">
-												<a href="#">Entertainment</a>
-											</li>
-
-											<li class="dropdown-toggle">
-												<a href="#">STEM</a>
-											</li>
-											<li class="dropdown-toggle">
-												<a href="#">Economics</a>
-											</li>
-											 <!-- end features -->
-
-											<!-- Search -->
-											<li class="nav-search type-2 hidden-sm hidden-xs">
-												<form method="get">
-													<input type="search" class="form-control" placeholder="Search here">
-													<button type="submit" class="search-button">
-														<i class="icon icon_search"></i>
-													</button>
-												</form>
-											</li>
-
-											<li class="mobile-links hidden-lg hidden-md">
-												<ul>
-													<li>
-														<a href="#">Login</a>
-													</li>
-													<li>
-														<a href="#">Join</a>
-													</li>
-													<li>
-														<a href="#">Advertise</a>
-													</li>
-													<li>
-														<a href="#">Career</a>
-													</li>
-												</ul>
-											</li>
-					
-										</ul> <!-- end menu -->
-									</div> <!-- end collapse -->
-									
-								</div>
-							</div>
-
-						</div> <!-- end col -->
-				
-					</div> <!-- end row -->
-				</div> <!-- end container -->
-			</div> <!-- end navigation -->
-		</nav> <!-- end navbar -->
-	</header>
-
+{% block title %}<title>YesorNoLIVE.com | Event</title>{% endblock %}
+{% block content %}
 	<div class="main-wrapper magazine oh">
 
 		
@@ -257,7 +40,7 @@
 									<ul class="slides clearfix">
 										<li>
 											<a href="#">
-												<img src="img/blog/gallery_post_img_3.jpg" alt="">
+												<img src="{% static 'img/blog/gallery_post_img_3.jpg' %}" alt="">
 											</a>
 										</li>
 									</ul>
@@ -474,7 +257,7 @@
 												<article>
 													<div class="entry-img hover-scale">
 														<a href="blog-single.html">
-															<img src="img/blog/1.jpg" alt="">
+															<img src="{% static 'img/blog/1.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -486,7 +269,7 @@
 												<article>
 													<div class="entry-img hover-scale">
 														<a href="blog-single.html">
-															<img src="img/blog/2.jpg" alt="">
+															<img src="{% static 'img/blog/2.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -498,7 +281,7 @@
 												<article>
 													<div class="entry-img hover-scale">
 														<a href="blog-single.html">
-															<img src="img/blog/3.jpg" alt="">
+															<img src="{% static 'img/blog/3.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
@@ -516,7 +299,7 @@
 										<ul class="comment-list">
 											<li>
 												<div class="comment-body">
-													<img src="img/blog/comment_1.jpg" class="comment-avatar" alt="">
+													<img src="{% static 'img/blog/comment_1.jpg' %}" class="comment-avatar" alt="">
 													<div class="comment-content">
 														<span class="comment-author">Joeby Ragpa</span>
 														<span><a href="#">May 6, 2014 at 12:48 pm</a></span>		
@@ -528,7 +311,7 @@
 												<ul class="comment-reply">
 													<li>
 														<div class="comment-body">
-															<img src="img/blog/comment_2.jpg" class="comment-avatar" alt="">
+															<img src="{% static 'img/blog/comment_2.jpg' %}" class="comment-avatar" alt="">
 															<div class="comment-content">
 																<span class="comment-author">Alexander Samokhin</span>
 																<span><a href="#">May 6, 2014 at 12:48 pm</a></span>		
@@ -543,7 +326,7 @@
 
 											<li>
 												<div class="comment-body">
-													<img src="img/blog/comment_3.jpg" class="comment-avatar" alt="">
+													<img src="{% static 'img/blog/comment_3.jpg' %}" class="comment-avatar" alt="">
 													<div class="comment-content">
 														<span class="comment-author">Christopher Robins</span>
 														<span><a href="#">May 6, 2014 at 12:48 pm</a></span>		
@@ -624,18 +407,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_5.jpg" alt="">
+													<a href="{% url 'general:event_details' %}">
+														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -644,18 +427,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_6.jpg" alt="">
+													<a href="{% url 'general:event_details' %}">
+														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -664,18 +447,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_7.jpg" alt="">
+													<a href="{% url 'general:event_details' %}">
+														<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">7 Traits That Define Work Productivity Superstars</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">7 Traits That Define Work Productivity Superstars</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -684,18 +467,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_5.jpg" alt="">
+													<a href="{% url 'general:event_details' %}">
+														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -704,18 +487,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_6.jpg" alt="">
+													<a href="{% url 'general:event_details' %}">
+														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -729,18 +512,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_5.jpg" alt="">
+													<a href="{% url 'general:event_details' %}">
+														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -749,18 +532,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_6.jpg" alt="">
+													<a href="{% url 'general:event_details' %}">
+														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -769,18 +552,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_7.jpg" alt="">
+													<a href="{% url 'general:event_details' %}">
+														<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">7 Traits That Define Work Productivity Superstars</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">7 Traits That Define Work Productivity Superstars</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -789,18 +572,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_5.jpg" alt="">
+													<a href="{% url 'general:event_details' %}">
+														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -809,18 +592,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_6.jpg" alt="">
+													<a href="{% url 'general:event_details' %}">
+														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -838,7 +621,7 @@
 					<!-- Ad 336x280 -->
 					<div class="widget ad-336x280 text-center">
 						<a href="#">
-							<img src="img/magazine/336_ad.jpg" alt="">
+							<img src="{% static 'img/magazine/336_ad.jpg' %}" alt="">
 						</a>
 					</div> <!-- end ad 336x280 -->
 
@@ -850,12 +633,12 @@
 							<li>
 								<article class="post-small clearfix">
 									<div class="entry-img hover-scale">
-										<a href="magazine-single-article.html">
-											<img src="img/magazine/thumb_8.jpg" alt="">
+										<a href="{% url 'general:event_details' %}">
+											<img src="{% static 'img/magazine/thumb_8.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry">
-										<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+										<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 										<ul class="entry-meta list-inline">
 											<li class="rating"></li>
 											<li class="entry-date">
@@ -868,12 +651,12 @@
 							<li>
 								<article class="post-small clearfix">
 									<div class="entry-img hover-scale">
-										<a href="magazine-single-article.html">
-											<img src="img/magazine/thumb_9.jpg" alt="">
+										<a href="{% url 'general:event_details' %}">
+											<img src="{% static 'img/magazine/thumb_9.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry">
-										<h3 class="entry-title"><a href="magazine-single-article.html">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+										<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 										<ul class="entry-meta list-inline">
 											<li class="rating"></li>
 											<li class="entry-date">
@@ -886,12 +669,12 @@
 							<li>
 								<article class="post-small clearfix">
 									<div class="entry-img hover-scale">
-										<a href="magazine-single-article.html">
-											<img src="img/magazine/thumb_10.jpg" alt="">
+										<a href="{% url 'general:event_details' %}">
+											<img src="{% static 'img/magazine/thumb_10.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry">
-										<h3 class="entry-title"><a href="magazine-single-article.html">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+										<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 										<ul class="entry-meta list-inline">
 											<li class="rating"></li>
 											<li class="entry-date">
@@ -904,18 +687,18 @@
 							<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_5.jpg" alt="">
+													<a href="{% url 'general:event_details' %}">
+														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -924,18 +707,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_6.jpg" alt="">
+													<a href="{% url 'general:event_details' %}">
+														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -979,154 +762,6 @@
 				</div> <!-- end row -->
 			</div> <!-- end main container -->						
 		</section> <!-- end post-single -->
+{% endblock %}
 
-
-		<!-- Footer Type-4 -->
-		<footer class="footer footer-type-4">
-			<div class="container">
-				<div class="footer-widgets">
-					<div class="row">
-
-						<div class="col-md-4 col-sm-6 col-xs-12">
-							<div class="widget footer-about-us">
-								<h5 class="uppercase">About Us</h5>
-								<p class="mb-20">Proident mollit pariatur eu anim dolore laboris Lorem amet. Consectetur adipisicing ea est est exercitation ex culpa fugiat sint duis. Mollit magna laboris est ullamco dolor consequat aliquip.</p>
-
-								<p>Subscribe to our newsletter:</p>
-								<form class="relative newsletter-form style-2">
-									<input type="email" class="newsletter-input" placeholder="Enter your email">
-									<i class="icon_mail"></i>
-									<input type="submit" class="btn btn-md btn-dark newsletter-submit" value="Subscribe">
-								</form>
-
-							</div>
-						</div> <!-- end about us -->
-
-						<div class="col-md-4 col-sm-6 col-xs-12">
-							<div class="widget footer-posts with-thumbs">
-								<h5 class="uppercase">Recent Posts</h5>
-								<div class="footer-entry-list">
-
-									<ul class="posts-list no-top-pad">
-										<li class="footer-entry">
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_11.jpg" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li class="footer-entry">
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
-														<img src="img/magazine/thumb_12.jpg" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-									</ul>
-
-								</div>
-							</div>
-						</div> <!-- end recent posts -->
-
-						<div class="col-md-4 col-sm-6 col-xs-12">
-							<div class="widget footer-links small-space">
-								<h5 class="uppercase">Quick Links</h5>
-								<ul>
-									<li><a href="#">Entertainment</a></li>
-									<li><a href="#">Science</a></li>
-									<li><a href="#">Sport</a></li>
-									<li><a href="#">Politics</a></li>
-									<li><a href="#">Economics</a></li>
-								</ul>
-							</div>
-						</div> <!-- end useful links -->
-
-					</div>
-				</div>		
-			</div> <!-- end container -->
-
-			<div class="bottom-footer">
-				<div class="container">
-					<div class="row">
-
-						<div class="col-md-4 col-xs-12 copyright">
-							<span>
-								© 2017 Yes or No Live
-							</span>
-						</div>
-
-						<div class="col-md-5 col-xs-12">
-							<ul class="bottom-footer-links style-2">
-								<li><a href="#">Privacy Policy</a></li>
-								<li><a href="#">Terms of Use</a></li>
-								<li><a href="#">Contact Us</a></li>
-								<li><a href="#">Advertisement</a></li>
-							</ul>
-						</div>
-							
-						<div class="col-md-3 col-xs-12 footer-socials mt-mdm-10 text-right">
-							<div class="social-icons dark">
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-facebook"></i></a>
-								<a href="#"><i class="fa fa-instagram"></i></a>
-							</div>
-						</div>
-
-					</div>
-				</div>
-			</div> <!-- end bottom footer -->
-		</footer> <!-- end footer -->
-
-		<div id="back-to-top">
-			<a href="#top"><i class="fa fa-angle-up"></i></a>
-		</div>
-
-	</div> <!-- end main-wrapper -->
-
-	<!-- jQuery Scripts -->		
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/plugins.js"></script>
-	<script type="text/javascript" src="revolution/js/jquery.themepunch.tools.min.js"></script>
-	<script type="text/javascript" src="revolution/js/jquery.themepunch.revolution.min.js"></script>
-	<script type="text/javascript" src="js/rev-slider.js"></script>
-	<script type="text/javascript" src="js/scripts.js"></script>
-
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.video.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.carousel.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.actions.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.kenburn.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.migration.min.js"></script>
-	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.parallax.min.js"></script>
-	  
-</body>
-</html>
+		

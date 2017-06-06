@@ -114,3 +114,7 @@ def register(request):
 	else:
 		form = UserForm()
 	return render(request, 'general/registration.html', {'form': form})
+
+
+def event_details(request):
+	return render(request, 'general/magazine-single-article.html',{})

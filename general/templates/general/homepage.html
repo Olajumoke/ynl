@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>YesorNoLIVE.com | Welcome</title>
+	{% block title %}<title>YesorNoLIVE.com | Welcome</title>{% endblock %}
 
 	<meta charset="utf-8">
 	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
@@ -65,11 +65,7 @@
 								<a href="#">career</a>
 							</li>
 
-							{% if request.user.is_authenticated and not request.user.is_staff %}
-							<li class="top-bar-link pull-right">
-								<a>Hi, {{request.user}}</a>
-							</li>
-							{% endif %}
+							
 
 						</ul>
 
@@ -86,7 +82,8 @@
 							<li class="top-bar-link"><a href="{% url 'general:register' %}">Join</a></li>
 
 							{% if request.user.is_authenticated %}
-							<li class="top-bar-link"><a href="{% url 'general:logout' %}">Logout</a></li>	
+							<li class="top-bar-link"><a href="{% url 'general:logout' %}">Logout</a></li>
+							<li class="top-bar-link"><a>Hi, {{request.user}}</a></li>	
 							{% else %}
 							<li class="top-bar-link"><a href="{% url 'general:login' %}">Login</a></li>
 							{% endif %}
@@ -238,7 +235,7 @@
 			</div> <!-- end navigation -->
 		</nav> <!-- end navbar -->
 	</header>
-
+{% block content %}
 	<div class="main-wrapper magazine oh">
 
 		<!-- Main Container -->
@@ -252,12 +249,12 @@
 					<div class="col-md-7">
 						<article class="post-1">
 							<div class="entry-img hover-scale">
-								<a href="magazine-single-article.html" class="gradient">
+								<a href="{% url 'general:event_details' %}" class="gradient">
 									<img src="{% static 'img/magazine/hero_1.jpg' %}" alt="">
 								</a>
 								<div class="entry-inner">
 									<div class="entry">
-										<h2 class="entry-title color-white"><a href="magazine-single-article.html">When Are You Actually Ready to Launch a Startup?</a></h2>
+										<h2 class="entry-title color-white"><a href="{% url 'general:event_details' %}">When Are You Actually Ready to Launch a Startup?</a></h2>
 										<ul class="entry-meta list-inline">
 											<li class="entry-date">
 												<i class="fa fa-clock-o"></i><a href="#">19 Dec, 2017</a>
@@ -293,12 +290,12 @@
 
 						<article class="post-2">
 							<div class="entry-img hover-scale">
-								<a href="magazine-single-article.html" class="gradient">
+								<a href="{% url 'general:event_details' %}" class="gradient">
 									<img src="{% static 'img/magazine/hero_2.jpg' %}" alt="">
 								</a>
 								<div class="entry-inner small">
 									<div class="entry">
-										<h2 class="entry-title color-white mb-0"><a href="magazine-single-article.html">How to Use Pastel Colors in Web Design Projects</a></h2>
+										<h2 class="entry-title color-white mb-0"><a href="{% url 'general:event_details' %}">How to Use Pastel Colors in Web Design Projects</a></h2>
 									</div>
 								</div>
 								<div class="entry-inner-bottom">
@@ -324,12 +321,12 @@
 							<div class="col-sm-6">
 								<article class="post-3">
 									<div class="entry-img hover-scale">
-										<a href="magazine-single-article.html" class="gradient">
+										<a href="{% url 'general:event_details' %}" class="gradient">
 											<img src="{% static 'img/magazine/hero_3.jpg' %}" alt="">
 										</a>
 										<div class="entry-inner small">
 											<div class="entry">
-												<h2 class="entry-title color-white mb-0"><a href="magazine-single-article.html">Size Matters: Make Your Business</a></h2>
+												<h2 class="entry-title color-white mb-0"><a href="{% url 'general:event_details' %}">Size Matters: Make Your Business</a></h2>
 											</div>
 										</div>
 										<div class="entry-inner-bottom">
@@ -352,12 +349,12 @@
 							<div class="col-sm-6">
 								<article class="post-4">
 									<div class="entry-img hover-scale">
-										<a href="magazine-single-article.html" class="gradient">
+										<a href="{% url 'general:event_details' %}" class="gradient">
 											<img src="{% static 'img/magazine/hero_4.jpg' %}" alt="">
 										</a>
 										<div class="entry-inner small">
 											<div class="entry">
-												<h2 class="entry-title color-white mb-0"><a href="magazine-single-article.html">Stop Reacting and Start Responding</a></h2>
+												<h2 class="entry-title color-white mb-0"><a href="{% url 'general:event_details' %}">Stop Reacting and Start Responding</a></h2>
 											</div>
 										</div>
 										<div class="entry-inner-bottom">
@@ -412,8 +409,8 @@
 									<div class="col-md-6 mb-50">
 										<article>
 											<div class="entry-img hover-scale">
-												<a href="magazine-single-article.html" class="entry-category-label blue">Sport</a>
-												<a href="magazine-single-article.html">
+												<a href="{% url 'general:event_details' %}" class="entry-category-label blue">Sport</a>
+												<a href="{% url 'general:event_details' %}">
 													<img src="{% static 'img/magazine/1.jpg' %}" alt="">
 												</a>
 												<div class="entry-inner-bottom">
@@ -431,18 +428,18 @@
 												</div>
 											</div>
 											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="magazine-single-article.html">The Golden Age: How the PR Industry Is Coming Into its Own.</a></h2>
+												<h2 class="entry-title"><a href="{% url 'general:event_details' %}">The Golden Age: How the PR Industry Is Coming Into its Own.</a></h2>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 												<div class="entry-content">
 													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+													<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 												</div>
 											</div>
 										</article>
@@ -451,18 +448,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_1.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -471,18 +468,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_2.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -495,8 +492,8 @@
 									<div class="col-md-6 mb-50">
 										<article>
 											<div class="entry-img hover-scale">
-												<a href="magazine-single-article.html" class="entry-category-label gold">Politics</a>
-												<a href="magazine-single-article.html">
+												<a href="{% url 'general:event_details' %}" class="entry-category-label gold">Politics</a>
+												<a href="{% url 'general:event_details' %}">
 													<img src="{% static 'img/magazine/2.jpg' %}" alt="">
 												</a>
 												<div class="entry-inner-bottom">
@@ -514,18 +511,18 @@
 												</div>
 											</div>
 											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="magazine-single-article.html">RadioShack Rescue Deal Dogged by Fights, Demands for New Auction</a></h2>
+												<h2 class="entry-title"><a href="{% url 'general:event_details' %}">RadioShack Rescue Deal Dogged by Fights, Demands for New Auction</a></h2>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 												<div class="entry-content">
 													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+													<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 												</div>
 											</div>
 										</article>
@@ -534,18 +531,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_3.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -554,18 +551,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_4.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -582,23 +579,23 @@
 									<div class="col-md-6 mb-50">
 										<article>
 											<div class="entry-img hover-scale">
-												<a href="magazine-single-article.html">
+												<a href="{% url 'general:event_details' %}">
 													<img src="{% static 'img/magazine/3.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="magazine-single-article.html">5 Questions to Help You Determine the Right Franchise for You</a></h2>
+												<h2 class="entry-title"><a href="{% url 'general:event_details' %}">5 Questions to Help You Determine the Right Franchise for You</a></h2>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 												<div class="entry-content">
 													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+													<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 												</div>
 											</div>
 										</article>
@@ -607,18 +604,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -627,18 +624,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -651,23 +648,23 @@
 									<div class="col-md-6 mb-50">
 										<article>
 											<div class="entry-img hover-scale">
-												<a href="magazine-single-article.html">
+												<a href="{% url 'general:event_details' %}">
 													<img src="{% static 'img/magazine/4.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="magazine-single-article.html">How to Make Your Startup Introduction Email Simple, Clear and Awesome</a></h2>
+												<h2 class="entry-title"><a href="{% url 'general:event_details' %}">How to Make Your Startup Introduction Email Simple, Clear and Awesome</a></h2>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 												<div class="entry-content">
 													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+													<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 												</div>
 											</div>
 										</article>
@@ -676,18 +673,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_9.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -696,18 +693,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_8.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -724,23 +721,23 @@
 									<div class="col-md-6 mb-50">
 										<article>
 											<div class="entry-img hover-scale">
-												<a href="magazine-single-article.html">
+												<a href="{% url 'general:event_details' %}">
 													<img src="{% static 'img/magazine/5.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="magazine-single-article.html">5 Ways to Give Thanks and Give Back at Work</a></h2>
+												<h2 class="entry-title"><a href="{% url 'general:event_details' %}">5 Ways to Give Thanks and Give Back at Work</a></h2>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 												<div class="entry-content">
 													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+													<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 												</div>
 											</div>
 										</article>
@@ -749,18 +746,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_10.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -769,18 +766,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_11.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -793,23 +790,23 @@
 									<div class="col-md-6 mb-50">
 										<article>
 											<div class="entry-img hover-scale">
-												<a href="magazine-single-article.html">
+												<a href="{% url 'general:event_details' %}">
 													<img src="{% static 'img/magazine/6.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="magazine-single-article.html">5 Ways to Earn the Business of Customers Who'd Rather Shop on Cyber Monday</a></h2>
+												<h2 class="entry-title"><a href="{% url 'general:event_details' %}">5 Ways to Earn the Business of Customers Who'd Rather Shop on Cyber Monday</a></h2>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 												<div class="entry-content">
 													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+													<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 												</div>
 											</div>
 										</article>
@@ -818,18 +815,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_12.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -838,18 +835,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_4.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -866,23 +863,23 @@
 									<div class="col-md-6 mb-50">
 										<article>
 											<div class="entry-img hover-scale">
-												<a href="magazine-single-article.html">
+												<a href="{% url 'general:event_details' %}">
 													<img src="{% static 'img/magazine/7.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="magazine-single-article.html">5 Online Payment Tips That Improve Conversion</a></h2>
+												<h2 class="entry-title"><a href="{% url 'general:event_details' %}">5 Online Payment Tips That Improve Conversion</a></h2>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 												<div class="entry-content">
 													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+													<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 												</div>
 											</div>
 										</article>
@@ -891,18 +888,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_3.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -911,18 +908,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -935,23 +932,23 @@
 									<div class="col-md-6 mb-50">
 										<article>
 											<div class="entry-img hover-scale">
-												<a href="magazine-single-article.html">
+												<a href="{% url 'general:event_details' %}">
 													<img src="{% static 'img/magazine/8.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="magazine-single-article.html">12 Founders on the Business Advice They Are Most Thankful For</a></h2>
+												<h2 class="entry-title"><a href="{% url 'general:event_details' %}">12 Founders on the Business Advice They Are Most Thankful For</a></h2>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 												<div class="entry-content">
 													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+													<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 												</div>
 											</div>
 										</article>
@@ -960,18 +957,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -980,18 +977,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_2.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -1008,23 +1005,23 @@
 									<div class="col-md-6 mb-50">
 										<article>
 											<div class="entry-img hover-scale">
-												<a href="magazine-single-article.html">
+												<a href="{% url 'general:event_details' %}">
 													<img src="{% static 'img/magazine/9.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="magazine-single-article.html">The Entrepreneurship of Building the Best Wine Cellar</a></h2>
+												<h2 class="entry-title"><a href="{% url 'general:event_details' %}">The Entrepreneurship of Building the Best Wine Cellar</a></h2>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 												<div class="entry-content">
 													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+													<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 												</div>
 											</div>
 										</article>
@@ -1033,18 +1030,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_8.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -1053,18 +1050,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_1.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -1077,23 +1074,23 @@
 									<div class="col-md-6 mb-50">
 										<article>
 											<div class="entry-img hover-scale">
-												<a href="magazine-single-article.html">
+												<a href="{% url 'general:event_details' %}">
 													<img src="{% static 'img/magazine/10.jpg' %}" alt="">
 												</a>
 											</div>
 											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="magazine-single-article.html">16-Step Blueprint to Master Your Digital Marketing in 2016</a></h2>
+												<h2 class="entry-title"><a href="{% url 'general:event_details' %}">16-Step Blueprint to Master Your Digital Marketing in 2016</a></h2>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 												<div class="entry-content">
 													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+													<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 												</div>
 											</div>
 										</article>
@@ -1102,18 +1099,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_10.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -1122,18 +1119,18 @@
 											<li>
 												<article class="post-small clearfix">
 													<div class="entry-img hover-scale">
-														<a href="magazine-single-article.html">
+														<a href="{% url 'general:event_details' %}">
 															<img src="{% static 'img/magazine/thumb_9.jpg' %}" alt="">
 														</a>
 													</div>
 													<div class="entry">
-														<h3 class="entry-title"><a href="magazine-single-article.html">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
+														<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
 														<ul class="entry-meta list-inline">
 															<li class="entry-date">
 																<a href="#">19 Dec, 2015</a>
 															</li>
 															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+																<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 															</li>
 														</ul>
 													</div>
@@ -1159,8 +1156,8 @@
 							<div class="col-md-7 mb-20">
 								<article>
 									<div class="entry-img hover-scale">
-										<a href="magazine-single-article.html" class="entry-category-label green">Sport</a>
-										<a href="magazine-single-article.html">
+										<a href="{% url 'general:event_details' %}" class="entry-category-label green">Sport</a>
+										<a href="{% url 'general:event_details' %}">
 											<img src="{% static 'img/magazine/11.jpg' %}" alt="">
 										</a>
 										<div class="entry-inner-bottom">
@@ -1178,18 +1175,18 @@
 										</div>
 									</div>
 									<div class="entry">
-										<h2 class="entry-title"><a href="magazine-single-article.html">Treat Your Employees Well. They Are Your Best Brand Ambassadors</a></h2>
+										<h2 class="entry-title"><a href="{% url 'general:event_details' %}">Treat Your Employees Well. They Are Your Best Brand Ambassadors</a></h2>
 										<ul class="entry-meta list-inline">
 											<li class="entry-date">
 												<a href="#">19 Dec, 2015</a>
 											</li>
 											<li class="entry-comments">
-												<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+												<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 											</li>
 										</ul>
 										<div class="entry-content">
 											<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-											<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+											<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 										</div>
 									</div>
 								</article>
@@ -1201,13 +1198,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1216,13 +1213,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1231,13 +1228,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1246,13 +1243,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">Entrepreneurs and Hustlers Are 2 Tracks on the Same Record</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">Entrepreneurs and Hustlers Are 2 Tracks on the Same Record</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1261,13 +1258,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">Size Matters: Make Your Business Appear Smaller When It Counts</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">Size Matters: Make Your Business Appear Smaller When It Counts</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1289,8 +1286,8 @@
 							<div class="col-md-7 mb-20">
 								<article>
 									<div class="entry-img hover-scale">
-										<a href="magazine-single-article.html" class="entry-category-label green">Politics</a>
-										<a href="magazine-single-article.html">
+										<a href="{% url 'general:event_details' %}" class="entry-category-label green">Politics</a>
+										<a href="{% url 'general:event_details' %}">
 											<img src="{% static 'img/magazine/11.jpg' %}" alt="">
 										</a>
 										<div class="entry-inner-bottom">
@@ -1308,18 +1305,18 @@
 										</div>
 									</div>
 									<div class="entry">
-										<h2 class="entry-title"><a href="magazine-single-article.html">Treat Your Employees Well. They Are Your Best Brand Ambassadors</a></h2>
+										<h2 class="entry-title"><a href="{% url 'general:event_details' %}">Treat Your Employees Well. They Are Your Best Brand Ambassadors</a></h2>
 										<ul class="entry-meta list-inline">
 											<li class="entry-date">
 												<a href="#">19 Dec, 2015</a>
 											</li>
 											<li class="entry-comments">
-												<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+												<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 											</li>
 										</ul>
 										<div class="entry-content">
 											<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-											<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+											<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 										</div>
 									</div>
 								</article>
@@ -1331,13 +1328,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1346,13 +1343,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1361,13 +1358,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1376,13 +1373,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">Entrepreneurs and Hustlers Are 2 Tracks on the Same Record</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">Entrepreneurs and Hustlers Are 2 Tracks on the Same Record</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1391,13 +1388,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">Size Matters: Make Your Business Appear Smaller When It Counts</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">Size Matters: Make Your Business Appear Smaller When It Counts</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1427,23 +1424,23 @@
 								<h2 class="heading relative heading-small uppercase bottom-line style-2 left-align heading-label-red">Entertainment</h2>
 								<article>
 									<div class="entry-img hover-scale">
-										<a href="magazine-single-article.html">
+										<a href="{% url 'general:event_details' %}">
 											<img src="{% static 'img/magazine/12.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry mb-0">
-										<h2 class="entry-title small"><a href="magazine-single-article.html">The Golden Age: How the PR Industry Is Coming Into its Own</a></h2>
+										<h2 class="entry-title small"><a href="{% url 'general:event_details' %}">The Golden Age: How the PR Industry Is Coming Into its Own</a></h2>
 										<ul class="entry-meta list-inline">
 											<li class="entry-date">
 												<a href="#">19 Dec, 2015</a>
 											</li>
 											<li class="entry-comments">
-												<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+												<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 											</li>
 										</ul>
 										<div class="entry-content">
 											<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-											<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+											<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 										</div>
 									</div>
 								</article>
@@ -1452,13 +1449,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1467,13 +1464,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1482,13 +1479,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1504,23 +1501,23 @@
 								<h2 class="heading relative heading-small uppercase bottom-line style-2 left-align heading-label-gold">STEM</h2>
 								<article>
 									<div class="entry-img hover-scale">
-										<a href="magazine-single-article.html">
+										<a href="{% url 'general:event_details' %}">
 											<img src="{% static 'img/magazine/13.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry mb-0">
-										<h2 class="entry-title small"><a href="magazine-single-article.html">The Golden Age: How the PR Industry Is Coming Into its Own</a></h2>
+										<h2 class="entry-title small"><a href="{% url 'general:event_details' %}">The Golden Age: How the PR Industry Is Coming Into its Own</a></h2>
 										<ul class="entry-meta list-inline">
 											<li class="entry-date">
 												<a href="#">19 Dec, 2015</a>
 											</li>
 											<li class="entry-comments">
-												<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+												<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 											</li>
 										</ul>
 										<div class="entry-content">
 											<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-											<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+											<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 										</div>
 									</div>
 								</article>
@@ -1529,13 +1526,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1544,13 +1541,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1559,13 +1556,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1581,23 +1578,23 @@
 								<h2 class="heading relative heading-small uppercase bottom-line style-2 left-align heading-label-green">Economics</h2>
 								<article>
 									<div class="entry-img hover-scale">
-										<a href="magazine-single-article.html">
+										<a href="{% url 'general:event_details' %}">
 											<img src="{% static 'img/magazine/14.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry mb-0">
-										<h2 class="entry-title small"><a href="magazine-single-article.html">The Golden Age: How the PR Industry Is Coming Into its Own</a></h2>
+										<h2 class="entry-title small"><a href="{% url 'general:event_details' %}">The Golden Age: How the PR Industry Is Coming Into its Own</a></h2>
 										<ul class="entry-meta list-inline">
 											<li class="entry-date">
 												<a href="#">19 Dec, 2015</a>
 											</li>
 											<li class="entry-comments">
-												<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+												<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 											</li>
 										</ul>
 										<div class="entry-content">
 											<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-											<a href="magazine-single-article.html" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
+											<a href="{% url 'general:event_details' %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
 										</div>
 									</div>
 								</article>
@@ -1606,13 +1603,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1621,13 +1618,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1636,13 +1633,13 @@
 									<li>
 										<article class="post-small clearfix">
 											<div class="entry">
-												<h3 class="entry-title"><a href="magazine-single-article.html">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
+												<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
 												<ul class="entry-meta list-inline">
 													<li class="entry-date">
 														<a href="#">19 Dec, 2015</a>
 													</li>
 													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+														<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 													</li>
 												</ul>
 											</div>
@@ -1697,18 +1694,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="magazine-single-article.html">
+													<a href="{% url 'general:event_details' %}">
 														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="magazine-single-article.html">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="magazine-single-article.html">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
 														</li>
 													</ul>
 												</div>
@@ -2052,7 +2049,7 @@
 			</div> <!-- end content -->
 		</div> <!-- end main container -->
 
-
+{% endblock %}
 		<!-- Footer Type-4 -->
 		<footer class="footer footer-type-4">
 			<div class="container">
