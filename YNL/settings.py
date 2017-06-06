@@ -95,10 +95,10 @@ MIDDLEWARE_CLASSES = [
 DATABASES = {
     'default': {
             'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'yesnolive$default',
-            'USER': 'yesnolive',                      # Not used with sqlite3.
-            'PASSWORD': 'ebrootuser@101',                  # Not used with sqlite3.
-            'HOST': 'yesnolive.mysql.pythonanywhere-services.com',                 # Set to empty string for localhost. Not used with sqlite3.
+            'NAME': 'ynl_db',
+            'USER': 'root',                      # Not used with sqlite3.
+            'PASSWORD': 'root',                  # Not used with sqlite3.
+            'HOST': '127.0.0.1',                 # Set to empty string for localhost. Not used with sqlite3.
             'PORT': '3306',
 
             # 'OPTIONS': {
