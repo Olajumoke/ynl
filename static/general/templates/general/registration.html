@@ -1,0 +1,119 @@
+{% extends 'general/sign_in.html' %}
+
+{% block title %}<title>YesorNoLIVE.com | Register</title>{% endblock %}
+
+{% block content %}
+<div class="main-wrapper oh">
+
+		<!-- Social Sign up -->
+		<!--<section class="page-title style-2 text-center">
+			
+			<div class="col-md-12">
+				<a href="#" class="btn btn-lg btn-blue rounded">Signup with facebook</a>
+			</div>
+
+			<div class="col-md-12" style="padding-top: 10px">
+				<a href="#" class="btn btn-lg btn-red rounded">Signup with Google+</a>
+			</div>
+			
+			<div class="col-md-12" style="padding-top: 10px">
+				<a href="#" class="btn btn-lg btn-lavender rounded">Signup with Twitter</a>
+			</div>
+					
+		</section> <!- end page title -->
+
+
+		<section class="section-wrap_2">
+			<div class="container" style="width: 100% !important; max-width: 640px !important;">
+
+				<div class="row">
+					<div class="col-md-12">
+							<p><center>Kindly fill the form below. Already have an account? 
+							<a href="{% url 'general:login' %}">Sign in</a></center></p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+		<!-- Animations -->
+		<section class="section-wrap_3">
+			<div class="container" style="width: 100% !important; max-width: 640px !important;">
+
+				<div class="row">
+					<form action="{% url 'general:register' %}" method="POST">
+					<div class="col-sm-12">
+						
+						{% csrf_token %}
+						<div class="row">
+
+							<div class="col-md-12">
+								<input name="email" type="text" placeholder="E-mail">
+								<!--<input name="text" type="text" placeholder="Confirm E-mail">-->
+								{% if email_taken %}
+								<span style="color:red; position:relative; left:6px; bottom: 10px;">This email address is already attached to an account </span>
+								{% endif %}
+
+								<input name="username" required type="text"  placeholder="Username">
+								{% if username_is_taken %}
+								<span style="color:red; position:relative; left:6px; bottom:10px">This username is taken</span>
+								{% endif %}
+
+								<input name="password" id="password" type="password" placeholder="Password">
+								{% if password_mismatch %}
+								<span style="color:red; position:relative; left:6px;">The passwords do not match...Please try again</span>
+								{% elif password_too_short %}
+								<span style="color:red; position:relative; left:6px;">The password is too short...Password must be at least 8 characters in length</span>
+								{% elif password_should_be_alphanumeric %}
+								<span style="color:red; position:relative; left:6px;">The password needs to be Alphanumeric</span>
+								{% endif %}
+
+								<input name="password1" id="password1" type="password" placeholder="Confirm Password">
+								{% if password_mismatch %}
+								<span style="color:red; position:relative; left:6px;">The passwords do not match...Please try again</span>
+								{% elif password_too_short %}
+								<span style="color:red; position:relative; left:6px;">The password is too short...Password must be at least 8 characters in length</span>
+								{% elif password_should_be_alphanumeric %}
+								<span style="color:red; position:relative; left:6px;">The password needs to be Alphanumeric</span>
+								{% endif %}
+							</div> <!-- end col -->
+
+							<div class="col-md-12">
+								<div class="col-md-12">
+									<div class="col-md-12">
+										
+											<input required type="checkbox" class="input-checkbox" name="checkbox" id="checkbox1" value="1">
+											<label for="checkbox1">By clicking on Sign up, you agree to YesorNoLIVE's terms and conditions.</label>
+										
+										<div class="form-group"> 
+											<div class="col-md-12">
+												<button type="submit" class="btn btn-lg btn-color">Sign Up</button>
+											</div>
+										</div>
+									</div>					
+								</div>
+							</div>
+						</div>
+				   
+					</div> <!-- end col -->
+
+				</form>
+					
+
+	
+				</div> <!-- end row -->
+			</div> <!-- end container -->
+		</section> <!-- end alert boxes -->
+
+
+		
+
+
+		
+
+		<div id="back-to-top">
+			<a href="#top"><i class="fa fa-angle-up"></i></a>
+		</div>
+
+	</div> <!-- end main-wrapper -->
+{% endblock %}
