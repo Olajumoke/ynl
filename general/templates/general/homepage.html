@@ -82,7 +82,7 @@
 							
 
 							{% if request.user.is_authenticated %}
-							<li class="top-bar-link"><a>Hi, {{request.user}}</a></li>
+							<li class="top-bar-link"><a href="{% url 'general:user_account' %}">Hi, {{request.user}}</a></li>
 							<li class="top-bar-link"><a href="{% url 'general:logout' %}">Logout</a></li>
 								
 							{% else %}

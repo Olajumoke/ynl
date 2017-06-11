@@ -110,13 +110,13 @@
 		<section class="page-title style-2 text-center">
 			
 			<div class="col-md-12">
-				<a href="#" class="btn btn-lg btn-blue rounded">Sign in with facebook</a>
+				<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-lg btn-blue rounded">Sign in with facebook</a>
 			</div>
 			<div class="col-md-12" style="padding-top: 10px">
-				<a href="#" class="btn btn-lg btn-red rounded">Sign in with Google+</a>
+				<a href="{% url 'social:begin' 'google-plus' %}" class="btn btn-lg btn-red rounded">Sign in with Google+</a>
 			</div>
 			<div class="col-md-12" style="padding-top: 10px">
-				<a href="#" class="btn btn-lg btn-lavender rounded">Sign in with Twitter</a>
+				<a href="{% url 'social:begin' 'twitter' %}" class="btn btn-lg btn-lavender rounded">Sign in with Twitter</a>
 			</div>
 			
 								

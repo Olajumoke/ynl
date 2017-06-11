@@ -118,3 +118,9 @@ def register(request):
 
 def event_details(request):
 	return render(request, 'general/magazine-single-article.html',{})
+
+def user_profile(request):
+	return render(request, 'general/profile.html', {})
+
+def user_account(request):
+	return render(request, 'general/user_account.html', {})

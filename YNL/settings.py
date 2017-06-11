@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-
+from config import *
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -45,11 +45,41 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends', 
+                'social_django.context_processors.login_redirect',
             ],
             'debug': DEBUG,
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GooglePlusAuth',
+    # 'backends.EmailAuthBackEnd',
+    # 'backends.UsernameAuthBackEnd',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    'social_core.pipeline.social_auth.associate_by_email',
+    'YNL.pipeline.save_profile',
+)
+
+SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'email']
+
+LOGIN_URL = '/login/Page/'
+LOGOUT_URL = '/user-logout/'
+LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'YNL.wsgi.application'
 
@@ -68,6 +98,7 @@ YNL_APPS= (
     'ynladmin',
     'gameplay',
     'django.contrib.admin',
+    'social_django',
 )
 
 
@@ -75,8 +106,8 @@ INSTALLED_APPS = DJANGO_APPS + YNL_APPS
 
 if not os.environ.get('RDS_DB_NAME'):
     YNL_APPS+=('debug_toolbar',)
-
-
+ 
+    
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -85,7 +116,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+]    
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
@@ -163,12 +195,21 @@ USE_TZ = True
 #     )
 
 
+
 STATIC_ROOT = ''
-
-STATIC_URL       = '/static/'
-
-STATICFILES_DIRS = ('static',)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+        'static',
+        # Put strings here, like "/home/html/static" or "C:/www/django/static".
+        # Always use forward slashes, even on Windows.
+        # Don't forget to use absolute paths, not relative paths.
+    )
 
 MEDIA_ROOT = 'media'
 
 MEDIA_URL = '/media/'
+
+
+
+
+
