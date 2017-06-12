@@ -6,18 +6,18 @@
 <div class="main-wrapper oh">
 
 		<!-- Social Sign up -->
-		<!--<section class="page-title style-2 text-center">
+		<section class="page-title style-2 text-center">
 			
 			<div class="col-md-12">
-				<a href="#" class="btn btn-lg btn-blue rounded">Signup with facebook</a>
+				<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-lg btn-blue rounded">Signup with facebook</a>
 			</div>
 
 			<div class="col-md-12" style="padding-top: 10px">
-				<a href="#" class="btn btn-lg btn-red rounded">Signup with Google+</a>
+				<a href="{% url 'social:begin' 'google-plus' %}" class="btn btn-lg btn-red rounded">Signup with Google+</a>
 			</div>
 			
 			<div class="col-md-12" style="padding-top: 10px">
-				<a href="#" class="btn btn-lg btn-lavender rounded">Signup with Twitter</a>
+				<a href="{% url 'social:begin' 'twitter' %}" class="btn btn-lg btn-lavender rounded">Signup with Twitter</a>
 			</div>
 					
 		</section> <!- end page title -->
