@@ -80,7 +80,11 @@
             <div class="wp-sidebar-nav">
                 <div class="user-profile">
                     <div class="dropdown user-pro-body">
+                        {% if user.user_image %}
+                        <div><img src="{{ user.user_image.url }}" alt="user-img" class="img-circle"></div> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user}} <span class="caret"></span></a>
+                        {% else %}
                         <div><img src="{% static 'user/plugins/images/users/varun.jpg' %}" alt="user-img" class="img-circle"></div> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user}} <span class="caret"></span></a>
+                        {% endif %}
                         <ul class="dropdown-menu animated flipInY">
                                                 
                             <li><a href="{% url 'general:logout' %}"><i class="fa fa-power-off"></i> Logout</a></li>

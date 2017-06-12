@@ -26,7 +26,10 @@ class UserAccount(models.Model):
 	dob                      = models.DateField(null=True, blank=True)
 	phone_number             = models.CharField(max_length=50, null=True, blank=True)
 	user_image               = models.ImageField(upload_to="media/user_image/%Y/%M/%d/", null=True, blank=True)
-
+	gender					 = models.CharField(max_length=10, null=True, blank=True, choices=GENDER)
+	
+	
+	
 	def __unicode__(self):
 	    return '%s' %(self.user)
 

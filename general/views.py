@@ -3,8 +3,8 @@ from django.shortcuts import render_to_response, render, redirect, get_object_or
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import Http404, HttpResponse , HttpResponseRedirect, JsonResponse
 from django.forms.models import model_to_dict
-from general.forms import UserForm
-
+from general.forms import UserForm, UserAccountForm, UserProfileForm
+from general.models import UserAccount
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
@@ -28,7 +28,7 @@ from django.db.models import Sum
 from django.template.loader import get_template
 from django.template import Context
 from django.core.mail import EmailMessage
-
+from django.utils import timezone
 
 # Create your views here.
 
@@ -128,7 +128,50 @@ def event_details(request):
 	return render(request, 'general/magazine-single-article.html',{})
 
 def user_profile(request):
-	return render(request, 'general/profile.html', {})
+	# try:
+	# 	user_account = UserAccount.objects.get(user=request.user)
+	# except Exception as e :
+	# 	print "e", e
+	if UserAccount.objects.filter(user=request.user).exists():
+		print "I exist"
+		user = UserAccount.objects.get(user=request.user)
+		form1 = UserProfileForm(instance=request.user)
+		form2 = UserAccountForm(instance=user)
+		print "form1", form1
+	else:
+		print "I do not exist"
+		if request.method == "POST":
+			#print "I got here", request.POST
+			user_form = UserProfileForm(request.POST, instance=request.user)
+			user_account_form = UserAccountForm(request.POST, request.FILES)
+			if user_account_form.is_valid() and user_form.is_valid():
+				form1 = user_form.save()
+				form1.first_name = request.POST.get('first_name')
+				form1.last_name = request.POST.get('last_name')
+				form1.save()
+				form2 = user_account_form.save(commit=False)
+				form2.user = form1
+				form2.created_on = timezone.now()
+				form2.save()
+				user =  UserAccount.objects.get(user=request.user)
+			else:
+				print user_account_form.errors, user_form.errors
+		else:
+			form1 = UserProfileForm(instance=request.user)
+			form2 = UserAccountForm()
+			user = None
+	return render(request, 'general/profile.html', { 'form1':form1, 'form2':form2, 'user':user})
 
 def user_account(request):
-	return render(request, 'general/user_account.html', {})
+	try:
+	 	user = UserAccount.objects.get(user=request.user)
+	except Exception as e :
+		print "e", e
+		user = None
+	return render(request, 'general/user_account.html', {'user':user})
+
+def account_activation(request):
+	if UserAccount.objects.filter(user=request.user).exists():
+		print "I exist"
+	
+	return render(request, 'general/profile.html', {})
