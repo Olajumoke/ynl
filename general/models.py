@@ -10,8 +10,11 @@ import datetime
 from django.utils import timezone
 from django.template.defaultfilters import slugify
 from general.modelchoices import *
+from tinymce.models import HTMLField
+
 
 # Create your models here.
+
 
 
 class UserAccount(models.Model):
@@ -39,18 +42,22 @@ class Event(models.Model):
 	title                     = models.CharField(max_length=250, null=True, blank=True)
 	category                  = models.CharField(max_length=50, null=True, blank=True, choices=CATEGORY)
 	created_on                = models.DateTimeField(auto_now_add = True)
-	description				  = models.TextField(null=True, blank=True)
-	start_time                = models.DateTimeField(null=True, blank=True)
-	end_time                  = models.DateTimeField(null=True, blank=True)
+	start_time                = models.DateField(null=True, blank=True)
+	end_time                  = models.DateField(null=True, blank=True)
 	publish     			  = models.BooleanField(default=False)
 	event_image               = models.ImageField(upload_to="media/event/%Y/%M/%d/", null=True, blank=True)
+	admin_text                = HTMLField(null=True, blank=True)
+	closed					  = models.BooleanField(default=False)
+	deleted                   = models.BooleanField(default=False)
+	tracking_number			  = models.CharField(max_length=50, null=True, blank=True)
 
 	def __unicode__(self):
-	    return '%s' %(self.user)
+	    return '%s' %(self.author)
 
 	class Meta:
 		verbose_name_plural = 'Event'
 		ordering = ['-created_on']
+
 
 
 class Comments(models.Model):
@@ -68,5 +75,10 @@ class Comments(models.Model):
 	class Meta:
 		verbose_name_plural = 'Comment'
 		ordering = ['-created_on']
+
+
+
+# class Tags(models.Model):
+
 
 

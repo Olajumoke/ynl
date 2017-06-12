@@ -1,0 +1,236 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>  
+<html lang="en">
+
+{% block header %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'user/plugins/images/favicon.png' %}">
+    <title>YesorNoLIVE.com | Admin</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'user/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- animation CSS -->
+    <link href="{% static 'user/css/animate.css' %}" rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href="{% static 'user/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'user/plugins/bower_components/dropify/dist/css/dropify.min.css' %}">
+    <!-- animation CSS -->
+    <link href="{% static 'user/css/animate.css' %}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'user/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'css/custom_style.css' %}" rel="stylesheet"> 
+
+    <!-- color CSS -->
+    <link href="{% static 'user/css/colors/green-dark.css' %}" id="theme" rel="stylesheet">
+    <script src='https://cdn.tinymce.com/4/tinymce.min.js'></script>
+    <script>
+    tinymce.init({ selector:'#id_admin_text',
+                 height: 500,
+                 plugins: [
+                          'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                          'searchreplace wordcount visualblocks visualchars code fullscreen',
+                          'insertdatetime media nonbreaking save table contextmenu directionality',
+                          'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                        ],
+                 toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                 toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+                 image_advtab: true,
+                 templates: [
+                          { title: 'Test template 1', content: 'Test 1' },
+                          { title: 'Test template 2', content: 'Test 2' }
+                         ],
+                 content_css: [
+                            '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+                            '//www.tinymce.com/css/codepen.min.css'
+                          ]
+                });
+    </script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o)
+                , m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-19175540-9', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+{% endblock header %}
+
+
+<body>
+
+{% block sidebar %}
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="cssload-speeding-wheel"></div>
+    </div>
+    <div id="wrapper">
+        <!-- Top Navigation -->
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg " href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i class="ti-menu"></i></a>
+                <div class="top-left-part"><a class="logo" href="#"><b><!--This is dark logo icon--><img src="{% static 'user/plugins/images/eliteadmin-logo.png' %}" alt="home" class="dark-logo" /><!--This is light logo icon-->
+                <img src="{% static 'user/plugins/images/eliteadmin-logo-dark.png' %}" alt="home" class="light-logo" /></b><span class="hidden-xs"><!--This is dark logo text-->
+                <img src="{% static 'user/plugins/images/eliteadmin-text.png' %}" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{% static 'user/plugins/images/eliteadmin-text-dark.png' %}" alt="home" class="light-logo" /></span></a></div>
+                <ul class="nav navbar-top-links navbar-left hidden-xs">
+                    <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
+                    <li>
+                        <form role="search" class="app-search hidden-xs">
+                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+                    </li>
+                </ul>
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    
+                    
+                   
+                    
+                    <!-- /.dropdown -->
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- Left navbar-header -->
+        <div class="sidebar" role="navigation">
+            <div class="wp-sidebar-nav">
+                <div class="user-profile">
+                    <div class="dropdown user-pro-body">
+                        <div><img src="{{user_acc_obj.user_image.url}}" alt="user-img" class="img-circle"></div> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user}}<span class="caret"></span></a>
+                        <ul class="dropdown-menu animated flipInY">
+                            {% if request.user.is_authenticated %}
+                                {% if request.user.is_staff %}
+                                    <li><a href="#">Hi, {{request.user}}</a></li>
+                                {% else %}
+                                    <li><a href="{% url 'general:user_account' %}">Hi, {{request.user}}</a></li>
+                                {% endif %}
+
+                            <li><a href="{% url 'general:logout' %}"><i class="fa fa-power-off"></i> Logout</a></li>
+                            {% endif %}    
+                        </ul>
+                    </div>
+                </div>
+                <ul class="wp-side-menu">
+                    <li> <a href="{% url 'ynladmin:admin_pages' 'events' %}"><i data-icon="T" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Event Manager</span></a> </li>
+                    <li> <a href=""><i data-icon="R" class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >User Manager</span></a> </li>
+                    <li> <a href=""><i data-icon="," class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >Message Center</span></a> </li>
+                    <li> <a href=""><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Payment</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Left navbar-header end -->
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Hi {{request.user}},</h4> </div>
+                        {% if 'events' or 'create_event' in request.path %}
+                        <h4 class="pull-right"  style="cursor: pointer; color: #03a9f3;" id="add_event"><i class="fa fa-plus">ADD EVENT</i></h4>
+                        {% endif %}
+                    <!-- /.col-lg-12 -->
+                </div>
+{% endblock sidebar %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+{% endblock transactions %}
+
+
+{% block footer %}
+ <footer class="footer text-center"> © 2017 Yes or No Live </footer>
+{% endblock footer %}
+
+
+{% block modals %}
+
+    {% include 'general/modals.html' %}
+
+{% endblock modals %}
+
+{% block scripts %}
+<!-- /#wrapper -->
+    <!-- jQuery -->
+    <script src="{% static 'user/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'user/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="{% static 'user/js/wp-sidebar.js' %}"></script>
+    <!--slimscroll JavaScript -->
+    <script src="{% static 'user/js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'user/js/waves.js' %}"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="{% static 'user/js/custom.min.js' %}"></script>
+    <script src="{% static 'user/js/jasny-bootstrap.js' %}"></script>
+    <!-- jQuery file upload -->
+    <script src="{% static 'user/plugins/bower_components/dropify/dist/js/dropify.min.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            // Basic
+            $('.dropify').dropify();
+            // Translated
+            $('.dropify-fr').dropify({
+                messages: {
+                    default: 'Glissez-déposez un fichier ici ou cliquez'
+                    , replace: 'Glissez-déposez un fichier ou cliquez pour remplacer'
+                    , remove: 'Supprimer'
+                    , error: 'Désolé, le fichier trop volumineux'
+                }
+            });
+            // Used events
+            var drEvent = $('#input-file-events').dropify();
+            drEvent.on('dropify.beforeClear', function (event, element) {
+                return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+            });
+            drEvent.on('dropify.afterClear', function (event, element) {
+                alert('File deleted');
+            });
+            drEvent.on('dropify.errors', function (event, element) {
+                console.log('Has Errors');
+            });
+            var drDestroy = $('#input-file-to-destroy').dropify();
+            drDestroy = drDestroy.data('dropify')
+            $('#toggleDropify').on('click', function (e) {
+                e.preventDefault();
+                if (drDestroy.isDropified()) {
+                    drDestroy.destroy();
+                }
+                else {
+                    drDestroy.init();
+                }
+            })
+        });
+    </script>
+    <!--Style Switcher -->
+<script src="{% static 'user/plugins/bower_components/styleswitcher/jQuery.style.switcher.js' %}"></script>
+{% endblock scripts %}
+
+{% block customscripts %}
+
+    {% include 'general/customscripts.html' %}
+
+{% endblock customscripts %}                    
+
+</body>
+
+</html>

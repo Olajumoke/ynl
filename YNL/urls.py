@@ -33,8 +33,9 @@ urlpatterns = [
     
     url(r'^admin/', admin.site.urls),
     url(r'^', include("general.urls", namespace="general")),
-    url(r'^', include("ynladmin.urls", namespace="ynladmin")),
+    url(r'^backend/', include("ynladmin.urls", namespace="ynladmin")),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
+    url(r'^tinymce/', include('tinymce.urls', namespace='tinymce')),
 
     #change password urls
     url(r'^reset/form/$', TemplateView.as_view(template_name = 'registration/password_reset_email.html')),

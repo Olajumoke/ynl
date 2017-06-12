@@ -1,5 +1,5 @@
 CATEGORY = (
-	('', 'Select country'),
+	('', 'Select Category'),
 	('SPORT', 'SPORT'),
 	('BUSINESS', 'BUSINESS'),
 	('FASHION', 'FASHION'),

@@ -48,15 +48,18 @@
 						<div class="row">
 
 							<div class="col-md-12">
-								<input name="email" type="text" required placeholder="E-mail">
-								<!--<input name="text" type="text" placeholder="Confirm E-mail">-->
-								{% if email_taken %}
-								<span style="color:red; position:relative; left:6px; bottom: 10px;">This email address is already attached to an account </span>
+								{% if not email_taken %}
+									{{form.email}}
+								{% else %}
+									{{form.email}}
+									<span style="color:red; position:relative; left:6px; bottom: 10px;">This email address is already attached to an account </span>
 								{% endif %}
 
-								<input name="username" required type="text"  placeholder="Username">
-								{% if username_is_taken %}
-								<span style="color:red; position:relative; left:6px; bottom:10px">This username is taken</span>
+								{% if not username_is_taken %}
+									{{form.username}}
+								{% else %}
+									{{form.username}}	
+									<span style="color:red; position:relative; left:6px; bottom:10px">This username is taken</span>
 								{% endif %}
 
 								<input name="password" required id="password" type="password" placeholder="Password">

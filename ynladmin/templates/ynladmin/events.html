@@ -1,0 +1,57 @@
+{% extends 'ynladmin/adminhome.html' %}
+{% load staticfiles %}
+
+{% block events_won %}
+{% endblock events_won %}
+
+{% block transactions %}
+
+	
+<div class="col-md-12 view-events">
+<div class="row">
+    <div class="col-md-12">
+        <div class="white-box">
+            <h3 class="box-title">Event Manager</h3>
+            <div class="table-responsive">
+                <table border="0" class="table table-striped" >
+                    <thead>
+                        <tr>
+                            <th>Event ID</th>
+                            <th>Author</th>
+                            <th>Category</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Closed</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                    {% for event in all_events %}
+                        <tr>
+                            <td>{{event.tracking_number}}</td>
+                            <td>{{event.author}}</td>
+                            <td>{{event.category}}</td>
+                            <td>{{event.start_time}}</td>
+                            <td>{{event.end_time}}</td>
+                            <td>{{event.closed}}</td>
+                            <td>
+                               <span><i class="fa fa-trash" style="cursor: pointer;" event_id="{{event.id}}"></i></span>&nbsp;&nbsp;
+                               <span><i class="fa fa-pencil"  style="cursor: pointer;" event_id="{{event.id}}"></i></span>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <p>No Event has been added</p>
+                    {% endfor %}  
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+	
+{% endblock transactions %}
+
+

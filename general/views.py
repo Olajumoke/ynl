@@ -51,10 +51,16 @@ def user_login(request):
 		if user:
 			# Is the account active? It could have been disabled.
 			if user.is_active:
+
 				# If the account is valid and active, we can log the user in.
 				# We'll send the user back to the homepage.
-				login(request, user)
-				return redirect(reverse('general:homepage'))
+				login(request, user)                  
+				if user.is_staff:
+					response =  redirect(reverse('ynladmin:adminHome'))
+					return response    
+				else:
+					response = redirect(reverse('general:homepage'))
+					return response
 			else:
 				# An inactive account was used - no logging in!
 				return HttpResponse("Your account is disabled.")
@@ -107,6 +113,8 @@ def register(request):
 				# 	first_name = rp.get('first_name'), last_name = rp.get('last_name'))
 				user.set_password(user.password)
 				user.save()
+				''' try this '''
+				# new_user_acc_obj = UserAccount.objects.create(user=user)
 				
 				return redirect('general:login')
 			else:
