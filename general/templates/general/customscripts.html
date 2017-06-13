@@ -1,5 +1,56 @@
 <script>
+
    $('body').on('click', '#add_event', function(e){
 		$('#eventForm').modal('show');
 	});
+
+
+   $('body').on('click', '.edit_event', function(e){
+   		var event_track_num = $(this).attr('event_track_num');
+   		alert(event_track_num);
+
+
+   		$.ajax({
+   			data: {'event_track_num':event_track_num},
+   			type: 'GET',
+   			url: "{% url 'ynladmin:view_edit_event' %}",
+
+   			success:function(data){
+   				$('#event_edit').replaceWith(data);
+   				$('#eventFormEdit').modal('show');
+   				console.log('working');
+   			},
+
+   			error:function(data){
+   				console.log('not working');
+   			}
+   		})
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </script>

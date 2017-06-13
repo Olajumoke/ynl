@@ -4,7 +4,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.http import Http404, HttpResponse , HttpResponseRedirect, JsonResponse
 from django.forms.models import model_to_dict
 from general.forms import UserForm, UserAccountForm, UserProfileForm
-from general.models import UserAccount
+from general.models import UserAccount, Event
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
@@ -35,7 +35,9 @@ from django.utils import timezone
 
 def homepage(request):
 	context = {}
+	event_obj = Event.objects.filter(deleted=False)
 	template_name = 'general/homepage.html'
+	context['events'] = event_obj
 	return render(request, template_name, context)
 
 def user_login(request):
@@ -56,7 +58,7 @@ def user_login(request):
 				# We'll send the user back to the homepage.
 				login(request, user)                  
 				if user.is_staff:
-					response =  redirect(reverse('ynladmin:adminHome'))
+					response =  redirect(reverse('ynladmin:admin_pages', args=['events']))
 					return response    
 				else:
 					response = redirect(reverse('general:homepage'))
@@ -124,8 +126,11 @@ def register(request):
 	return render(request, 'general/registration.html', {'form': form})
 
 
-def event_details(request):
-	return render(request, 'general/magazine-single-article.html',{})
+def event_details(request,tracking_number):
+	context = {}
+	event_obj = Event.objects.get(tracking_number=tracking_number)
+	context['event'] = event_obj
+	return render(request, 'general/magazine-single-article.html',context)
 
 def user_profile(request):
 	# try:

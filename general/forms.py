@@ -34,7 +34,7 @@ class EventForm(forms.ModelForm):
 	start_time     = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
 	end_time       = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
 	publish        = forms.BooleanField(required = False)
-	event_image    = forms.ImageField(help_text='Photo', widget=forms.widgets.ClearableFileInput({'required':'required'}))
+	event_image    = forms.ImageField(help_text='Photo', widget=forms.widgets.ClearableFileInput())
 	admin_text     = HTMLField()
 
 
