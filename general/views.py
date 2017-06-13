@@ -126,9 +126,9 @@ def register(request):
 	return render(request, 'general/registration.html', {'form': form})
 
 
-def event_details(request,tracking_number):
+def event_details(request,pk):
 	context = {}
-	event_obj = Event.objects.get(tracking_number=tracking_number)
+	event_obj = Event.objects.get(pk=pk)
 	context['event'] = event_obj
 	return render(request, 'general/magazine-single-article.html',context)
 
