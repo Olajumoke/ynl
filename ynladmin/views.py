@@ -45,14 +45,14 @@ def randomNumber(value):
 
 
 
-@login_required
-def admin_home(request):
-	context = {}
-	template_name = 'ynladmin/adminHome.html'
-	user_obj = request.user
-	user_acc_obj = UserAccount.objects.get(user=user_obj)
-	context['user_acc_obj'] = user_acc_obj
-	return render(request,template_name,context)
+# @login_required
+# def admin_home(request):
+# 	context = {}
+# 	template_name = 'ynladmin/adminHome.html'
+# 	user_obj = request.user
+# 	user_acc_obj = UserAccount.objects.get(user=user_obj)
+# 	context['user_acc_obj'] = user_acc_obj
+# 	return render(request,template_name,context)
 
 
 @login_required
@@ -60,7 +60,7 @@ def admin_pages(request,pages_to):
 	context = {}
 	user_obj = request.user
 	user_acc_obj = UserAccount.objects.get(user=user_obj)
-	all_event = Event.objects.all()
+	all_event = Event.objects.filter(deleted=False)
 	context['all_events'] = all_event
 	context['user_acc_obj'] = user_acc_obj	
 	if pages_to == 'events':
@@ -80,7 +80,7 @@ def create_event(request):
 	user_obj = request.user
 	user_acc_obj = UserAccount.objects.get(user=user_obj)
 	event_form = EventForm()
-	all_event = Event.objects.all()
+	all_event = Event.objects.filter(deleted=False)
 	context['event_form'] = event_form
 	context['all_events'] = all_event
 	context['user_acc_obj'] = user_acc_obj
@@ -88,21 +88,54 @@ def create_event(request):
 	if request.method == 'POST':
 		rp = request.POST
 		print 'rp:', rp
-		form = EventForm(request.POST, request.FILES)
-		if form.is_valid:
-			print 'The form is valid'
-			print form
-			create_event_form = form.save(commit=False)
-			create_event_form.author = request.user
-			create_event_form.tracking_number = randomNumber(str(rp.get('category'))[:2])
-			create_event_form.save()
-			return redirect(reverse('ynladmin:admin_pages', args=['events']))
+		if rp.has_key('edit_event'):
+			print "i wanna edit"
+			event_obj = Event.objects.get(tracking_number=rp.get('event_track_num'))
+			form = EventForm(request.POST, request.FILES, instance=event_obj)
+			if form.is_valid:
+				print 'The form is valid'
+				create_event_form = form.save(commit=False)
+				create_event_form.author = request.user
+				create_event_form.tracking_number = rp.get('event_track_num')
+				create_event_form.save()
+				return redirect(reverse('ynladmin:admin_pages', args=['events']))
+			else:
+				print form.errors
 		else:
-			print form.errors
+			form = EventForm(request.POST, request.FILES)
+			if form.is_valid:
+				print 'The form is valid'
+				create_event_form = form.save(commit=False)
+				create_event_form.author = request.user
+				create_event_form.tracking_number = randomNumber(str(rp.get('category'))[:2])
+				create_event_form.save()
+				return redirect(reverse('ynladmin:admin_pages', args=['events']))
+			else:
+				print form.errors
+			return render(request,template_name,context)
 		return render(request,template_name,context)
 	else:
 		return render(request,template_name,context)
 
+
+@login_required
+def delete_event(request,event_id):
+	event_obj = Event.objects.get(id=event_id)
+	event_obj.deleted = True
+	event_obj.save()
+	return redirect(reverse('ynladmin:admin_pages', args=['events']))
+
+
+@login_required
+def view_edit_event(request):
+	context = {}
+	print request.GET
+	event_track_num = request.GET.get('event_track_num')
+	event_obj = Event.objects.get(tracking_number=event_track_num)
+	event_form = EventForm(instance=event_obj)
+	context['event_track_num'] = event_track_num
+	context['event_form'] = event_form
+	return render(request,'ynladmin/edit_event.html',context)
 
 
 

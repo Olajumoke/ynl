@@ -4,8 +4,10 @@ import views
 
 
 urlpatterns = [
-            url(r'^admin/home/$', views.admin_home, name='adminHome'),
-            url(r'^admin/events/(?P<pages_to>.+)/$', views.admin_pages, name='admin_pages'),
-            url(r'^admin/create_event/$', views.create_event, name='create_event'),
+            # url(r'^admin/home/$', views.admin_home, name='adminHome'),
+            url(r'^admin/all-events/(?P<pages_to>.+)/$', views.admin_pages, name='admin_pages'),
+            url(r'^admin/create-event/$', views.create_event, name='create_event'),
+            url(r'^admin/delete-event/(?P<event_id>[\w]+)/$', views.delete_event, name='delete_event'),
+            url(r'^admin/edit-event/$', views.view_edit_event, name='view_edit_event'),
     ]
 
