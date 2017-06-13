@@ -32,6 +32,7 @@ from django.template import Context
 from django.core.mail import EmailMessage
 from general.models import *
 from general.forms import *
+from general.views import paginate_list
 # Create your views here.
 
 
@@ -56,20 +57,27 @@ def randomNumber(value):
 
 
 @login_required
-def admin_pages(request,pages_to):
+def admin_pages(request,pages_to,**kwargs):
 	context = {}
 	user_obj = request.user
 	user_acc_obj = UserAccount.objects.get(user=user_obj)
-	all_event = Event.objects.filter(deleted=False)
-	context['all_events'] = all_event
 	context['user_acc_obj'] = user_acc_obj	
 	if pages_to == 'events':
+		all_event = paginate_list(request,Event.objects.filter(deleted=False),10)
 		template_name = 'ynladmin/events.html'
 		event_form = EventForm()
 		context['event_form'] = event_form
-	elif pages_to == "users":
+		context['all_events'] = all_event
+	elif pages_to == 'users':
+		template_name = 'ynladmin/users.html'
+		all_users = paginate_list(request,UserAccount.objects.filter(deleted=False),10)
+		useraccount_form = UserAccountForm()
 		user_form = UserForm()
+		context['useraccount_form'] = useraccount_form
+		context['all_users'] = all_users
 		context['user_form'] = user_form
+	elif pages_to == "payment":
+		pass		
 	return render(request,template_name,context)
 
 
@@ -80,7 +88,7 @@ def create_event(request):
 	user_obj = request.user
 	user_acc_obj = UserAccount.objects.get(user=user_obj)
 	event_form = EventForm()
-	all_event = Event.objects.filter(deleted=False)
+	all_event = paginate_list(request,Event.objects.filter(deleted=False),10)
 	context['event_form'] = event_form
 	context['all_events'] = all_event
 	context['user_acc_obj'] = user_acc_obj
@@ -94,6 +102,13 @@ def create_event(request):
 			form = EventForm(request.POST, request.FILES, instance=event_obj)
 			if form.is_valid:
 				print 'The form is valid'
+				start_date = rp.get('start_time')
+				end_date = rp.get('end_time')
+				if start_date >= end_date:
+					messages.error(request,'Unsuccessful...Start date cannot be less than or equal to end date')
+					return redirect(request.META['HTTP_REFERER'])
+				else:
+					print "you may proceed"
 				create_event_form = form.save(commit=False)
 				create_event_form.author = request.user
 				create_event_form.tracking_number = rp.get('event_track_num')
@@ -101,10 +116,28 @@ def create_event(request):
 				return redirect(reverse('ynladmin:admin_pages', args=['events']))
 			else:
 				print form.errors
+		elif rp.has_key('edit_user'):
+			print "i wanna edit this user"
+			user_obj = UserAccount.objects.get(id=rp.get('user_id'))
+			form = UserAccountForm(request.POST, request.FILES, instance=user_obj)
+			if form.is_valid:
+				print 'The form is valid'
+				print form
+				form.save()
+				return redirect(reverse('ynladmin:admin_pages', args=['users']))
+			else:
+				print form.errors
 		else:
 			form = EventForm(request.POST, request.FILES)
 			if form.is_valid:
+				print form
 				print 'The form is valid'
+				start_date = rp.get('start_time')
+				end_date = rp.get('end_time')
+				if start_date >= end_date:
+					messages.error(request,'Unsuccessful...Start date cannot be less than or equal to end date')
+				else:
+					pass
 				create_event_form = form.save(commit=False)
 				create_event_form.author = request.user
 				create_event_form.tracking_number = randomNumber(str(rp.get('category'))[:2])
@@ -127,6 +160,14 @@ def delete_event(request,event_id):
 
 
 @login_required
+def delete_user(request,user_id):
+	user_obj = UserAccount.objects.get(id=user_id)
+	user_obj.deleted = True
+	user_obj.save()
+	return redirect(reverse('ynladmin:admin_pages', args=['users']))
+
+
+@login_required
 def view_edit_event(request):
 	context = {}
 	print request.GET
@@ -136,6 +177,18 @@ def view_edit_event(request):
 	context['event_track_num'] = event_track_num
 	context['event_form'] = event_form
 	return render(request,'ynladmin/edit_event.html',context)
+
+
+@login_required
+def edit_user(request):
+	context = {}
+	print request.GET
+	user_id = request.GET.get('user_id')
+	useracc_obj = UserAccount.objects.get(id=user_id)
+	useraccount_form = UserAccountForm(instance=useracc_obj)
+	context['user_id'] = user_id
+	context['useraccount_form'] = useraccount_form
+	return render(request,'ynladmin/user_edit.html',context)
 
 
 

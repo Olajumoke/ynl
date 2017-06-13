@@ -18,11 +18,11 @@
 						<!-- gallery post -->
 						<div class="entry-item">
 							<h1 class="entry-title">
-								Treat Your Employees Well. They Are Your Best Brand Ambassadors
+								{{event.title}}
 							</h1>
 							<ul class="entry-meta list-inline mb-30">
 								<li class="entry-date">
-									<i class="fa fa-clock-o"></i><a href="#">19 July, 2015</a>
+									<i class="fa fa-clock-o"></i><a href="#">{{event.created_on}}</a>
 								</li>
 								<li class="entry-category">
 									<i class="fa fa-folder-open"></i><a href="#">Economics</a>
@@ -40,7 +40,7 @@
 									<ul class="slides clearfix">
 										<li>
 											<a href="#">
-												<img src="{% static 'img/blog/gallery_post_img_3.jpg' %}" alt="">
+												<img src="{{event.large_event_image.url}}" alt="">
 											</a>
 										</li>
 									</ul>
@@ -407,18 +407,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' %}">
+													<a href="#">
 														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
+															<i class="fa fa-comments"></i><a href="#">15</a>
 														</li>
 													</ul>
 												</div>
@@ -427,18 +427,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' %}">
+													<a href="#">
 														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
+															<i class="fa fa-comments"></i><a href="#">15</a>
 														</li>
 													</ul>
 												</div>
@@ -447,18 +447,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' %}">
+													<a href="#">
 														<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">7 Traits That Define Work Productivity Superstars</a></h3>
+													<h3 class="entry-title"><a href="#">7 Traits That Define Work Productivity Superstars</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
+															<i class="fa fa-comments"></i><a href="#">15</a>
 														</li>
 													</ul>
 												</div>
@@ -467,18 +467,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' %}">
+													<a href="#">
 														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
+															<i class="fa fa-comments"></i><a href="#">15</a>
 														</li>
 													</ul>
 												</div>
@@ -487,18 +487,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' %}">
+													<a href="#">
 														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
+															<i class="fa fa-comments"></i><a href="#">15</a>
 														</li>
 													</ul>
 												</div>
@@ -512,18 +512,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' %}">
+													<a href="#">
 														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
+															<i class="fa fa-comments"></i><a href="#">15</a>
 														</li>
 													</ul>
 												</div>
@@ -532,18 +532,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' %}">
+													<a href="#">
 														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
+															<i class="fa fa-comments"></i><a href="#">15</a>
 														</li>
 													</ul>
 												</div>
@@ -552,18 +552,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' %}">
+													<a href="#">
 														<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">7 Traits That Define Work Productivity Superstars</a></h3>
+													<h3 class="entry-title"><a href="#">7 Traits That Define Work Productivity Superstars</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
+															<i class="fa fa-comments"></i><a href="#">15</a>
 														</li>
 													</ul>
 												</div>
@@ -572,18 +572,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' %}">
+													<a href="#">
 														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
+															<i class="fa fa-comments"></i><a href="#">15</a>
 														</li>
 													</ul>
 												</div>
@@ -592,18 +592,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' %}">
+													<a href="#">
 														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
+															<i class="fa fa-comments"></i><a href="#">15</a>
 														</li>
 													</ul>
 												</div>
@@ -633,12 +633,12 @@
 							<li>
 								<article class="post-small clearfix">
 									<div class="entry-img hover-scale">
-										<a href="{% url 'general:event_details' %}">
+										<a href="#">
 											<img src="{% static 'img/magazine/thumb_8.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry">
-										<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
+										<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
 										<ul class="entry-meta list-inline">
 											<li class="rating"></li>
 											<li class="entry-date">
@@ -651,12 +651,12 @@
 							<li>
 								<article class="post-small clearfix">
 									<div class="entry-img hover-scale">
-										<a href="{% url 'general:event_details' %}">
+										<a href="#">
 											<img src="{% static 'img/magazine/thumb_9.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry">
-										<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+										<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 										<ul class="entry-meta list-inline">
 											<li class="rating"></li>
 											<li class="entry-date">
@@ -669,12 +669,12 @@
 							<li>
 								<article class="post-small clearfix">
 									<div class="entry-img hover-scale">
-										<a href="{% url 'general:event_details' %}">
+										<a href="#">
 											<img src="{% static 'img/magazine/thumb_10.jpg' %}" alt="">
 										</a>
 									</div>
 									<div class="entry">
-										<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+										<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 										<ul class="entry-meta list-inline">
 											<li class="rating"></li>
 											<li class="entry-date">
@@ -687,18 +687,18 @@
 							<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' %}">
+													<a href="#">
 														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
+															<i class="fa fa-comments"></i><a href="#">15</a>
 														</li>
 													</ul>
 												</div>
@@ -707,18 +707,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' %}">
+													<a href="#">
 														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' %}">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' %}">15</a>
+															<i class="fa fa-comments"></i><a href="#">15</a>
 														</li>
 													</ul>
 												</div>
