@@ -7,7 +7,6 @@
 
    $('body').on('click', '.edit_event', function(e){
    		var event_track_num = $(this).attr('event_track_num');
-   		alert(event_track_num);
 
 
    		$.ajax({
@@ -31,12 +30,29 @@
    			}
    		})
 	});
-	
-</script>
 
-<script>
-	
-</script>
+
+   $('body').on('click', '.update_user', function(e){
+         var user_id = $(this).attr('user_id');
+
+
+         $.ajax({
+            data: {'user_id':user_id},
+            type: 'GET',
+            url: "{% url 'ynladmin:edit_user' %}",
+            
+            success:function(data){
+               $('#user_edit').replaceWith(data);
+               $('#userFormEdit').modal('show');
+               console.log('working');
+               
+            },
+
+            error:function(data){
+               console.log('not working');
+            }
+         })
+   });
 
 
 

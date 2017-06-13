@@ -56,8 +56,18 @@
 				</div>
 
 				<div class="form-group">
-				<label class="label-controller">Upload Event Image</label>
-					{{event_form.event_image}}
+				<label>Upload Lagre Event Image(770x400)</label>
+					{{event_form.large_event_image}}
+				</div>
+
+				<div class="form-group">
+				<label>Upload Medium Event Image(370x215)</label>
+					{{event_form.medium_event_image}}
+				</div>
+
+				<div class="form-group">
+				<label>Upload Small Event Image(100x72)</label>
+					{{event_form.small_event_image}}
 				</div>
 
 			    <button type="submit" id="submit-edit-events" class="btn btn-success pull-right">Submit</button><br />

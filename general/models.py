@@ -21,13 +21,13 @@ class UserAccount(models.Model):
 	""" user details """
 	user            		 = models.ForeignKey(User, null=True, blank=True)
 	created_on               = models.DateTimeField(auto_now_add = True)
-	bank                     = models.CharField(max_length=100, null=True, blank=True)
+	bank                     = models.CharField(max_length=100, null=True, blank=True, choices=BANK)
 	account_number           = models.CharField(max_length=50, null=True, blank=True)
 	dob                      = models.DateField(null=True, blank=True)
 	phone_number             = models.CharField(max_length=50, null=True, blank=True)
 	user_image               = models.ImageField(upload_to="media/user_image/%Y/%M/%d/", null=True, blank=True)
 	gender					 = models.CharField(max_length=10, null=True, blank=True, choices=GENDER)
-	
+	deleted                  = models.BooleanField(default=False)
 	
 	
 	def __unicode__(self):

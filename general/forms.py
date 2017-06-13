@@ -29,18 +29,20 @@ class UserForm(forms.ModelForm):
 
 class EventForm(forms.ModelForm):
 
-	title          = forms.CharField(help_text="Title", required = True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
-	category 	   = forms.ChoiceField(choices = CATEGORY, error_messages = {'required': 'Please select a category.'},widget=forms.Select(attrs={'class':'form-control','required':'required'}))
-	start_time     = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
-	end_time       = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
-	publish        = forms.BooleanField(required = False)
-	event_image    = forms.ImageField(help_text='Photo', widget=forms.widgets.ClearableFileInput())
-	admin_text     = HTMLField()
+	title               = forms.CharField(help_text="Title", required = True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
+	category 	        = forms.ChoiceField(choices = CATEGORY, error_messages = {'required': 'Please select a category.'},widget=forms.Select(attrs={'class':'form-control','required':'required'}))
+	start_time          = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
+	end_time            = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
+	publish        		= forms.BooleanField(required = False)
+	large_event_image   = forms.ImageField(required = False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
+	medium_event_image  = forms.ImageField(required = False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
+	small_event_image   = forms.ImageField(required = False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
+	admin_text          = HTMLField()
 
 
 	class Meta:
 	    model = Event
-	    fields = ('title', 'category', 'start_time', 'end_time', 'publish', 'event_image', 'admin_text',)
+	    fields = ('title', 'category', 'start_time', 'end_time', 'publish', 'large_event_image', 'medium_event_image','small_event_image','admin_text',)
 
 
 

@@ -8,6 +8,7 @@ from general.models import UserAccount, Event
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from operator import attrgetter
 from django.core import serializers
@@ -39,6 +40,21 @@ def homepage(request):
 	template_name = 'general/homepage.html'
 	context['events'] = event_obj
 	return render(request, template_name, context)
+
+
+def paginate_list(request, objects_list, num_per_page):
+    paginator   =   Paginator(objects_list, num_per_page) # show number of jobs per page
+    page  = request.GET.get('page')
+    try:
+        paginated_list  = paginator.page(page)
+    except PageNotAnInteger:
+        # if page is not an integer, deliver first page
+        paginated_list   =   paginator.page(1)
+    except  EmptyPage:
+        #if page is out of range(e.g 9999), deliver last page of results
+        paginated_list      =   paginator.page(paginator.num_pages)
+    return paginated_list
+
 
 def user_login(request):
     if request.method == "POST":
@@ -126,9 +142,9 @@ def register(request):
 	return render(request, 'general/registration.html', {'form': form})
 
 
-def event_details(request,tracking_number):
+def event_details(request,pk):
 	context = {}
-	event_obj = Event.objects.get(tracking_number=tracking_number)
+	event_obj = Event.objects.get(pk=pk)
 	context['event'] = event_obj
 	return render(request, 'general/magazine-single-article.html',context)
 
