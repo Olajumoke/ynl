@@ -5,5 +5,6 @@ import views
 
 urlpatterns = [
         url(r'^wallet/details/$',views.view_wallet, name="wallet"),
+        url(r'^wallet/topup/$',views.main, name="main"),
 
 ]

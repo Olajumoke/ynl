@@ -105,15 +105,37 @@
                             <div class="row">
                                 
                                 <div class="col-lg-6 col-sm-4 col-xs-12">
-                                    <button class="btn btn-block btn-info btn-rounded">Paystack</button>
+                                    <button class="btn btn-block btn-info btn-rounded" id="paystack">Paystack</button>
                                 </div>
                                
                             </div>
                             
+                        </div>
+                        </div>
+                        
+                        <div class="col-lg-6 hidden" id="paydiv">
+                        <div class="white-box">
+
+                            <div class="row">
+                                <form method="post" action="{% url 'wallet:main' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="Amount">Amount(&#8358;)</label>
+                                        <div class="input-group">
+                                            <input type="number" name="amount" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-block btn-info btn-rounded">Pay Now</button>
+                                    </div>                               
+                                </form>
+                                
                             </div>
+                            
+                        </div>
                         </div>
 
-                        <div class="col-lg-6">
+                        <!--<div class="col-lg-6">
                         <div class="white-box">
 
                             <div class="row">
@@ -124,7 +146,7 @@
                                 
                             </div>
                             
-                            </div>
+                        </div>
                         </div>
                         <div class="col-lg-6">
                         <div class="white-box">
@@ -150,8 +172,8 @@
                                 
                             </div>
                             
-                            </div>
                         </div>
+                        </div>-->
                     </div>
                 </div>
                 <!--row -->
@@ -183,6 +205,11 @@
     <!--Style Switcher -->
 <script src="plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
 {% block custom_scripts %}
+<script>
+$('body').on('click','#paystack',function(){
+    $('#paydiv').removeClass('hidden');
+    });
+</script>
 {% endblock %}
 </body>
 
