@@ -14,11 +14,16 @@
    			data: {'event_track_num':event_track_num},
    			type: 'GET',
    			url: "{% url 'ynladmin:view_edit_event' %}",
-
+				beforeSend: function(){
+					
+					tinymce.remove();
+				},
    			success:function(data){
    				$('#event_edit').replaceWith(data);
    				$('#eventFormEdit').modal('show');
    				console.log('working');
+					tinymce.init({selector:'textarea',height: 300});
+					
    			},
 
    			error:function(data){
@@ -26,6 +31,12 @@
    			}
    		})
 	});
+	
+</script>
+
+<script>
+	
+</script>
 
 
 
