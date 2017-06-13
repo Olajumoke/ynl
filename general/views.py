@@ -129,7 +129,7 @@ def register(request):
 def event_details(request,tracking_number):
 	context = {}
 	event_obj = Event.objects.get(tracking_number=tracking_number)
-	contxt['event'] = event_obj
+	context['event'] = event_obj
 	return render(request, 'general/magazine-single-article.html',context)
 
 def user_profile(request):
