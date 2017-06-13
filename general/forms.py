@@ -63,7 +63,7 @@ class UserAccountForm(forms.ModelForm):
     dob             = forms.DateField(help_text="Date of Birth", required = True,widget=forms.DateInput(attrs={'placeholder':'Date of birth', 'required':'required', 'class':'form-control', 'type': 'date'}))
     bank            = forms.ChoiceField(help_text="Bank", choices=BANK, required = True, widget=forms.Select(attrs={'placeholder':'Bank', 'required':'required','class':'form-control'}))
     account_number  = forms.IntegerField(help_text="Account Number", required = True,widget=forms.NumberInput(attrs={'placeholder':'Account Number', 'required':'required', 'class':'form-control'}))
-    user_image      = forms.ImageField(help_text="User Image", required = True,widget=forms.ClearableFileInput(attrs={'required':'required', 'class':'dropify'}))
+    user_image      = forms.ImageField(help_text="User Image",widget=forms.ClearableFileInput(attrs={'class':'dropify'}))
     class Meta:
         model = UserAccount
         fields = ('bank', 'dob', 'account_number', 'gender', 'phone_number', 'user_image')
