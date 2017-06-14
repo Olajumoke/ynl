@@ -30,7 +30,7 @@ from django.template.loader import get_template
 from django.template import Context
 from django.core.mail import EmailMessage
 from django.utils import timezone
-
+from wallet.account_standing import account_standing
 # Create your views here.
 
 
@@ -190,10 +190,11 @@ def user_account(request):
 	except Exception as e :
 		print "e", e
 		user = None
-	return render(request, 'general/user_account.html', {'user':user})
+	balance = account_standing(request,request.user)
+	return render(request, 'general/user_account.html', {'user':user, 'balance':balance})
 
-def account_activation(request):
-	if UserAccount.objects.filter(user=request.user).exists():
-		print "I exist"
-	
-	return render(request, 'general/profile.html', {})
+# def account_activation(request):
+# 	if UserAccount.objects.filter(user=request.user).exists():
+# 		print "I exist"
+# 	
+# 	return render(request, 'general/profile.html', {})

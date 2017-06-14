@@ -30,7 +30,7 @@
                             <h3 class="box-title">Wallet Balance</h3>
                             <ul class="list-inline two-part">
                                 <li><i class="ti-wallet text-success"></i></li>
-                                <li class="text-right"><span class="counter">₦20456.90</span></li>
+                                <li class="text-right"><span class="counter">₦{{balance}}</span></li>
                             </ul>
                         </div>
                     </div>
@@ -53,20 +53,32 @@
                                             <th>Description</th>
                                             <th>Amount</th>
                                             <th>Date</th>
-                                            <th>Time</th>
+                                            <th>Reference No</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        {% for txn in wallet %}
                                         <tr>
-                                            <td>1</td>
-                                            <td>Paystack Deposite</td>
-                                            <td>₦2045</td>
-                                            <td>12/06/2017</td>
-                                            <td>10:34</td>
-                                            <td><span class="label label-danger">failed</span> </td>
+                                            <td>{{forloop.counter}}</td>
+                                            {% if txn.bank == 'PAYSTACK' %}
+                                            <td>Wallet Top-up</td>
+                                            {% else %}
+                                            <td>{{txn.message }}</td>
+                                            {% endif %}
+                                            <td>₦{{txn.amount}}</td>
+                                            <td>{{txn.created_at}}</td>
+                                            <td>{{txn.ref_no}}</td>
+                                            {% if txn.status == "Declined" %}
+                                            <td><span class="label label-danger">{{txn.status}}</span> </td>
+                                            {% elif txn.status == "Pending Approval" %}
+                                            <td><span class="label label-warning">{{txn.status}}</span> </td>
+                                            {% else %}
+                                            <td><span class="label label-success">{{txn.status}}</span> </td>
+                                            {% endif %}
                                         </tr>
-                                        <tr>
+                                        {% endfor %}
+                                        <!--<tr>
                                             <td>2</td>
                                             <td>Paystack Deposite</td>
                                             <td>₦2045</td>
@@ -89,7 +101,7 @@
                                             <td>12/06/2017</td>
                                             <td>10:34</td>
                                             <td><span class="label label-success">successful</span> </td>
-                                        </tr>
+                                        </tr>-->
                                         
                                     </tbody>
                                 </table>
