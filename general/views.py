@@ -158,7 +158,7 @@ def user_profile(request):
 		user = UserAccount.objects.get(user=request.user)
 		form1 = UserProfileForm(instance=request.user)
 		form2 = UserAccountForm(instance=user)
-		print "form1", form1
+		#print "form1", form1
 	else:
 		print "I do not exist"
 		if request.method == "POST":
@@ -175,6 +175,7 @@ def user_profile(request):
 				form2.created_on = timezone.now()
 				form2.save()
 				user =  UserAccount.objects.get(user=request.user)
+				return redirect(request.META.get('HTTP_REFERER', '/'))
 			else:
 				print user_account_form.errors, user_form.errors
 		else:
