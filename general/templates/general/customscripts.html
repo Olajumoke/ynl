@@ -55,6 +55,17 @@
    });
 
 
+   $('body').on('click','#search',function(e){
+      alert('was clicked');
+      var query = $('#search_for').val();
+      if (query == ""){
+         alert("Please enter a search value");
+         return false
+      }else{
+         $('#search_form').submit();
+      }
+   })
+
 
 
 

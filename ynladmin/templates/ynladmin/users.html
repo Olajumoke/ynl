@@ -1,7 +1,6 @@
 {% extends 'ynladmin/adminHome.html' %}
 {% load staticfiles %}
 
-
 {% block add_event %}
 {% endblock add_event %}
 
@@ -9,7 +8,6 @@
 {% endblock events_won %}
 
 {% block transactions %}
-
 	
 <div class="col-md-12 view-events">
 <div class="row">
@@ -50,7 +48,7 @@
                             </td>
                         </tr>
                     {% empty %}
-                        <p>No User has been added</p>
+                        <p>No User found</p>
                     {% endfor %}  
                     </tbody>
                     
