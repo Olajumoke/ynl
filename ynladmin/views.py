@@ -38,12 +38,10 @@ from general.views import paginate_list
 
 
 
-
 def randomNumber(value):
 	allowed_chars = ''.join((string.digits))
 	unique_id = ''.join(random.choice(allowed_chars) for _ in range(5))
 	return '#' + value + unique_id
-
 
 
 # @login_required
@@ -57,12 +55,30 @@ def randomNumber(value):
 
 
 @login_required
-def admin_pages(request,pages_to,**kwargs):
+def admin_pages(request,pages_to):
 	context = {}
 	user_obj = request.user
 	user_acc_obj = UserAccount.objects.get(user=user_obj)
-	context['user_acc_obj'] = user_acc_obj	
-	if pages_to == 'events':
+	context['user_acc_obj'] = user_acc_obj
+	if request.POST.has_key('events'):
+		query = request.POST.get('search_for')
+		all_events = Event.objects.filter((Q(author__username__icontains=query) |Q(title__icontains=query) |Q(category__icontains=query) |Q(publish__icontains=query) |Q(tracking_number__icontains=query)), deleted=False)
+		all_event = paginate_list(request,all_events,10)
+		template_name = 'ynladmin/events.html'
+		event_form = EventForm()
+		context['event_form'] = event_form
+		context['all_events'] = all_event
+	elif request.POST.has_key('users'):
+		query = request.POST.get('search_for')
+		template_name = 'ynladmin/users.html'
+		all_user = UserAccount.objects.filter((Q(user__username__icontains=query) |Q(bank__icontains=query) |Q(dob__icontains=query) |Q(phone_number__icontains=query) |Q(gender__icontains=query) |Q(account_number__icontains=query)), deleted=False)
+		all_users = paginate_list(request,all_user,10)
+		useraccount_form = UserAccountForm()
+		user_form = UserForm()
+		context['useraccount_form'] = useraccount_form
+		context['all_users'] = all_users
+		context['user_form'] = user_form	
+	elif pages_to == 'events':
 		all_event = paginate_list(request,Event.objects.filter(deleted=False),10)
 		template_name = 'ynladmin/events.html'
 		event_form = EventForm()
@@ -122,7 +138,6 @@ def create_event(request):
 			form = UserAccountForm(request.POST, request.FILES, instance=user_obj)
 			if form.is_valid:
 				print 'The form is valid'
-				print form
 				form.save()
 				return redirect(reverse('ynladmin:admin_pages', args=['users']))
 			else:
@@ -130,7 +145,6 @@ def create_event(request):
 		else:
 			form = EventForm(request.POST, request.FILES)
 			if form.is_valid:
-				print form
 				print 'The form is valid'
 				start_date = rp.get('start_time')
 				end_date = rp.get('end_time')
@@ -189,6 +203,7 @@ def edit_user(request):
 	context['user_id'] = user_id
 	context['useraccount_form'] = useraccount_form
 	return render(request,'ynladmin/user_edit.html',context)
+
 
 
 
