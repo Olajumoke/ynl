@@ -138,7 +138,6 @@ def create_event(request):
 			form = UserAccountForm(request.POST, request.FILES, instance=user_obj)
 			if form.is_valid:
 				print 'The form is valid'
-				print form
 				form.save()
 				return redirect(reverse('ynladmin:admin_pages', args=['users']))
 			else:
@@ -146,7 +145,6 @@ def create_event(request):
 		else:
 			form = EventForm(request.POST, request.FILES)
 			if form.is_valid:
-				print form
 				print 'The form is valid'
 				start_date = rp.get('start_time')
 				end_date = rp.get('end_time')

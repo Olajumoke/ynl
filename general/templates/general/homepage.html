@@ -415,7 +415,11 @@
 
 												<a href="{% url 'general:event_details' event.pk %}" class="entry-category-label blue">{{event.category}}</a>
 												<a href="{% url 'general:event_details' event.pk %}">
-													<img src="{{event.medium_event_image.url}}" alt="">
+													{% if not event.medium_event_image %}
+														<img src="{% static 'img/magazine/2.jpg' %}" alt="">
+													{% else %}
+														<img src="{{event.medium_event_image.url}}" alt="">
+													{% endif %}
 												</a>
 
 												<div class="entry-inner-bottom">
