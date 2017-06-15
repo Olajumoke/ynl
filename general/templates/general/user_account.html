@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load humanize %}
 <!DOCTYPE html>  
 <html lang="en">
 
@@ -136,7 +137,7 @@
                             <h3 class="box-title">Wallet Balance</h3>
                             <ul class="list-inline two-part">
                                 <li><i class="ti-wallet text-success"></i></li>
-                                <li class="text-right"><span class="counter">₦{{balance}}</span></li>
+                                <li class="text-right"><span class="counter">₦{{balance|floatformat:2|intcomma}}</span></li>
                             </ul>
                         </div>
                     </div>
@@ -147,7 +148,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="white-box">
-                            <h3 class="box-title">Transaction History</h3>
+                            <h3 class="box-title">Prediction History</h3>
                             <div class="table-responsive">
                                 <table class="table table-striped">
                                     <thead>

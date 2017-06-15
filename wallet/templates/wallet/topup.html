@@ -1,5 +1,6 @@
 {% extends 'general/profile.html' %}
 {% load staticfiles %}
+{% load humanize %}
 {% block title %}<title>YesorNoLIVE.com | Wallet</title>{% endblock %}
 
 {% block pg_title %}<h4 class="page-title">Wallet</h4> </div>{% endblock %}
@@ -30,7 +31,7 @@
                             <h3 class="box-title">Wallet Balance</h3>
                             <ul class="list-inline two-part">
                                 <li><i class="ti-wallet text-success"></i></li>
-                                <li class="text-right"><span class="counter">₦{{balance}}</span></li>
+                                <li class="text-right"><span class="counter">₦{{balance|floatformat:2|intcomma}}</span></li>
                             </ul>
                         </div>
                     </div>
@@ -66,7 +67,7 @@
                                             {% else %}
                                             <td>{{txn.message }}</td>
                                             {% endif %}
-                                            <td>₦{{txn.amount}}</td>
+                                            <td>₦{{txn.amount|floatformat:2|intcomma}}</td>
                                             <td>{{txn.created_at}}</td>
                                             <td>{{txn.ref_no}}</td>
                                             {% if txn.status == "Declined" %}
