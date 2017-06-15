@@ -61,10 +61,10 @@ class UserProfileForm(forms.ModelForm):
 
 class UserAccountForm(forms.ModelForm):
     gender          = forms.ChoiceField(help_text="gender", choices=GENDER, required = True,widget=forms.Select(attrs={'required':'required', 'class':'form-control'}))
-    phone_number    = forms.IntegerField(help_text="Phone Number", required = True,widget=forms.NumberInput(attrs={'placeholder':'Phone Number', 'required':'required', 'class':'form-control'}))
+    phone_number    = forms.CharField(help_text="Phone Number", required = True,widget=forms.TextInput(attrs={'placeholder':'Phone Number', 'required':'required', 'class':'form-control'}))
     dob             = forms.DateField(help_text="Date of Birth", required = True,widget=forms.DateInput(attrs={'placeholder':'Date of birth', 'required':'required', 'class':'form-control', 'type': 'date'}))
     bank            = forms.ChoiceField(help_text="Bank", choices=BANK, required = True, widget=forms.Select(attrs={'placeholder':'Bank', 'required':'required','class':'form-control'}))
-    account_number  = forms.IntegerField(help_text="Account Number", required = True,widget=forms.NumberInput(attrs={'placeholder':'Account Number', 'required':'required', 'class':'form-control', 'type':'tel'}))
+    account_number  = forms.CharField(help_text="Account Number", required = True,widget=forms.TextInput(attrs={'placeholder':'Account Number', 'required':'required', 'class':'form-control'}))
     user_image      = forms.ImageField(help_text="User Image", required = False, widget=forms.ClearableFileInput(attrs={'class':'dropify'}))
     class Meta:
         model = UserAccount

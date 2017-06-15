@@ -52,6 +52,12 @@
         ga('create', 'UA-19175540-9', 'auto');
         ga('send', 'pageview');
     </script>
+    
+    <style>
+    #errmsg {
+        color: red;
+    }
+    </style>
 </head>
 
 <body>
@@ -156,7 +162,7 @@
                                         <div class="form-group">
                                             <label for="exampleInputpwd1">Phone Number</label>
                                             <div class="input-group">
-                                                {{ form2.phone_number }}
+                                                {{ form2.phone_number }}&nbsp;<span id="errmsg"></span>
                                                 <!--<input type="number" name="phone_number" class="form-control" id="exampleInputpwd1" placeholder="Phone Number" required>-->
                                                 <div class="input-group-addon"></div>
                                             </div>
@@ -225,6 +231,7 @@
                                             <label for="exampleInputpwd1">Account Number</label>
                                             <div class="input-group">
                                                 {{ form2.account_number }}
+                                                &nbsp;<span id="errmsg"></span>
                                                 <!--<input type="number" name="account_number" maxlength="10" class="form-control" id="acc_number" placeholder="1234567890" required>-->
                                                 <div class="input-group-addon"></div>
                                             </div>
@@ -378,7 +385,7 @@
         });
     </script>
     
-<script>
+<script>   
     id_account_number.oninput = function () {
     if (this.value.length > 10)
         this.value = this.value.slice(0,10); 
@@ -387,6 +394,34 @@
 //$('body').on('focus',"#id_dob", function(){
 //    $(this).datepicker();
 //});
+</script>
+
+<script>
+    $(document).ready(function () {
+  //called when key is pressed in textbox
+  $("#id_account_number").keypress(function (e) {
+     //if the letter is not digit then display error and don't type anything
+     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+        //display error message
+        $("#errmsg").html("Digits Only").show().fadeOut("slow");
+               return false;
+    }
+   });
+});
+</script>
+
+<script>
+    $(document).ready(function () {
+  //called when key is pressed in textbox
+  $("#id_phone_number").keypress(function (e) {
+     //if the letter is not digit then display error and don't type anything
+     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+        //display error message
+        $("#errmsg").html("Digits Only").show().fadeOut("slow");
+               return false;
+    }
+   });
+});
 </script>
 {% endblock %}
 </body>
