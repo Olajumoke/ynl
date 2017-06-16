@@ -6,9 +6,12 @@ from django.shortcuts import render, redirect
 import string, random, ast, json
 from general.models import UserAccount
 from .models import Bank
-from wallet.account_standing import account_standing
+from wallet.account_standing import account_standing, bank_codes
 from paystackapi.paystack import Paystack
 from paystackapi.transaction import Transaction
+from wallet.Transfer import Transfer
+from django.contrib import messages
+from django.core.urlresolvers import reverse
 # Create your views here.
 
 paystack_secret_key = "sk_test_9fe140b2bf798accdc2aade269cac47bc2de7ecc"  
@@ -108,3 +111,97 @@ def verify_payment(request):
     return redirect('wallet:wallet')
 
 
+
+def create_recipient(request):
+    # user = UserAccount.objects.get(user=request.user)
+    # first_name = user.user.first_name
+    # last_name = user.user.last_name
+    # name = first_name + last_name
+    # print name
+    # description = "Withdrawal from YNLwallet"
+    # account_number = user.account_number
+    # bank_code = '058'
+    # response = Transfer.create_recipient(type='nuban',name=name,description=description,
+    #                                      account_number=account_number,bank_code=bank_code)
+    # print "response:", response
+    # data = response.get('data')
+    # recipient_code = data['recipient_code']
+    # amount = 10000
+    # reason = "Withdrawal from YNLwallet"
+    # transfer = Transfer.transfer(source='balance',reason=reason,amount=amount,recipient=recipient_code)
+    # print "transfer:", transfer
+    # verify = transfer.get('data')
+    transfer_code = 'TRF_2o8n1mj1zogql3l'
+    otp = 782008
+    finalize = Transfer.finalize_transfer(transfer_code=transfer_code,otp=otp)
+    return redirect('wallet:wallet')
+    
+
+def cash_out(request):
+    if request.method == "POST":
+        credit = account_standing(request, request.user)
+        print "credit:", credit
+        amount = float(request.POST.get('amount'))
+        print amount > credit
+        if amount > credit:
+            messages.warning(request, "You do not have Sufficient money in your wallet!!!")
+        else:
+            ref = purchase_ref()
+            user = UserAccount.objects.get(user=request.user)
+            bank = user.bank
+            cash_out = Bank.objects.create(user=request.user,txn_type="Remove",amount=amount, ref_no=ref,status="Transfer",
+                            created_at=timezone.now(), bank=bank,message="Cash out from YNLwallet to Bank")
+            messages.info(request, "Your request is being processed!!!")
+    return redirect('wallet:wallet')
+
+def initiate_transfer(request):
+    pk = request.GET.get('pk')
+    record = Bank.objects.get(pk=pk)
+    user = UserAccount.objects.get(user=record.user)
+    first_name = user.user.first_name
+    last_name = user.user.last_name
+    name = first_name +"" + last_name
+    print name
+    description = "Withdrawal from YNLwallet"
+    account_number = user.account_number
+    bank_code = bank_codes(user.bank)
+    response = Transfer.create_recipient(type='nuban',name=name,description=description,
+                                         account_number=account_number,bank_code=bank_code)
+    print "response:", response
+    data = response.get('data')
+    recipient_code = data['recipient_code']
+    amount = record.amount * 100
+    reason = "Withdrawal from YNLwallet"
+    transfer = Transfer.transfer(source='balance',reason=reason,amount=amount,recipient=recipient_code)
+    print "transfer:", transfer
+    verify = transfer.get('data')
+    transfer_code = verify['transfer_code']
+    return render(request, 'wallet/finalize_transfer.html', {'transfer_code':transfer_code, 'ref':record.ref_no})
+        
+def finalize_transfer(request):
+    if request.method == "POST":
+        otp = str(request.POST.get('otp'))
+        transfer_code = str(request.POST.get('transfer_code'))
+        ref = request.POST.get('ref')
+        finalize = Transfer.finalize_transfer(transfer_code=transfer_code,otp=otp)
+        print "finalize:", finalize
+        verify= finalize.get('data')
+        verify_list = verify[0]
+        status = verify_list['status']
+        print "status",status
+        bank = Bank.objects.get(ref_no=ref)
+        if status == "success":
+            bank.status = "Successful"
+        else:
+            bank.status = "Declined"
+        bank.payment_gateway_tranx_id = transfer_code
+        bank.save()
+        return redirect(reverse('ynladmin:admin_pages', args=['payment']))
+
+def resend_otp(request):
+    transfer_code = str(request.GET.get('code'))
+    reason = 'resend_otp'
+    response = Transfer.resend_otp(transfer_code=transfer_code,reason=reason)
+    print "resend:", response
+    return response
+    

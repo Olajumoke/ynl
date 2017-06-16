@@ -168,7 +168,8 @@ def user_profile(request):
 				form2.user = form1
 				form2.created_on = timezone.now()
 				form2.save()
-				user =  UserAccount.objects.get(user=request.user)
+				#user =  UserAccount.objects.get(user=request.user)
+				messages.success(request, "User Details Updated Succesfully!!")
 				return redirect(request.META.get('HTTP_REFERER', '/'))
 			else:
 				print user_account_form.errors, user_form.errors
@@ -191,7 +192,7 @@ def user_profile(request):
 				form2.user = form1
 				form2.created_on = timezone.now()
 				form2.save()
-				user =  UserAccount.objects.get(user=request.user)
+				#user =  UserAccount.objects.get(user=request.user)
 				return redirect(request.META.get('HTTP_REFERER', '/'))
 			else:
 				print user_account_form.errors, user_form.errors

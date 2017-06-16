@@ -37,7 +37,7 @@
                     </div>
                 </div>
 
-
+                
 
 
 
@@ -114,11 +114,11 @@
                         <div class="white-box">
                             
                             
-                            <p class="text-muted m-b-30">Choose from the options below to top up your wallet</p>
+                            <p class="text-muted m-b-30">Choose from the options below to top up or cash out your wallet</p>
                             <div class="row">
                                 
                                 <div class="col-lg-6 col-sm-4 col-xs-12">
-                                    <button class="btn btn-block btn-info btn-rounded" id="paystack">Paystack</button>
+                                    <button class="btn btn-block btn-info btn-rounded" id="paystack">Top Up</button>
                                 </div>
                                
                             </div>
@@ -148,20 +148,42 @@
                         </div>
                         </div>
 
-                        <!--<div class="col-lg-6">
+                        <div class="col-lg-6">
                         <div class="white-box">
 
                             <div class="row">
                         
                                 <div class="col-lg-6 col-sm-4 col-xs-12">
-                                    <button class="btn btn-block btn-danger btn-rounded">Cashenvoy</button>
+                                    <button id="transfer" class="btn btn-block btn-danger btn-rounded">Transfer to Bank</button>
                                 </div>
                                 
                             </div>
                             
                         </div>
                         </div>
-                        <div class="col-lg-6">
+                        
+                        <div class="col-lg-6 hidden" id="transferdiv">
+                        <div class="white-box">
+
+                            <div class="row">
+                                <form method="post" action="{% url 'wallet:cashout' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="Amount">Amount(&#8358;)</label>
+                                        <div class="input-group">
+                                            <input type="number" name="amount" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-block btn-info btn-rounded">Cash out</button>
+                                    </div>                               
+                                </form>
+                                
+                            </div>
+                            
+                        </div>
+                        </div>
+                        <!--<div class="col-lg-6">
                         <div class="white-box">
 
                             <div class="row">
@@ -220,7 +242,13 @@
 {% block custom_scripts %}
 <script>
 $('body').on('click','#paystack',function(){
-    $('#paydiv').removeClass('hidden');
+    $('#paydiv').toggleClass('hidden');
+    });
+</script>
+
+<script>
+$('body').on('click','#transfer',function(){
+    $('#transferdiv').toggleClass('hidden');
     });
 </script>
 {% endblock %}

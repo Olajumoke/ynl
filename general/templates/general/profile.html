@@ -120,10 +120,20 @@
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         {% block pg_title %}<h4 class="page-title">Account Settings</h4> </div>{% endblock %}
-                    
+                        
                     <!-- /.col-lg-12 -->
                 </div>
                 <!--.row-->
+                {% for msg in messages %}
+                    <script>
+                        function show_alert(){
+                        var alert = '<p style="color:green; text-align:center;"><b>{{ msg }}</b></p>';
+                        document.write(alert);
+                        }
+                        display = window.setTimeout(show_alert(), 1000);
+                        window.clearTimeout(display);
+                    </script>
+                {% endfor %}
             {% block body %}
             <form method="POST" action="{% url 'general:profile' %}" enctype="multipart/form-data">
                 {% csrf_token %}

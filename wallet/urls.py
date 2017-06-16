@@ -7,5 +7,11 @@ urlpatterns = [
         url(r'^wallet/details/$',views.view_wallet, name="wallet"),
         url(r'^wallet/topup/$',views.main, name="main"),
         url(r'^verify/payment/$',views.verify_payment, name="verify_payment"),
+       # url(r'^create/recipient/$',views.create_recipient, name="recipient"),
+        url(r'^wallet/cashout/$',views.cash_out, name="cashout"),
+        url(r'^wallet/initiate-transfer/$',views.initiate_transfer, name="initiate_transfer"),
+        url(r'^wallet/finalize-transfer/$',views.finalize_transfer, name="finalize_transfer"),
+        url(r'^wallet/resend/otp/$',views.resend_otp, name="resend_otp"),
+
 
 ]

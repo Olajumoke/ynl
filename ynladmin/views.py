@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response, render, redirect, get_object_or
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import Http404, HttpResponse , HttpResponseRedirect, JsonResponse
 from django.forms.models import model_to_dict
-
+from wallet.models import Bank
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
@@ -93,7 +93,9 @@ def admin_pages(request,pages_to):
 		context['all_users'] = all_users
 		context['user_form'] = user_form
 	elif pages_to == "payment":
-		pass		
+		template_name = 'ynladmin/payment.html'
+		payments = paginate_list(request,Bank.objects.all(),10)
+		context['payments'] = payments
 	return render(request,template_name,context)
 
 
@@ -203,6 +205,26 @@ def edit_user(request):
 	context['user_id'] = user_id
 	context['useraccount_form'] = useraccount_form
 	return render(request,'ynladmin/user_edit.html',context)
+
+@login_required
+def payment_filter(request, status):
+	context = {}
+	user_acc_obj = UserAccount.objects.get(user=request.user)
+	context['user_acc_obj'] = user_acc_obj
+	if status == "successful":
+		template_name = 'ynladmin/payment.html'
+		payments = paginate_list(request,Bank.objects.filter(status="Successful"),10)
+		context['payments'] = payments
+	elif status == "declined":
+		template_name = 'ynladmin/payment.html'
+		payments = paginate_list(request,Bank.objects.filter(status="Declined"),10)
+		context['payments'] = payments
+	else:
+		template_name = 'ynladmin/payment.html'
+		payments = paginate_list(request,Bank.objects.filter(status="Transfer"),10)
+		context['payments'] = payments
+	return render(request,template_name,context)
+
 
 
 

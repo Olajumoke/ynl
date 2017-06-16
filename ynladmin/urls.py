@@ -12,6 +12,7 @@ urlpatterns = [
             url(r'^admin/delete-user/(?P<user_id>[\w]+)/$', views.delete_user, name='delete_user'),
             url(r'^admin/edit-event/$', views.view_edit_event, name='view_edit_event'),
             url(r'^admin/edit-user/$', views.edit_user, name='edit_user'),
+            url(r'^admin/payment/(?P<status>.+)/$', views.payment_filter, name='payment_filter'),
 
     ]
 
