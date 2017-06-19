@@ -86,7 +86,7 @@ def admin_pages(request,pages_to):
 		context['all_events'] = all_event
 	elif pages_to == 'users':
 		template_name = 'ynladmin/users.html'
-		all_users = paginate_list(request,UserAccount.objects.filter(deleted=False),10)
+		all_users = paginate_list(request,UserAccount.objects.filter(user__is_staff=False, deleted=False),10)
 		useraccount_form = UserAccountForm()
 		user_form = UserForm()
 		context['useraccount_form'] = useraccount_form
@@ -187,12 +187,17 @@ def delete_user(request,user_id):
 def view_edit_event(request):
 	context = {}
 	print request.GET
+	template_name = ""
+	if request.GET.has_key('edit'):
+		template_name = 'ynladmin/edit_event.html'
+	else:
+		template_name = 'ynladmin/view_event.html'
 	event_track_num = request.GET.get('event_track_num')
 	event_obj = Event.objects.get(tracking_number=event_track_num)
 	event_form = EventForm(instance=event_obj)
 	context['event_track_num'] = event_track_num
 	context['event_form'] = event_form
-	return render(request,'ynladmin/edit_event.html',context)
+	return render(request,template_name,context)
 
 
 @login_required

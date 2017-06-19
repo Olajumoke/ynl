@@ -7,10 +7,12 @@
 
    $('body').on('click', '.edit_event', function(e){
    		var event_track_num = $(this).attr('event_track_num');
+         var identifier = $(this).attr('identifier');
+
 
 
    		$.ajax({
-   			data: {'event_track_num':event_track_num},
+   			data: {'event_track_num':event_track_num,'edit':identifier},
    			type: 'GET',
    			url: "{% url 'ynladmin:view_edit_event' %}",
 				beforeSend: function(){
@@ -31,6 +33,32 @@
    		})
 	});
 
+
+   $('body').on('click', '.view_event', function(e){
+            var event_track_num = $(this).attr('event_track_num');
+            var identifier = $(this).attr('identifier');
+
+            $.ajax({
+               data: {'event_track_num':event_track_num,'view':identifier},
+               type: 'GET',
+               url: "{% url 'ynladmin:view_edit_event' %}",
+               beforeSend: function(){
+                  
+                  tinymce.remove();
+               },
+               success:function(data){
+                  $('#event_view').replaceWith(data);
+                  $('#viewFormEdit').modal('show');
+                  console.log('working');
+                  tinymce.init({selector:'textarea',height: 300});
+                  
+               },
+
+               error:function(data){
+                  console.log('not working');
+               }
+            })
+      });
 
    $('body').on('click', '.update_user', function(e){
          var user_id = $(this).attr('user_id');
