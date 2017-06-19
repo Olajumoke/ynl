@@ -61,10 +61,15 @@ def user_login(request):
         
 		username = request.POST.get('username')
 		password = request.POST.get('password')
-		if '@' in username :
+		try :
 			username = User.objects.get(email=username).username
-		else:
-			username = username
+		except Exception as e:
+			print "e", e
+			try:
+				username = User.objects.get(username=username).username
+				username = username
+			except Exception as e:
+				return render(request, 'general/sign_in.html', {'error_msg':"Invalid login details supplied."})
 		user = authenticate(username=username, password=password)
 		if user:
 			# Is the account active? It could have been disabled.

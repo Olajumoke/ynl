@@ -12,6 +12,7 @@ from paystackapi.transaction import Transaction
 from wallet.Transfer import Transfer
 from django.contrib import messages
 from django.core.urlresolvers import reverse
+from general.views import paginate_list
 # Create your views here.
 
 paystack_secret_key = "sk_test_9fe140b2bf798accdc2aade269cac47bc2de7ecc"  
@@ -20,7 +21,7 @@ paystack = Paystack(secret_key=paystack_secret_key)
 
 def view_wallet(request):
     balance = account_standing(request,request.user)
-    wallet = Bank.objects.filter(user=request.user)
+    wallet = paginate_list(request, Bank.objects.filter(user=request.user),5)
     
     return render(request, 'wallet/topup.html', {'balance':balance, 'wallet':wallet}) 
 
@@ -155,6 +156,7 @@ def cash_out(request):
     return redirect('wallet:wallet')
 
 def initiate_transfer(request):
+    print "I started transfer"
     pk = request.GET.get('pk')
     record = Bank.objects.get(pk=pk)
     user = UserAccount.objects.get(user=record.user)
@@ -179,6 +181,7 @@ def initiate_transfer(request):
     return render(request, 'wallet/finalize_transfer.html', {'transfer_code':transfer_code, 'ref':record.ref_no})
         
 def finalize_transfer(request):
+    print "i got here"
     if request.method == "POST":
         otp = str(request.POST.get('otp'))
         transfer_code = str(request.POST.get('transfer_code'))
@@ -199,9 +202,9 @@ def finalize_transfer(request):
         return redirect(reverse('ynladmin:admin_pages', args=['payment']))
 
 def resend_otp(request):
-    transfer_code = str(request.GET.get('code'))
+    print "i got to dis place"
+    transfer_code = str(request.GET.get('transfer_code'))
     reason = 'resend_otp'
-    response = Transfer.resend_otp(transfer_code=transfer_code,reason=reason)
-    print "resend:", response
+    response = Transfer.resend_otp(transfer_code=transfer_code)
+    print "response", response
     return response
-    
