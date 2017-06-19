@@ -252,17 +252,21 @@
 						<article class="post-1">
 							<div class="entry-img hover-scale">
 								<a href="#" class="gradient">
+								{% if most_recent.large_event_image %}
+									<img src="{{most_recent.large_event_image.url}}" alt="">
+								{% else %}
 									<img src="{% static 'img/magazine/hero_1.jpg' %}" alt="">
+								{% endif %}
 								</a>
 								<div class="entry-inner">
 									<div class="entry">
-										<h2 class="entry-title color-white"><a href="#">When Are You Actually Ready to Launch a Startup?</a></h2>
+										<h2 class="entry-title color-white"><a href="#">{{most_recent.title}}</a></h2>
 										<ul class="entry-meta list-inline">
 											<li class="entry-date">
-												<i class="fa fa-clock-o"></i><a href="#">19 Dec, 2017</a>
+												<i class="fa fa-clock-o"></i><a href="#">{{most_recent.created_on}}</a>
 											</li>
 											<li class="entry-category">
-												<i class="fa fa-folder-open"></i><a href="#">Politics</a>
+												<i class="fa fa-folder-open"></i><a href="#">{{most_recent.category}}</a>
 											</li>	
 											<li class="entry-author">
 												<i class="fa fa-user"></i><a href="#">Admin</a>

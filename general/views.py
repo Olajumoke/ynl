@@ -37,8 +37,10 @@ from wallet.account_standing import account_standing
 def homepage(request):
 	context = {}
 	event_obj = Event.objects.filter(deleted=False)
+	most_recent = event_obj[0]
 	template_name = 'general/homepage.html'
 	context['events'] = event_obj
+	context['most_recent'] = most_recent
 	return render(request, template_name, context)
 
 
