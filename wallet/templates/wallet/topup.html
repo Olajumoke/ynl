@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
                         <div class="white-box">
                             <h3 class="box-title">Wallet Balance</h3>
                             <ul class="list-inline two-part">
@@ -43,7 +43,7 @@
 
                 <!--row -->
                 <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                         <div class="white-box">
                             <h3 class="box-title">Wallet Transaction History</h3>
                             <div class="table-responsive">
@@ -78,6 +78,8 @@
                                             <td><span class="label label-success">{{txn.status}}</span> </td>
                                             {% endif %}
                                         </tr>
+                                        {% empty %}
+                                            <p>No Payment Record found!!!!</p> 
                                         {% endfor %}
                                         <!--<tr>
                                             <td>2</td>
@@ -106,6 +108,26 @@
                                         
                                     </tbody>
                                 </table>
+                                <div class="pagination" style="position:relative; margin:0px; float: right;">
+                                    <span class="step-links">
+                                        {% if wallet.has_previous %}
+                                            <a style="font-size:14px;" href="?page={{ wallet.previous_page_number }}">prev</a>
+                                        <!--% else %}
+                                            <a style="font-size:20px;" class="hidden" >Next</a>-->
+                                        {% endif %}
+                                    
+                                        <span style="font-size:14px;" class="current">
+                                            Page {{ wallet.number }} of {{ wallet.paginator.num_pages }}.
+                                        </span>
+                    
+                                        {% if wallet.has_next %}
+                                            <a style="font-size:14px;" href="?page={{ wallet.next_page_number }}">Next</a>
+                                        <!--% else %}
+                                            <a style="font-size:20px;" class="hidden">&raquo;</a>-->
+                    
+                                        {% endif %}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         </div>
@@ -114,7 +136,7 @@
                         <div class="white-box">
                             
                             
-                            <p class="text-muted m-b-30">Choose from the options below to top up or cash out your wallet</p>
+                            <p class="text-muted m-b-30">Choose from the options below to top up your wallet</p>
                             <div class="row">
                                 
                                 <div class="col-lg-6 col-sm-4 col-xs-12">
@@ -124,10 +146,7 @@
                             </div>
                             
                         </div>
-                        </div>
-                        
-                        <div class="col-lg-6 hidden" id="paydiv">
-                        <div class="white-box">
+                        <div class="white-box hidden" id = 'paydiv'>
 
                             <div class="row">
                                 <form method="post" action="{% url 'wallet:main' %}">
@@ -147,10 +166,10 @@
                             
                         </div>
                         </div>
-
+                        
                         <div class="col-lg-6">
                         <div class="white-box">
-
+                            <p class="text-muted m-b-30">Choose from the options below to cash out your wallet</p>
                             <div class="row">
                         
                                 <div class="col-lg-6 col-sm-4 col-xs-12">
@@ -160,10 +179,7 @@
                             </div>
                             
                         </div>
-                        </div>
-                        
-                        <div class="col-lg-6 hidden" id="transferdiv">
-                        <div class="white-box">
+                        <div class="white-box hidden" id="transferdiv">
 
                             <div class="row">
                                 <form method="post" action="{% url 'wallet:cashout' %}">
@@ -183,6 +199,7 @@
                             
                         </div>
                         </div>
+                        
                         <!--<div class="col-lg-6">
                         <div class="white-box">
 

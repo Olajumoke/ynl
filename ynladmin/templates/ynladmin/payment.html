@@ -92,9 +92,10 @@
             </div>
         </div>
     </div>
+    <div class="loader hidden"></div>
 </div>
 </div>
-	<div class="loader hidden"></div>
+	<!--<div class="loader hidden"></div>-->
 {% endblock transactions %}
 
 {% block modals %}
@@ -141,23 +142,23 @@
                 console.log('not working');
             }
         });
-        })
+        });
 </script>
 
 <script>
     $('body').on('click','#resend_otp', function(){
         //$('.loader').removeClass('hidden');
         var code = $('#transfer_code').val();
-        console.log(pk);
+        //console.log(pk);
         $.ajax({
             url: "{% url 'wallet:resend_otp' %}",
             type: 'GET',
             data: {'code': code},
             success: function(data){
-                alert('OTP has been resent')
-                /*$('.loader').addClass('hidden');
-                $('#otp').replaceWith(data);
-                $('#myModal').modal('show')*/;
+                alert('OTP has been resent');
+                //$('.loader').addClass('hidden');
+                //$('#otp').replaceWith(data);
+                //$('#myModal').modal('show')*/;
                  },
             error: function(data){
                 console.log('not working');
