@@ -92,6 +92,14 @@ def admin_pages(request,pages_to):
 		context['useraccount_form'] = useraccount_form
 		context['all_users'] = all_users
 		context['user_form'] = user_form
+	elif pages_to == 'messages':
+		template_name = 'ynladmin/messages.html'
+		all_users = paginate_list(request,UserAccount.objects.filter(user__is_staff=False, deleted=False),10)
+		useraccount_form = UserAccountForm()
+		user_form = UserForm()
+		context['useraccount_form'] = useraccount_form
+		context['all_users'] = all_users
+		context['user_form'] = user_form
 	elif pages_to == "payment":
 		template_name = 'ynladmin/payment.html'
 		payments = paginate_list(request,Bank.objects.all(),10)
