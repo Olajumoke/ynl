@@ -94,12 +94,18 @@ def admin_pages(request,pages_to):
 		context['user_form'] = user_form
 	elif pages_to == 'messages':
 		template_name = 'ynladmin/messages.html'
-		all_users = paginate_list(request,UserAccount.objects.filter(user__is_staff=False, deleted=False),10)
-		useraccount_form = UserAccountForm()
-		user_form = UserForm()
-		context['useraccount_form'] = useraccount_form
-		context['all_users'] = all_users
-		context['user_form'] = user_form
+		rg = request.GET
+		# print 'rg:',rg
+		new_messages = MessageCenter.objects.filter(new=True)
+		replied_messages = MessageCenter.objects.filter(replied=True)
+		archived_messages = MessageCenter.objects.filter(archive=True)
+		deleted_messages = MessageCenter.objects.filter(deleted=True)
+		comment_form = MessageCenterCommentForm()
+		context['comment_form'] = comment_form
+		context['new_messages'] = new_messages
+		context['replied_messages'] = replied_messages
+		context['archived_messages'] = archived_messages
+		context['deleted_messages'] = deleted_messages
 	elif pages_to == "payment":
 		template_name = 'ynladmin/payment.html'
 		payments = paginate_list(request,Bank.objects.all(),10)
@@ -121,7 +127,7 @@ def create_event(request):
 	template_name = 'ynladmin/events.html'
 	if request.method == 'POST':
 		rp = request.POST
-		print 'rp:', rp
+		# print 'rp:', rp
 		if rp.has_key('edit_event'):
 			print "i wanna edit"
 			event_obj = Event.objects.get(tracking_number=rp.get('event_track_num'))
@@ -194,7 +200,7 @@ def delete_user(request,user_id):
 @login_required
 def view_edit_event(request):
 	context = {}
-	print request.GET
+	# print request.GET
 	template_name = ""
 	if request.GET.has_key('edit'):
 		template_name = 'ynladmin/edit_event.html'
@@ -211,13 +217,14 @@ def view_edit_event(request):
 @login_required
 def edit_user(request):
 	context = {}
-	print request.GET
+	# print request.GET
 	user_id = request.GET.get('user_id')
 	useracc_obj = UserAccount.objects.get(id=user_id)
 	useraccount_form = UserAccountForm(instance=useracc_obj)
 	context['user_id'] = user_id
 	context['useraccount_form'] = useraccount_form
 	return render(request,'ynladmin/user_edit.html',context)
+
 
 @login_required
 def payment_filter(request, status):
@@ -237,6 +244,67 @@ def payment_filter(request, status):
 		payments = paginate_list(request,Bank.objects.filter(status="Transfer"),10)
 		context['payments'] = payments
 	return render(request,template_name,context)
+
+
+
+@login_required
+def admin_messages(request):
+	context = {}
+	if request.method == 'POST':
+		rp = request.POST
+		# print "rp here: ", rp	
+		message_obj = MessageCenter.objects.get(
+			id=rp.get('msg_id')
+			)
+		comment_obj = MessageCenterComment.objects.create(
+			message=rp.get('message'),
+			message_obj=message_obj,
+			image_obj=request.FILES.get('image_obj'),
+			user=request.user)
+		message_obj.replied = True
+		message_obj.new = False
+		message_obj.save()
+		messages.success(request,'Message sent successfully')
+		return redirect(request.META['HTTP_REFERER'])
+	else:
+		# print request.GET
+		template_name = ""
+		if request.GET.get('identifier') == 'comment':
+			template_name = 'ynladmin/adminmessageComments.html'
+		else:
+			template_name = 'ynladmin/adminviewMessages.html'
+		message_id = request.GET.get('message_id')
+		message_obj = MessageCenter.objects.get(id=message_id)
+		# print "msg_obj:", message_obj
+		all_comments = message_obj.getComments()
+		comment_form = MessageCenterCommentForm()
+		context['comment_form'] = comment_form
+		context['all_comments'] = all_comments
+		context['message_id'] = message_id
+		return render(request,template_name,context)
+
+
+@login_required
+def delete_message(request,pk):
+	get_msg = MessageCenter.objects.get(pk=pk)
+	get_msg.archive = False
+	get_msg.new = False
+	get_msg.deleted = True
+	get_msg.replied = False
+	get_msg.save()
+	return redirect(request.META['HTTP_REFERER'])
+
+
+@login_required
+def archive_message(request,pk):
+	get_msg = MessageCenter.objects.get(pk=pk)
+	get_msg.archive = True
+	get_msg.new = False
+	get_msg.deleted = False
+	get_msg.replied = False
+	get_msg.save()
+	return redirect(request.META['HTTP_REFERER'])
+		
 
 
 

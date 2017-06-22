@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-from models import UserAccount, Event, Comments
+from models import UserAccount, Event, Comments, MessageCenter, MessageCenterComment
 # Register your models here.
 
 
@@ -32,3 +32,5 @@ class UserAccountAdmin(admin.ModelAdmin):
 admin.site.register(UserAccount, UserAccountAdmin)
 admin.site.register(Event)
 admin.site.register(Comments)
+admin.site.register(MessageCenterComment)
+admin.site.register(MessageCenter)

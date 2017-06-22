@@ -178,8 +178,25 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        
                         <h4 class="page-title">Hi {{request.user.username}},</h4> </div>
+                        <h3>
+
+                            {% for msg in messages %}
+                                <script>
+                                    function show_alert(){
+                                    var alert = '<p class="text-{{ msg.tags }}">{{ msg }}</p>';
+                                    document.write(alert);
+                                    }
+                                    display = window.setTimeout(show_alert(), 1000);
+                                    window.clearTimeout(display);
+                                </script>
+                            {% endfor %}
+                            
+                        </h3>
+
                         {% block add_event %}
+
                         {% endblock add_event %}
                     <!-- /.col-lg-12 -->
                 </div>
@@ -258,7 +275,7 @@
         });
     </script>
     <!--Style Switcher -->
-<script src="{% static 'user/plugins/bower_components/styleswitcher/jQuery.style.switcher.js' %}"></script>
+    <script src="{% static 'user/plugins/bower_components/styleswitcher/jQuery.style.switcher.js' %}"></script>
 {% endblock scripts %}
 
 {% block customscripts %}
