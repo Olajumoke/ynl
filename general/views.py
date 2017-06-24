@@ -218,8 +218,10 @@ def user_account(request):
 	balance = account_standing(request,request.user)
 	return render(request, 'general/user_account.html', {'user':user, 'balance':balance})
 
-# def account_activation(request):
-# 	if UserAccount.objects.filter(user=request.user).exists():
-# 		print "I exist"
-# 	
-# 	return render(request, 'general/profile.html', {})
+def about_us(request):
+	
+	return render(request, 'general/about_page.html', {})
+
+
+def contact(request):
+	return render(request, 'general/contact.html', {})
