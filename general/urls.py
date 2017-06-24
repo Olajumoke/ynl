@@ -13,6 +13,9 @@ urlpatterns = [
             url(r'^user/profile/$',views.user_profile, name = "profile"),
             url(r'^about/$',views.about_us, name = "about_us"),
             url(r'^Contact-us/$',views.contact, name = "contact"),
+            url(r'^user/messages/$',views.user_messages, name = "messages"),
+            url(r'^user/comments/$',views.view_comment_message, name = "view_comment_message"),
+
 
 
 ]

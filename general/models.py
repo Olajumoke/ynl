@@ -83,7 +83,52 @@ class Comments(models.Model):
 
 
 
-# class Tags(models.Model):
+class MessageCenter(models.Model):
+    user                = models.ForeignKey(User, null=True, blank=True)
+    subject             = models.CharField(max_length=150, null=True, blank=True)
+    created_on          = models.DateTimeField(default = timezone.now)
+    message             = models.TextField()
+    no_of_comments      = models.IntegerField(default=0)
+    new                 = models.BooleanField(default = True)
+    replied             = models.BooleanField(default=False)
+    replied_on          = models.DateTimeField(null = True, blank=True)
+    archive             = models.BooleanField(default=False)
+    deleted             = models.BooleanField(default=False)
+
+
+    class Meta:
+	    verbose_name_plural = 'Messages'
+
+    def __unicode__(self):
+	    return unicode(self.user)
+
+    def getComments(self):
+		return self.messagecentercomment_set.all()
+
+    def get_comments_count(self):
+		comments_count = self.getComments().count()
+		return comments_count
+
+	
+
+
+
+class MessageCenterComment(models.Model):
+    user                    = models.ForeignKey(User, null=True, blank=True)
+    message                 = models.TextField()
+    date                    = models.DateTimeField(default = timezone.now)
+    message_obj             = models.ForeignKey(MessageCenter, null=True, blank=True)
+    image_obj               = models.ImageField(upload_to="image_obj", null=True, blank=True)
+
+
+    class Meta:
+	    verbose_name_plural = 'Message Center Comments'
+
+
+    def __unicode__(self):
+        return unicode(self.user)
+
+
 
 
 

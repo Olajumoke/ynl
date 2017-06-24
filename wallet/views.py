@@ -20,10 +20,15 @@ paystack = Paystack(secret_key=paystack_secret_key)
 
 
 def view_wallet(request):
+    try:
+        user = UserAccount.objects.get(user=request.user)
+    except Exception as e :
+        print "e", e
+        user = None
     balance = account_standing(request,request.user)
     wallet = paginate_list(request, Bank.objects.filter(user=request.user),5)
     
-    return render(request, 'wallet/topup.html', {'balance':balance, 'wallet':wallet}) 
+    return render(request, 'wallet/topup.html', {'balance':balance, 'wallet':wallet, 'user':user}) 
 
 
 def generate_purchaseRef():

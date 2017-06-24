@@ -60,6 +60,7 @@
             })
       });
 
+
    $('body').on('click', '.update_user', function(e){
          var user_id = $(this).attr('user_id');
 
@@ -95,7 +96,46 @@
    })
 
 
+   $('body').on('click','.admin_msg', function(e){
+         var message_id = $(this).attr('msg_id');
+         var identifier = $(this).attr('identifier');
 
+         $.ajax({
+             data: {'message_id':message_id, 'identifier':identifier},
+             url: "{% url 'ynladmin:admin_messages' %}",
+             type: 'GET',
+
+             success:function(data){
+                 $("#adminmessageView").replaceWith(data);
+                 $('#adminviewMessage').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 console.log('not working');
+             }
+         })
+     })
+
+
+   $('body').on('click','.admin_cmt', function(e){
+         var message_id = $(this).attr('msg_id');
+         var identifier = $(this).attr('identifier');
+
+         $.ajax({
+             data: {'message_id':message_id, 'identifier':identifier},
+             url: "{% url 'ynladmin:admin_messages' %}",
+             type: 'GET',
+
+             success:function(data){
+                 $("#adminmessageComment").replaceWith(data);
+                 $('#adminmessageToComment').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 console.log('not working');
+             }
+         })
+     })
 
 
 

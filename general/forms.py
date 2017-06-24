@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from general.models import UserAccount, Event
 from general.modelchoices import *
 from tinymce.models import HTMLField
-from general.models import UserAccount
+from general.models import UserAccount, MessageCenterComment
 from general.modelchoices import BANK, GENDER
 
 
@@ -25,6 +25,7 @@ class UserForm(forms.ModelForm):
 	class Meta:
 	    model = User
 	    fields = ('username', 'email', 'password')
+
 
 
 class EventForm(forms.ModelForm):
@@ -74,3 +75,22 @@ class UserAccountForm(forms.ModelForm):
         len_value = len(value)
         if (len_value < 10 or len_value > 10) and value.isdigit():
             raise ValidationError('Please provide NUBAN 10 digits Bank Account Number. (It currently has %s)' %len_value)
+
+
+
+class MessageCenterCommentForm(forms.ModelForm):
+    message        = forms.CharField(max_length = 128, help_text = "", widget=forms.Textarea(attrs={'required':'true'}))
+    image_obj      = forms.ImageField(required = False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
+
+    class Meta:
+        model = MessageCenterComment
+        fields = ('message', 'image_obj',)
+
+
+
+
+
+
+
+
+

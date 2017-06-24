@@ -3,8 +3,8 @@ from django.shortcuts import render_to_response, render, redirect, get_object_or
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import Http404, HttpResponse , HttpResponseRedirect, JsonResponse
 from django.forms.models import model_to_dict
-from general.forms import UserForm, UserAccountForm, UserProfileForm
-from general.models import UserAccount, Event
+from general.forms import UserForm, UserAccountForm, UserProfileForm, MessageCenterCommentForm
+from general.models import UserAccount, Event, MessageCenter, MessageCenterComment
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
@@ -155,6 +155,8 @@ def event_details(request,pk):
 	context['event'] = event_obj
 	return render(request, 'general/magazine-single-article.html',context)
 
+
+@login_required
 def user_profile(request):
 	# try:
 	# 	user_account = UserAccount.objects.get(user=request.user)
@@ -209,6 +211,8 @@ def user_profile(request):
 			user = None
 	return render(request, 'general/profile.html', { 'form1':form1, 'form2':form2, 'user':user})
 
+
+@login_required
 def user_account(request):
 	try:
 	 	user = UserAccount.objects.get(user=request.user)
@@ -218,6 +222,7 @@ def user_account(request):
 	balance = account_standing(request,request.user)
 	return render(request, 'general/user_account.html', {'user':user, 'balance':balance})
 
+
 def about_us(request):
 	
 	return render(request, 'general/about_page.html', {})
@@ -225,3 +230,83 @@ def about_us(request):
 
 def contact(request):
 	return render(request, 'general/contact.html', {})
+
+# def account_activation(request):
+# 	if UserAccount.objects.filter(user=request.user).exists():
+# 		print "I exist"
+# 	
+# 	return render(request, 'general/profile.html', {})
+
+
+@login_required
+def user_messages(request):
+	context = {}
+	try:
+	 	user = UserAccount.objects.get(user=request.user)
+	except Exception as e :
+		print "e", e
+		user = None
+	if request.method == 'POST':
+		rp = request.POST
+		print "rp: ", rp	
+		message_obj = MessageCenter.objects.create(
+			subject=rp.get('subject'),
+			message=rp.get('message'),
+			user=request.user,
+			new=True
+			)
+		message_obj.save()
+		comment_obj = MessageCenterComment.objects.create(
+			message=rp.get('message'),
+			message_obj=message_obj,
+			user=request.user)
+		messages.success(request,'Message sent successfully')
+		return redirect(request.META['HTTP_REFERER'])
+	else:
+		rg = request.GET
+		print 'rg:',rg
+		context = {}
+		new_messages = MessageCenter.objects.filter(new=True)
+		replied_messages = MessageCenter.objects.filter(replied=True)
+		archived_messages = MessageCenter.objects.filter(archive=True)
+		comment_form = MessageCenterCommentForm()
+		context['comment_form'] = comment_form
+		context['new_messages'] = new_messages
+		context['replied_messages'] = replied_messages
+		context['archived_messages'] = archived_messages
+		context['user'] = user
+		template_name = 'general/user_messages.html'
+		return render(request,template_name,context)
+
+
+
+@login_required
+def view_comment_message(request):
+	context = {}
+	if request.method == 'POST':
+		print 'rp:',request.POST
+		message_obj = MessageCenter.objects.get(id=request.POST.get('msg_id'))
+		comment_obj = MessageCenterComment.objects.create(
+			message=request.POST.get('message'),
+			message_obj=message_obj,
+			image_obj=request.FILES.get('image_obj'),
+			user=request.user)
+		messages.success(request,'Message sent successfully')
+		return redirect(request.META['HTTP_REFERER'])
+
+	else:
+		print request.GET
+		template_name = ""
+		if request.GET.get('identifier') == 'comment':
+			template_name = 'general_snippets/messageComments.html'
+		else:
+			template_name = 'general_snippets/viewMessages.html'
+		message_id = request.GET.get('message_id')
+		message_obj = MessageCenter.objects.get(id=message_id)
+		print "msg_obj:", message_obj
+		all_comments = message_obj.getComments()
+		comment_form = MessageCenterCommentForm()
+		context['comment_form'] = comment_form
+		context['all_comments'] = all_comments
+		context['message_id'] = message_id
+		return render(request,template_name,context)

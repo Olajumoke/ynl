@@ -95,7 +95,7 @@
                 <ul class="wp-side-menu">
                     <li> <a href="{% url 'general:user_account' %}"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Dashboard</span></a> </li>
                     <li> <a href="{% url 'wallet:wallet' %}"><i data-icon="?" class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >My Wallet</span></a> </li>
-                    <li> <a href="#"><i data-icon="," class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >My Messages</span></a> </li>
+                    <li> <a href="{% url 'general:messages' %}"><i data-icon="," class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >My Messages</span></a> </li>
                     <li> <a href="{% url 'general:profile' %}"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Account Settings</span></a></li>
                     <!--<li> <a href="#"><i data-icon="," class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Message Center</span></a></li>-->
                 </ul>
@@ -247,6 +247,12 @@
             <!-- /.container-fluid -->
             <footer class="footer text-center"> © 2017 Yes or No Live </footer>
         </div>
+
+        {% block modals %}
+
+            {% include 'general_snippets/general_modals.html' %}
+
+        {% endblock modals %} 
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
