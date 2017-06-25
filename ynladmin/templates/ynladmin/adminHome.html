@@ -137,6 +137,13 @@
                             <input type="hidden"  name="users" id="users" value="users">
                             <a style="cursor:pointer;" id="search"><i class="fa fa-search"></i></a> 
                         </form>
+                        {% elif 'messages' in request.path %}
+                        <form role="search" id="search_form" class="app-search hidden-xs" action="{% url 'ynladmin:admin_pages' 'messages' %}" method='POST'>
+                            {% csrf_token %}
+                            <input type="text" id="search_for" name="search_for" value="" placeholder="Search..." class="form-control">
+                            <input type="hidden"  name="messages_search" id="messages_search" value="messages_search">
+                            <a style="cursor:pointer;" id="search"><i class="fa fa-search"></i></a> 
+                        </form>
                         {% endif %}
                     </li>
                 </ul>

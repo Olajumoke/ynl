@@ -16,16 +16,16 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
                     <a href="#t1" aria-controls="t1" role="tab" data-toggle="tab">New&nbsp;<span class="badge">
-                    {% get_admin_comments_count request 'new' %}</span></a></li>
+                    {{new_count}}</span></a></li>
                     <li role="presentation">
                     <a href="#t2" aria-controls="t2" role="tab" data-toggle="tab">Replied &nbsp;<span class="badge">
-                    {% get_admin_comments_count request 'replied' %}</span></a></li>
+                    {{replied_count}}</span></a></li>
                     <li role="presentation">
                     <a href="#t3" aria-controls="t3" role="tab" data-toggle="tab">Archive &nbsp;<span class="badge">
-                    {% get_admin_comments_count request 'archive' %}</span></a></li>
+                    {{archived_count}}</span></a></li>
                     <li role="presentation">
                     <a href="#t4" aria-controls="t4" role="tab" data-toggle="tab">Deleted &nbsp;<span class="badge">
-                    {% get_admin_comments_count request 'deleted' %}</span></a></li>
+                    {{deleted_count}}</span></a></li>
                 </ul>
 
               <div class="tab-content">

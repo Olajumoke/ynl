@@ -6,7 +6,7 @@
 
 
    $('body').on('click', '.edit_event', function(e){
-   		var event_track_num = $(this).attr('event_track_num');
+   		   var event_track_num = $(this).attr('event_track_num');
          var identifier = $(this).attr('identifier');
 
 
@@ -85,7 +85,6 @@
 
 
    $('body').on('click','#search',function(e){
-      alert('was clicked');
       var query = $('#search_for').val();
       if (query == ""){
          alert("Please enter a search value");

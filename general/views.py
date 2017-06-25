@@ -247,21 +247,40 @@ def user_messages(request):
 		print "e", e
 		user = None
 	if request.method == 'POST':
-		rp = request.POST
-		print "rp: ", rp	
-		message_obj = MessageCenter.objects.create(
-			subject=rp.get('subject'),
-			message=rp.get('message'),
-			user=request.user,
-			new=True
-			)
-		message_obj.save()
-		comment_obj = MessageCenterComment.objects.create(
-			message=rp.get('message'),
-			message_obj=message_obj,
-			user=request.user)
-		messages.success(request,'Message sent successfully')
-		return redirect(request.META['HTTP_REFERER'])
+		if request.POST.has_key('messages_search'):
+			context = {}
+			query = request.POST.get('search_for')
+			query = request.POST.get('search_for')
+			new_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), new=True)
+			replied_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), replied=True)
+			archived_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), archive=True)
+			comment_form = MessageCenterCommentForm()
+			context['comment_form'] = comment_form
+			context['new_messages'] = new_messages
+			context['replied_messages'] = replied_messages
+			context['archived_messages'] = archived_messages
+			context['new_count'] = new_messages.count()
+			context['replied_count'] = replied_messages.count()
+			context['archived_count'] = archived_messages.count()
+			context['user'] = user
+			template_name = 'general/user_messages.html'
+			return render(request,template_name,context)
+		else:
+			rp = request.POST
+			print "rp: ", rp	
+			message_obj = MessageCenter.objects.create(
+				subject=rp.get('subject'),
+				message=rp.get('message'),
+				user=request.user,
+				new=True
+				)
+			message_obj.save()
+			comment_obj = MessageCenterComment.objects.create(
+				message=rp.get('message'),
+				message_obj=message_obj,
+				user=request.user)
+			messages.success(request,'Message sent successfully')
+			return redirect(request.META['HTTP_REFERER'])
 	else:
 		rg = request.GET
 		print 'rg:',rg
@@ -274,6 +293,9 @@ def user_messages(request):
 		context['new_messages'] = new_messages
 		context['replied_messages'] = replied_messages
 		context['archived_messages'] = archived_messages
+		context['new_count'] = new_messages.count()
+		context['replied_count'] = replied_messages.count()
+		context['archived_count'] = archived_messages.count()
 		context['user'] = user
 		template_name = 'general/user_messages.html'
 		return render(request,template_name,context)

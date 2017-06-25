@@ -20,13 +20,13 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
                     <a href="#t1" aria-controls="t1" role="tab" data-toggle="tab">New&nbsp;<span class="badge">
-                    {% get_comments_count request 'new' %}</span></a></li>
+                    {{new_count}}</span></a></li>
                     <li role="presentation">
                     <a href="#t2" aria-controls="t2" role="tab" data-toggle="tab">Replied &nbsp;<span class="badge">
-                    {% get_comments_count request 'replied' %}</span></a></li>
+                    {{replied_count}}</span></a></li>
                     <li role="presentation">
                     <a href="#t3" aria-controls="t3" role="tab" data-toggle="tab">Archive &nbsp;<span class="badge">
-                    {% get_comments_count request 'archive' %}</span></a></li>
+                    {{archived_count}}</span></a></li>
                     <span class="pull-right create_message" style="cursor: pointer; color: #449f07;">
                     <i class="fa fa-plus">&nbsp;COMPOSE MESSAGE</i>
                     </span>
@@ -216,6 +216,16 @@
                 }
             })
         })
+
+         $('body').on('click','#search',function(e){
+              var query = $('#search_for').val();
+              if (query == ""){
+                 alert("Please enter a search value");
+                 return false
+              }else{
+                 $('#search_form').submit();
+              }
+           })
 
         $('body').on('click','.comment_on_message', function(e){
             var message_id = $(this).attr('msg_id');

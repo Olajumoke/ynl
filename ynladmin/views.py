@@ -77,7 +77,24 @@ def admin_pages(request,pages_to):
 		user_form = UserForm()
 		context['useraccount_form'] = useraccount_form
 		context['all_users'] = all_users
-		context['user_form'] = user_form	
+		context['user_form'] = user_form
+	elif request.POST.has_key('messages_search'):
+		template_name = 'ynladmin/messages.html'
+		query = request.POST.get('search_for')
+		new_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), new=True)
+		replied_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), replied=True)
+		archived_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), archive=True)
+		deleted_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), deleted=True)
+		comment_form = MessageCenterCommentForm()
+		context['comment_form'] = comment_form
+		context['new_messages'] = new_messages
+		context['replied_messages'] = replied_messages
+		context['archived_messages'] = archived_messages
+		context['deleted_messages'] = deleted_messages
+		context['new_count'] = new_messages.count()
+		context['replied_count'] = replied_messages.count()
+		context['archived_count'] = archived_messages.count()
+		context['deleted_count'] = deleted_messages.count()		
 	elif pages_to == 'events':
 		all_event = paginate_list(request,Event.objects.filter(deleted=False),10)
 		template_name = 'ynladmin/events.html'
@@ -106,6 +123,10 @@ def admin_pages(request,pages_to):
 		context['replied_messages'] = replied_messages
 		context['archived_messages'] = archived_messages
 		context['deleted_messages'] = deleted_messages
+		context['new_count'] = new_messages.count()
+		context['replied_count'] = replied_messages.count()
+		context['archived_count'] = archived_messages.count()
+		context['deleted_count'] = deleted_messages.count()
 	elif pages_to == "payment":
 		template_name = 'ynladmin/payment.html'
 		payments = paginate_list(request,Bank.objects.all(),10)

@@ -75,10 +75,23 @@
                 <div class="top-left-part"><a class="logo" href="{% url 'general:homepage' %}"><b><!--This is dark logo icon--><img src="{% static 'user/plugins/images/eliteadmin-logo.png' %}" alt="home" class="dark-logo" /><!--This is light logo icon--><img src="{% static 'user/plugins/images/eliteadmin-logo-dark.png' %}" alt="home" class="light-logo" /></b><span class="hidden-xs"><!--This is dark logo text--><img src="{% static 'user/plugins/images/eliteadmin-text.png' %}" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{% static 'user/plugins/images/eliteadmin-text-dark.png' %}" alt="home" class="light-logo" /></span></a></div>
                 <ul class="nav navbar-top-links navbar-left hidden-xs">
                     <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
-                    <!--<li>
-                        <form role="search" class="app-search hidden-xs">
-                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
-                    </li>-->
+                    <li>
+                        {% if 'wallet' in request.path %}
+                        <form role="search" id="search_form" class="app-search hidden-xs" action="/" method='POST'>
+                            {% csrf_token %}
+                            <input type="text" id="search_for" name="search_for" value="" placeholder="Search..." class="form-control">
+                            <input type="hidden"  name="events" id="events" value="events">
+                            <a style="cursor:pointer;" id="search"><i class="fa fa-search"></i></a> 
+                        </form>
+                        {% elif 'messages' in request.path %}
+                        <form role="search" id="search_form" class="app-search hidden-xs" action="{% url 'general:messages' %}" method='POST'>
+                            {% csrf_token %}
+                            <input type="text" id="search_for" name="search_for" value="" placeholder="Search..." class="form-control">
+                            <input type="hidden"  name="messages_search" id="messages_search" value="messages_search">
+                            <a style="cursor:pointer;" id="search"><i class="fa fa-search"></i></a> 
+                        </form>
+                        {% endif %}
+                    </li>
                 </ul>
                 <ul class="nav navbar-top-links navbar-right pull-right">
                     
