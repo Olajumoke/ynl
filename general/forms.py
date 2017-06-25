@@ -79,7 +79,7 @@ class UserAccountForm(forms.ModelForm):
 
 
 class MessageCenterCommentForm(forms.ModelForm):
-    message        = forms.CharField(max_length = 128, help_text = "", widget=forms.Textarea(attrs={'required':'true'}))
+    message        = forms.CharField(max_length = 128, help_text = "", widget=forms.Textarea(attrs={'required':'true','class':'form-control'}))
     image_obj      = forms.ImageField(required = False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
 
     class Meta:

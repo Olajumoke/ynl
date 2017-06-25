@@ -1,6 +1,6 @@
 <div class="modal fade" id="userMessagesForm" tabindex="-1" role="dialog" 
 	aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
         <!-- Modal Header -->
             <div class="modal-header" style="background-color: azure;">
@@ -25,13 +25,13 @@
 
 				  		<div class="form-group">
 			  			<label class="label-controller">Subject</label><br/>
-			  			<input type="text" name="subject" required id="subject" value="">
+			  			<input type="text" class=" form-control" name="subject" required id="subject" value="">
 				  		</div>
 
 						<div class="form-group">
 						<label class="label-controller">Message</label><br/>
 						{{comment_form.message}}
-						</div>
+						</div><br/>
 
 						<div class="form-group">
 						<label>Upload Image</label>
@@ -49,7 +49,7 @@
 
 <div class="modal fade" id="messageToComment" tabindex="-1" role="dialog" 
 		aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content" id="messageComment">
         </div>
     </div>
@@ -58,7 +58,7 @@
 
 <div class="modal fade" id="viewMessage" tabindex="-1" role="dialog" 
 		aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content" id="messageView">
         </div>
     </div>
