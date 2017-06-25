@@ -8,9 +8,6 @@
 {% block pg_title %}
 
 <h4 class="page-title">Messages
-    <span class="pull-right" id="create_message" style="position: relative; left: 200px; bottom: 20px;cursor: pointer; color: #03a9f3;">
-    <i class="fa fa-plus">COMPOSE MESSAGE</i>
-    </span>
 </h4>
 
 {% endblock pg_title %}
@@ -30,11 +27,15 @@
                     <li role="presentation">
                     <a href="#t3" aria-controls="t3" role="tab" data-toggle="tab">Archive &nbsp;<span class="badge">
                     {% get_comments_count request 'archive' %}</span></a></li>
+                    <span class="pull-right create_message" style="cursor: pointer; color: #449f07;">
+                    <i class="fa fa-plus">&nbsp;COMPOSE MESSAGE</i>
+                    </span>
                 </ul>
 
               <div class="tab-content">
 
                 <div role="tabpanel" class="tab-pane active" id="t1">
+                    
                     <table border="0" class="table table-striped">
                         <tr>
                             <th>S/N</th>
@@ -75,6 +76,7 @@
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="t2">
+                    
                     <table border="0" class="table table-striped">
                         <tr>
                             <th>S/N</th>
@@ -114,6 +116,7 @@
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="t3">
+                    
                     <table border="0" class="table table-striped">
                         <tr>
                             <th>S/N</th>
@@ -190,7 +193,7 @@
             $('#transferdiv').toggleClass('hidden');
             });
 
-        $('body').on('click', '#create_message', function(e){
+        $('body').on('click', '.create_message', function(e){
             $('#userMessagesForm').modal('show');
         });
 
