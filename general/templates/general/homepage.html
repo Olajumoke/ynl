@@ -1,5 +1,5 @@
 {% load staticfiles %}
-
+{% block header %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -160,12 +160,12 @@
 												<a href="/"><i class="icon_house"></i></a>
 											</li>
 
-											<li class="dropdown-toggle">
+											<li class="">
 												<a href="/">Home</a>
 											</li>
 
 											<li class="dropdown">
-												<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages</a>
+												<a href="#" class="dropdown-toggle" data-toggle="dropdown">Category</a>
 												<ul class="dropdown-menu">
 													<li><a href="/">Services</a></li>
 													<li><a href="/">About Us</a></li>
@@ -177,23 +177,23 @@
 												</ul>
 											</li>
 
-											<li class="dropdown-toggle">
-												<a href="#">Politics</a>
+											<li class="">
+												<a href="{% url 'general:user_account' %}">My Account</a>
 											</li> <!-- end portfolio -->
 
-											<li class="dropdown-toggle">
-												<a href="#">Sport</a>
+											<li class="">
+												<a href="{% url 'general:about_us' %}">About</a>
 											</li>
 
-											<li class="dropdown-toggle">
-												<a href="#">Entertainment</a>
+											<li class="">
+												<a href="{% url 'general:contact' %}">Contact Us</a>
 											</li>
 
-											<li class="dropdown-toggle">
-												<a href="#">STEM</a>
+											<li class="">
+												<a href="#">FAQ</a>
 											</li>
-											<li class="dropdown-toggle">
-												<a href="#">Economics</a>
+											<li class="">
+												<a href="#">Legal</a>
 											</li>
 											 <!-- end features -->
 
@@ -237,6 +237,7 @@
 			</div> <!-- end navigation -->
 		</nav> <!-- end navbar -->
 	</header>
+{% endblock header %}
 {% block content %}
 	<div class="main-wrapper magazine oh">
 

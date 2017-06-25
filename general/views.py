@@ -222,6 +222,15 @@ def user_account(request):
 	balance = account_standing(request,request.user)
 	return render(request, 'general/user_account.html', {'user':user, 'balance':balance})
 
+
+def about_us(request):
+	
+	return render(request, 'general/about_page.html', {})
+
+
+def contact(request):
+	return render(request, 'general/contact.html', {})
+
 # def account_activation(request):
 # 	if UserAccount.objects.filter(user=request.user).exists():
 # 		print "I exist"
@@ -301,31 +310,3 @@ def view_comment_message(request):
 		context['all_comments'] = all_comments
 		context['message_id'] = message_id
 		return render(request,template_name,context)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
