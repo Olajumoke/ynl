@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from datetime import datetime
 from django.utils import timezone
+from gameplay.models import Gameplay
 # Create your models here.
 
 
@@ -36,7 +37,7 @@ class CustomManager(models.Manager):
 
 
 class Bank(models.Model):
-    user            = models.ForeignKey(User, null = True,)
+    user            = models.ForeignKey(User, null = True, blank=True)
     txn_type        = models.CharField(max_length=20, choices=PAYMENT_TYPE)
     amount          = models.FloatField(max_length=15)
     ref_no          = models.CharField(max_length=50, null=True, blank=True)
@@ -50,6 +51,22 @@ class Bank(models.Model):
     
     class Meta:
         ordering = ['-created_at']
+
+    def __unicode__(self):
+        return unicode(self.user)
+    
+
+
+class Betpayments(models.Model):
+    user        = models.ForeignKey(User, null = True, blank=True)
+    game        = models.ForeignKey(Gameplay, null=True, blank=True)
+    date        = models.DateTimeField(auto_now_add=True)
+    amount      = models.FloatField(max_length=15)
+    
+    
+    
+    class Meta:
+        ordering = ['date']
 
     def __unicode__(self):
         return unicode(self.user)
