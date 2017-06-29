@@ -37,7 +37,7 @@ urlpatterns = [
     url(r'^', include("wallet.urls", namespace="wallet")),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     #url(r'^tinymce/', include('tinymce.urls', namespace='tinymce')),
-    
+    url(r'^game/', include('gameplay.urls', namespace="gameplay")),
     
     #change password urls
     url(r'^reset/form/$', TemplateView.as_view(template_name = 'registration/password_reset_email.html')),

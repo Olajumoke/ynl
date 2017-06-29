@@ -39,3 +39,19 @@ BANK = (
 	('ZENITH BANK', 'ZENITH BANK'),
 	
 )
+
+CHOICES = (
+	('YES', 'YES'),
+	('NO', 'NO'),
+)
+
+GAME_STATUS = (
+	('OPEN', 'OPEN'),
+	('CLOSED', 'CLOSED'),
+)
+
+
+DECISION = (
+	('WIN', 'WIN'),
+	('LOST', 'LOST'),
+)

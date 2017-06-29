@@ -31,6 +31,7 @@ from django.template import Context
 from django.core.mail import EmailMessage
 from django.utils import timezone
 from wallet.account_standing import account_standing
+from gameplay.models import Gameplay
 # Create your views here.
 
 def paginate_list(request, objects_list, num_per_page):
@@ -235,7 +236,8 @@ def user_account(request):
 		print "e", e
 		user = None
 	balance = account_standing(request,request.user)
-	return render(request, 'general/user_account.html', {'user':user, 'balance':balance})
+	game = Gameplay.objects.filter(user=user)
+	return render(request, 'general/user_account.html', {'user':user, 'balance':balance, 'game':game})
 
 
 def about_us(request):
@@ -347,3 +349,5 @@ def view_comment_message(request):
 		context['all_comments'] = all_comments
 		context['message_id'] = message_id
 		return render(request,template_name,context)
+	
+

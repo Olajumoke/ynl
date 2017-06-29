@@ -5,7 +5,16 @@
 {% block title %}<title>YesorNoLIVE.com | Event</title>{% endblock %}
 {% block content %}
 	<div class="main-wrapper magazine oh">
-
+		{% for msg in messages %}
+                    <script>
+                        function show_alert(){
+                        var alert = '<p style="color:green; text-align:center;"><b>{{ msg }}</b></p>';
+                        document.write(alert);
+                        }
+                        display = window.setTimeout(show_alert(), 1000);
+                        window.clearTimeout(display);
+                    </script>
+                {% endfor %}
 		
 
 
@@ -158,34 +167,40 @@
 
 
 											<div style=" padding-bottom: 10px;">
+												<form method="POST" action="{% url 'gameplay:betting' %}">
 												<div class="bet-question">
 
 													<strong>{{event.admin_text|striptags}} YES or NO</strong>
 												</div>
 											</div>
-
+												{% csrf_token %}
 											<div class="col-md-4">
-												<a class="btn btn-lg btn-color rounded" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">Yes</a>
+												<input type='button' name="choice" class="btn btn-lg btn-color rounded" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" value="YES">
 											</div>
 											<div class="col-md-4">
-												<a class="btn btn-lg btn-red rounded" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">No</a>
+												<input type='button' name="choice" class="btn btn-lg btn-red rounded" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" value="NO">
 											</div>
+												<input type="hidden" value="{{event.id}}" name="event">
 												<div class="col-md-7">	
 													<div class="collapse" id="collapseExample">
 														<div style="padding-top: 35px; padding-bottom: 30px;">
 															<div class="col-md-10">
 
-																<label for="input-label">Enter bet amount (₦) - Starting at ₦2000</label>
-																<input name="name" id="input-label" type="text" placeholder="₦109899"> <a href="#" class="btn btn-sm btn-olive">Place Bet</a>
+																<label for="input-label">Enter bet amount (₦) - Starting at ₦200</label>
+																<input name="amount" id="input-label" type="number" placeholder="₦109899"  min="200" required>
+																
+																	<input type="hidden" id="choice" name="user-choice" value = "">
+																	<input type="checkbox" class="input-checkbox" name="checkbox" id="checkbox1" required>
+																	<label for="checkbox1">I agree to the terms and conditions of YesorNoLIVE</label>
+																
+																<button id = "bet" class="btn btn-sm btn-olive">Place Bet</button>
 																
 															</div>													
 														</div>
-														<li>
-															<input type="checkbox" class="input-checkbox" name="checkbox" id="checkbox1" value="1">
-															<label for="checkbox1">I agree to the terms and conditions of YesorNoLIVE</label>
-														</li>
+														
 													</div>
-												</div>	
+												</div>
+												</form>
 										</div>
 										
 									<!-- prev / next entry -->
@@ -697,6 +712,25 @@
 				</div> <!-- end row -->
 			</div> <!-- end main container -->						
 		</section> <!-- end post-single -->
+{% endblock %}
+
+
+{% block customscripts %}
+
+<script>
+//$('body').on('click','#bet',function(){
+//    $('#paydiv').toggleClass('hidden');
+//    });
+</script>
+
+	<script>
+		$('body').on('click','input[name="choice"]',function(){
+			var choice = $(this).val();
+			alert(choice);
+			$('#choice').val(choice);
+			});
+	</script>
+
 {% endblock %}
 
 		
