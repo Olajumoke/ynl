@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load custom_filters %}
 {% block header %}
 <!DOCTYPE html>
 <html lang="en">
@@ -56,21 +57,15 @@
 							<li class="top-bar-date">
 								<span>{% now "jS F Y" %}</span>
 							</li>
-
 							<li class="top-bar-link">
 								<a href="#">advertise</a>
 							</li>
-
 							<li class="top-bar-link">
 								<a href="#">career</a>
 							</li>
-
-							
-
 						</ul>
 
 						
-
 						<ul class="col-sm-6 top-bar-acc text-right">
 							<li class="social-icons dark">
 								<a href="#"><i class="fa fa-twitter"></i></a>
@@ -119,6 +114,7 @@
 							<div class="container">
 								<div class="row">
 
+							
 									<!-- Logo -->
 									<div class="logo-container">
 										<div class="logo-wrap text-center">
@@ -156,6 +152,7 @@
 												</form>
 											</li>
 
+									
 											<li class="nav-home hidden-sm hidden-xs">
 												<a href="/"><i class="icon_house"></i></a>
 											</li>
@@ -177,25 +174,33 @@
 												</ul>
 											</li>
 
-											<li class="">
-												<a href="{% url 'general:user_account' %}">My Account</a>
+
+											<li class="dropdown-toggle">
+												<a href="#">Politics</a>
 											</li> <!-- end portfolio -->
 
-											<li class="">
-												<a href="{% url 'general:about_us' %}">About</a>
+											<li class="dropdown-toggle">
+												<a href="#">Sport</a>
 											</li>
 
-											<li class="">
-												<a href="{% url 'general:contact' %}">Contact Us</a>
+											<li class="dropdown-toggle">
+												<a href="#">Entertainment</a>
 											</li>
 
-											<li class="">
-												<a href="#">FAQ</a>
+											<li class="dropdown-toggle">
+												<a href="#">STEM</a>
 											</li>
-											<li class="">
-												<a href="#">Legal</a>
+											<li class="dropdown-toggle">
+												<a href="#">Economics</a>
 											</li>
 											 <!-- end features -->
+
+											{% if request.user.is_authenticated %}
+											<li class="">
+												<a href="{% url 'general:user_account' %}">My Account</a>
+											</li> 
+											{% endif %}
+											<!-- end portfolio -->
 
 											<!-- Search -->
 											<li class="nav-search type-2 hidden-sm hidden-xs">
@@ -207,6 +212,7 @@
 												</form>
 											</li>
 
+											
 											<li class="mobile-links hidden-lg hidden-md">
 												<ul>
 													<li>
@@ -237,44 +243,29 @@
 			</div> <!-- end navigation -->
 		</nav> <!-- end navbar -->
 	</header>
-{% endblock header %}
-{% block content %}
-	<div class="main-wrapper magazine oh">
+	{% endblock header %}
 
-		<!-- Main Container -->
-		<div class="container">
+	{% block content %}
+	<div class="main-wrapper oh">
 
-			<!-- Main News -->
-			<section class="section-wrap main-news pt-30 pb-50">
-				
-				<div class="row small-spacing">
+	
 
-					<div class="col-md-7">
-						<article class="post-1">
+		<!-- Blog Standard -->
+		<section class="section-wrap blog-standard pb-50">
+			<div class="container relative">
+				<div class="row">
+					
+					<!-- content -->
+					<div class="col-md-8 post-content mb-50">
+
+						{% for event in events %}
+
+						<!-- standard post -->
+						<article class="entry-item">
 							<div class="entry-img hover-scale">
-								<a href="#" class="gradient">
-								{% if most_recent.large_event_image %}
-									<img src="{{most_recent.large_event_image.url}}" alt="">
-								{% else %}
-									<img src="{% static 'img/magazine/hero_1.jpg' %}" alt="">
-								{% endif %}
+								<a href="{% url 'general:event_details' event.pk %}">
+									<img src="{{event.large_event_image.url}}" alt="">
 								</a>
-								<div class="entry-inner">
-									<div class="entry">
-										<h2 class="entry-title color-white"><a href="#">{{most_recent.title}}</a></h2>
-										<ul class="entry-meta list-inline">
-											<li class="entry-date">
-												<i class="fa fa-clock-o"></i><a href="#">{{most_recent.created_on}}</a>
-											</li>
-											<li class="entry-category">
-												<i class="fa fa-folder-open"></i><a href="#">{{most_recent.category}}</a>
-											</li>	
-											<li class="entry-author">
-												<i class="fa fa-user"></i><a href="#">Admin</a>
-											</li>
-										</ul>
-									</div>
-								</div>
 								<div class="entry-inner-bottom">
 									<div class="entry">
 										<h2 class="entry-title color-white"><a>₦9,987,230</a> <span style="font-size: 10px !important;">to be won</span></h2>
@@ -290,1306 +281,72 @@
 									
 								</div>
 							</div>
-						</article>
-					</div>
 
-					<div class="col-md-5">
-
-						<article class="post-2">
-							<div class="entry-img hover-scale">
-								<a href="#" class="gradient">
-									<img src="{% static 'img/magazine/hero_2.jpg' %}" alt="">
-								</a>
-								<div class="entry-inner small">
-									<div class="entry">
-										<h2 class="entry-title color-white mb-0"><a href="#">How to Use Pastel Colors in Web Design Projects</a></h2>
-									</div>
-								</div>
-								<div class="entry-inner-bottom">
-									<div class="entry">
-										<h2 class="entry-title color-white"><a>₦10,987,930</a> <span style="font-size: 10px !important;">to be won</span></h2>
-										<div class="yesorno-bar">
-      										<div class="progress-bar progress-bar-success" style="width: 75%">
-       											 <span class="sr-only">40% Complete (success)</span>Yes <!-- Text  -->
-      										</div>
-      										<div class="progress-bar progress-bar-danger" style="width: 25%">
-        										<span class="sr-only">30% Complete (danger)</span>No
-      										</div>
-										</div>
-									</div>
-									
+							<div class="entry">					
+								<h2 class="entry-title">
+									<a href="{% url 'general:event_details' event.pk %}">{{event.title}}</a>
+								</h2>
+								<ul class="entry-meta list-inline">
+									<li class="entry-date">
+										<i class="fa fa-clock-o"></i><a href="#">{{event.created_on}}</a>
+									</li>
+									<li class="entry-category">
+										<i class="fa fa-folder-open"></i><a href="#">{{event.category}}</a>
+									</li>
+									<li class="entry-author">
+										<i class="fa fa-user"></i><a href="#">Admin</a>
+									</li>										
+									<li class="entry-comments">
+										<i class="fa fa-comments"></i><a href="{% url 'general:event_details' event.pk %}">15</a>
+									</li>							
+								</ul>
+								<div class="entry-content">
+									<p>{{event.}}</p>
+									<a href="{% url 'general:event_details' event.pk %}" class="read-more dark-link">
+										Read More <i class="fa fa-angle-right"></i>
+									</a>
 								</div>
 							</div>
-							
-						</article>
+						</article> 
+						<!-- end standard post -->
 
-						<div class="row small-spacing">
+						{% endfor %}
 
-							<div class="col-sm-6">
-								<article class="post-3">
-									<div class="entry-img hover-scale">
-										<a href="#" class="gradient">
-											<img src="{% static 'img/magazine/hero_3.jpg' %}" alt="">
-										</a>
-										<div class="entry-inner small">
-											<div class="entry">
-												<h2 class="entry-title color-white mb-0"><a href="#">Size Matters: Make Your Business</a></h2>
-											</div>
-										</div>
-										<div class="entry-inner-bottom">
-											<div class="entry">
-												<h2 class="entry-title color-white"><a>₦50,987,230</a> <span style="font-size: 10px !important;">to be won</span></h2>
-												<div class="yesorno-bar">
-													<div class="progress-bar progress-bar-success" style="width: 15%">
-														<span class="sr-only">40% Complete (success)</span>Yes <!-- Text  -->
-													</div>
-													<div class="progress-bar progress-bar-danger" style="width: 85%">
-														<span class="sr-only">30% Complete (danger)</span>No
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</article>
-							</div>
+						<!-- Pagination -->
+						<!-- <nav class="pagination clear">
+							<a href="#"><i class="fa fa-angle-left"></i></a>
+							<span class="page-numbers current">1</span>
+							<a href="#">2</a>
+							<a href="#">3</a>
+							<a href="#">4</a>
+							<a href="#"><i class="fa fa-angle-right"></i></a>
+						</nav>
+ -->
+ 							<nav class="clear">
 
-							<div class="col-sm-6">
-								<article class="post-4">
-									<div class="entry-img hover-scale">
-										<a href="#" class="gradient">
-											<img src="{% static 'img/magazine/hero_4.jpg' %}" alt="">
-										</a>
-										<div class="entry-inner small">
-											<div class="entry">
-												<h2 class="entry-title color-white mb-0"><a href="#">Stop Reacting and Start Responding</a></h2>
-											</div>
-										</div>
-										<div class="entry-inner-bottom">
-											<div class="entry">
-												<h2 class="entry-title color-white"><a>₦50,987,230</a> <span style="font-size: 10px !important;">to be won</span></h2>
-												<div class="yesorno-bar">
-													<div class="progress-bar progress-bar-success" style="width: 45%">
-														<span class="sr-only">40% Complete (success)</span>Yes <!-- Text  -->
-													</div>
-													<div class="progress-bar progress-bar-danger" style="width: 55%">
-														<span class="sr-only">30% Complete (danger)</span>No
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</article>
-							</div>
+			                    {% if events.has_previous %}
+			                        <a href="?page={{ events.previous_page_number }}">&laquo;</a>
+			                    {% else %}
+			                        <a class="hidden" >&laquo;</a>
 
-						</div>
-					</div>
+			                    {% endif %}
 
-				</div>			
-			</section> <!-- end main news -->
+			                    <span class="current">
+			                        Page {{ events.number }} of {{ events.paginator.num_pages }}.
+			                    </span>
 
+			                    {% if events.has_next %}
+			                        <a href="?page={{ events.next_page_number }}">&raquo;</a>
+			                    {% else %}
+			                        <a class="hidden">&raquo;</a>
+			                    {% endif %}
+			                </nav>
 
-			<!-- Content -->
-			<div class="row">
-				<div class="col-md-8 content">
+					</div> <!-- end col -->
 
-					<!-- Latest news -->
-					<section class="section-wrap relative pb-0 pt-0">
-						<h2 class="heading relative heading-small uppercase bottom-line style-2 left-align">Latest news</h2>
-						<div class="cat-filter tabs">
-							<ul class="nav nav-tabs">
-								<li class="active"><a href="#tab-all" data-toggle="tab">all</a></li>
-								<li><a href="#tab-world" data-toggle="tab">politics</a></li>
-								<li><a href="#tab-travel" data-toggle="tab">entertainment</a></li>
-								<li><a href="#tab-sport" data-toggle="tab">sport</a></li>
-								<li><a href="#tab-Economics" data-toggle="tab">STEM</a></li>
-							</ul>
-						</div>
 
-						<div class="row">
+				{% block aside %}
 
-							<!-- tab content -->
-							<div class="tab-content clearfix nopadding">
-
-								<!-- tab all -->
-								<div class="tab-pane fade in active" id="tab-all">
-									{% for event in events %}
-									<div class="col-md-6 mb-50">
-										<article>
-
-											<div class="entry-img hover-scale">
-
-												<a href="{% url 'general:event_details' event.pk %}" class="entry-category-label blue">{{event.category}}</a>
-												<a href="{% url 'general:event_details' event.pk %}">
-													{% if not event.medium_event_image %}
-														<img src="{% static 'img/magazine/2.jpg' %}" alt="">
-													{% else %}
-														<img src="{{event.medium_event_image.url}}" alt="">
-													{% endif %}
-												</a>
-
-												<div class="entry-inner-bottom">
-													<div class="entry">
-														<h2 class="entry-title color-white"><a>₦537,230</a> <span style="font-size: 10px !important;">to be won</span></h2>
-														<div class="yesorno-bar">
-															<div class="progress-bar progress-bar-success" style="width: 75%">
-																<span class="sr-only">40% Complete (success)</span>Yes <!-- Text  -->
-															</div>
-															<div class="progress-bar progress-bar-danger" style="width: 25%">
-																<span class="sr-only">30% Complete (danger)</span>No
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-											<div class="entry mb-0">
-												<h2 class="entry-title"><a 
-												href="{% url 'general:event_details' event.pk %}">{{event.title}}</a></h2>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">{{event.created_on}}</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-												<div class="entry-content">
-													<p>{{event.description}}</p>
-													<a href="{% url 'general:event_details' event.pk %}" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-												</div>
-											</div>
-										</article>
-
-										<ul class="posts-list">
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a 
-														href="{% url 'general:event_details' event.pk %}">
-															<img src="{% static 'img/magazine/thumb_1.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="{% url 'general:event_details' event.pk %}">
-															<img src="{% static 'img/magazine/thumb_2.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-										</ul>
-									</div> <!-- end col -->
-									{% endfor %}
-								</div> <!-- end tab all -->
-
-								<!-- tab world -->
-								<div class="tab-pane fade" id="tab-world">
-
-									<div class="col-md-6 mb-50">
-										<article>
-											<div class="entry-img hover-scale">
-												<a href="#">
-													<img src="{% static 'img/magazine/3.jpg' %}" alt="">
-												</a>
-											</div>
-											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="#">5 Questions to Help You Determine the Right Franchise for You</a></h2>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-												<div class="entry-content">
-													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-												</div>
-											</div>
-										</article>
-
-										<ul class="posts-list">
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-										</ul>
-
-									</div> <!-- end col -->
-
-									<div class="col-md-6 mb-50">
-										<article>
-											<div class="entry-img hover-scale">
-												<a href="#">
-													<img src="{% static 'img/magazine/4.jpg' %}" alt="">
-												</a>
-											</div>
-											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="#">How to Make Your Startup Introduction Email Simple, Clear and Awesome</a></h2>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-												<div class="entry-content">
-													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-												</div>
-											</div>
-										</article>
-
-										<ul class="posts-list">
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_9.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_8.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-										</ul>
-
-									</div> <!-- end col -->
-								</div> <!-- end tab world -->
-
-								<!-- tab travel -->
-								<div class="tab-pane fade" id="tab-travel">
-
-									<div class="col-md-6 mb-50">
-										<article>
-											<div class="entry-img hover-scale">
-												<a href="#">
-													<img src="{% static 'img/magazine/5.jpg' %}" alt="">
-												</a>
-											</div>
-											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="#">5 Ways to Give Thanks and Give Back at Work</a></h2>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-												<div class="entry-content">
-													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-												</div>
-											</div>
-										</article>
-
-										<ul class="posts-list">
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_10.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_11.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-										</ul>
-
-									</div> <!-- end col -->
-
-									<div class="col-md-6 mb-50">
-										<article>
-											<div class="entry-img hover-scale">
-												<a href="#">
-													<img src="{% static 'img/magazine/6.jpg' %}" alt="">
-												</a>
-											</div>
-											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="#">5 Ways to Earn the Business of Customers Who'd Rather Shop on Cyber Monday</a></h2>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-												<div class="entry-content">
-													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-												</div>
-											</div>
-										</article>
-
-										<ul class="posts-list">
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_12.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_4.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-										</ul>
-
-									</div> <!-- end col -->
-								</div> <!-- end tab travel -->
-
-								<!-- tab sport -->
-								<div class="tab-pane fade" id="tab-sport">
-
-									<div class="col-md-6 mb-50">
-										<article>
-											<div class="entry-img hover-scale">
-												<a href="#">
-													<img src="{% static 'img/magazine/7.jpg' %}" alt="">
-												</a>
-											</div>
-											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="#">5 Online Payment Tips That Improve Conversion</a></h2>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-												<div class="entry-content">
-													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-												</div>
-											</div>
-										</article>
-
-										<ul class="posts-list">
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_3.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-										</ul>
-
-									</div> <!-- end col -->
-
-									<div class="col-md-6 mb-50">
-										<article>
-											<div class="entry-img hover-scale">
-												<a href="#">
-													<img src="{% static 'img/magazine/8.jpg' %}" alt="">
-												</a>
-											</div>
-											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="#">12 Founders on the Business Advice They Are Most Thankful For</a></h2>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-												<div class="entry-content">
-													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-												</div>
-											</div>
-										</article>
-
-										<ul class="posts-list">
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_2.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-										</ul>
-
-									</div> <!-- end col -->
-								</div> <!-- end tab sport -->
-
-								<!-- tab Economics -->
-								<div class="tab-pane fade" id="tab-Economics">
-
-									<div class="col-md-6 mb-50">
-										<article>
-											<div class="entry-img hover-scale">
-												<a href="#">
-													<img src="{% static 'img/magazine/9.jpg' %}" alt="">
-												</a>
-											</div>
-											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="#">The Entrepreneurship of Building the Best Wine Cellar</a></h2>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-												<div class="entry-content">
-													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-												</div>
-											</div>
-										</article>
-
-										<ul class="posts-list">
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_8.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_1.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-										</ul>
-
-									</div> <!-- end col -->
-
-									<div class="col-md-6 mb-50">
-										<article>
-											<div class="entry-img hover-scale">
-												<a href="#">
-													<img src="{% static 'img/magazine/10.jpg' %}" alt="">
-												</a>
-											</div>
-											<div class="entry mb-0">
-												<h2 class="entry-title"><a href="#">16-Step Blueprint to Master Your Digital Marketing in 2016</a></h2>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-												<div class="entry-content">
-													<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-													<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-												</div>
-											</div>
-										</article>
-
-										<ul class="posts-list">
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_10.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">Introverts at Work: Why You Withdraw and One Way to Cope</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-											<li>
-												<article class="post-small clearfix">
-													<div class="entry-img hover-scale">
-														<a href="#">
-															<img src="{% static 'img/magazine/thumb_9.jpg' %}" alt="">
-														</a>
-													</div>
-													<div class="entry">
-														<h3 class="entry-title"><a href="#">3 Great Ways to Create an Emotional Bond with Customers</a></h3>
-														<ul class="entry-meta list-inline">
-															<li class="entry-date">
-																<a href="#">19 Dec, 2015</a>
-															</li>
-															<li class="entry-comments">
-																<i class="fa fa-comments"></i><a href="#">15</a>
-															</li>
-														</ul>
-													</div>
-												</article>
-											</li>
-										</ul>
-
-									</div> <!-- end col -->
-								</div> <!-- end tab Economics -->
-
-							</div> <!-- end tab content -->
-
-
-						</div> <!-- end row -->
-					</section> <!-- end trending news -->
-																	
-					<!-- Sport -->
-					<section class="section-wrap relative pb-0 pt-0">
-						<h2 class="heading relative heading-small uppercase bottom-line style-2 left-align">Sport</h2>
-
-						<div class="row">
-
-							<div class="col-md-7 mb-20">
-								<article>
-									<div class="entry-img hover-scale">
-										<a href="#" class="entry-category-label green">Sport</a>
-										<a href="#">
-											<img src="{% static 'img/magazine/11.jpg' %}" alt="">
-										</a>
-										<div class="entry-inner-bottom">
-											<div class="entry">
-												<h2 class="entry-title color-white"><a>₦50,987,230</a> <span style="font-size: 10px !important;">to be won</span></h2>
-												<div class="yesorno-bar">
-													<div class="progress-bar progress-bar-success" style="width: 45%">
-														<span class="sr-only">40% Complete (success)</span>Yes <!-- Text  -->
-													</div>
-													<div class="progress-bar progress-bar-danger" style="width: 55%">
-														<span class="sr-only">30% Complete (danger)</span>No
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="entry">
-										<h2 class="entry-title"><a href="#">Treat Your Employees Well. They Are Your Best Brand Ambassadors</a></h2>
-										<ul class="entry-meta list-inline">
-											<li class="entry-date">
-												<a href="#">19 Dec, 2015</a>
-											</li>
-											<li class="entry-comments">
-												<i class="fa fa-comments"></i><a href="#">15</a>
-											</li>
-										</ul>
-										<div class="entry-content">
-											<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-											<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-										</div>
-									</div>
-								</article>
-
-							</div> <!-- end col -->
-
-							<div class="col-md-5 mb-50">
-								<ul class="posts-list no-top-pad">
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">Entrepreneurs and Hustlers Are 2 Tracks on the Same Record</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">Size Matters: Make Your Business Appear Smaller When It Counts</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-								</ul>
-
-							</div> <!-- end col -->
-
-						</div> <!-- end row -->
-					</section> <!-- end latest news -->
-
-					<!-- Politics -->
-					<section class="section-wrap relative pb-0 pt-0">
-						<h2 class="heading relative heading-small uppercase bottom-line style-2 left-align">Politics</h2>
-
-						<div class="row">
-
-							<div class="col-md-7 mb-20">
-								<article>
-									<div class="entry-img hover-scale">
-										<a href="#" class="entry-category-label green">Politics</a>
-										<a href="#">
-											<img src="{% static 'img/magazine/11.jpg' %}" alt="">
-										</a>
-										<div class="entry-inner-bottom">
-											<div class="entry">
-												<h2 class="entry-title color-white"><a>₦50,987,230</a> <span style="font-size: 10px !important;">to be won</span></h2>
-												<div class="yesorno-bar">
-													<div class="progress-bar progress-bar-success" style="width: 45%">
-														<span class="sr-only">40% Complete (success)</span>Yes <!-- Text  -->
-													</div>
-													<div class="progress-bar progress-bar-danger" style="width: 55%">
-														<span class="sr-only">30% Complete (danger)</span>No
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="entry">
-										<h2 class="entry-title"><a href="#">Treat Your Employees Well. They Are Your Best Brand Ambassadors</a></h2>
-										<ul class="entry-meta list-inline">
-											<li class="entry-date">
-												<a href="#">19 Dec, 2015</a>
-											</li>
-											<li class="entry-comments">
-												<i class="fa fa-comments"></i><a href="#">15</a>
-											</li>
-										</ul>
-										<div class="entry-content">
-											<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-											<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-										</div>
-									</div>
-								</article>
-
-							</div> <!-- end col -->
-
-							<div class="col-md-5 mb-50">
-								<ul class="posts-list no-top-pad">
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">Entrepreneurs and Hustlers Are 2 Tracks on the Same Record</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">Size Matters: Make Your Business Appear Smaller When It Counts</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-								</ul>
-
-							</div> <!-- end col -->
-
-						</div> <!-- end row -->
-					</section> <!-- end latest news -->
-
-					<!-- Banner Ad -->
-					<div class="hidden-sm hidden-xs text-center pb-50">
-						<a href="http://deothemes.com">
-							<img src="{% static 'img/magazine/728_ad.jpg' %}" alt="">
-						</a>				        		        	
-					</div>
-
-
-					<!-- Other categories -->
-					<section class="section-wrap relative pb-0 pt-0">
-						<div class="row">
-
-							<!-- Entertainment -->
-							<div class="col-md-4 mb-50">
-								<h2 class="heading relative heading-small uppercase bottom-line style-2 left-align heading-label-red">Entertainment</h2>
-								<article>
-									<div class="entry-img hover-scale">
-										<a href="#">
-											<img src="{% static 'img/magazine/12.jpg' %}" alt="">
-										</a>
-									</div>
-									<div class="entry mb-0">
-										<h2 class="entry-title small"><a href="#">The Golden Age: How the PR Industry Is Coming Into its Own</a></h2>
-										<ul class="entry-meta list-inline">
-											<li class="entry-date">
-												<a href="#">19 Dec, 2015</a>
-											</li>
-											<li class="entry-comments">
-												<i class="fa fa-comments"></i><a href="#">15</a>
-											</li>
-										</ul>
-										<div class="entry-content">
-											<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-											<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-										</div>
-									</div>
-								</article>
-
-								<ul class="posts-list">
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-								</ul>
-
-							</div> <!-- end col sport -->
-
-
-							<!-- STEM -->
-							<div class="col-md-4 mb-50">
-								<h2 class="heading relative heading-small uppercase bottom-line style-2 left-align heading-label-gold">STEM</h2>
-								<article>
-									<div class="entry-img hover-scale">
-										<a href="#">
-											<img src="{% static 'img/magazine/13.jpg' %}" alt="">
-										</a>
-									</div>
-									<div class="entry mb-0">
-										<h2 class="entry-title small"><a href="#">The Golden Age: How the PR Industry Is Coming Into its Own</a></h2>
-										<ul class="entry-meta list-inline">
-											<li class="entry-date">
-												<a href="#">19 Dec, 2015</a>
-											</li>
-											<li class="entry-comments">
-												<i class="fa fa-comments"></i><a href="#">15</a>
-											</li>
-										</ul>
-										<div class="entry-content">
-											<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-											<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-										</div>
-									</div>
-								</article>
-
-								<ul class="posts-list">
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-								</ul>
-
-							</div> <!-- end col Economics -->
-
-
-							<!-- Economics -->
-							<div class="col-md-4 mb-50">
-								<h2 class="heading relative heading-small uppercase bottom-line style-2 left-align heading-label-green">Economics</h2>
-								<article>
-									<div class="entry-img hover-scale">
-										<a href="#">
-											<img src="{% static 'img/magazine/14.jpg' %}" alt="">
-										</a>
-									</div>
-									<div class="entry mb-0">
-										<h2 class="entry-title small"><a href="#">The Golden Age: How the PR Industry Is Coming Into its Own</a></h2>
-										<ul class="entry-meta list-inline">
-											<li class="entry-date">
-												<a href="#">19 Dec, 2015</a>
-											</li>
-											<li class="entry-comments">
-												<i class="fa fa-comments"></i><a href="#">15</a>
-											</li>
-										</ul>
-										<div class="entry-content">
-											<p>We possess within us two minds. So far I have written only of the conscious mind.</p>
-											<a href="#" class="read-more dark-link">Read More <i class="fa fa-angle-right"></i></a>
-										</div>
-									</div>
-								</article>
-
-								<ul class="posts-list">
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-									<li>
-										<article class="post-small clearfix">
-											<div class="entry">
-												<h3 class="entry-title"><a href="#">3 Principles of Video Games That Can Make You a Better Entrepreneur</a></h3>
-												<ul class="entry-meta list-inline">
-													<li class="entry-date">
-														<a href="#">19 Dec, 2015</a>
-													</li>
-													<li class="entry-comments">
-														<i class="fa fa-comments"></i><a href="#">15</a>
-													</li>
-												</ul>
-											</div>
-										</article>
-									</li>
-								</ul>
-
-							</div> <!-- end col travel -->
-
-						</div> <!-- end row -->
-					</section> <!-- end latest news -->
-
-
-				</div> <!-- end content col -->
-
-				<!-- Sidebar -->
 				<aside class="col-md-4 sidebar pb-50">
 
 					<!-- Follow Us -->
@@ -1653,7 +410,7 @@
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
+													<h3 class="entry-title"><a href="/">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
 															<a href="#">19 Dec, 2015</a>
@@ -1679,7 +436,7 @@
 															<a href="#">19 Dec, 2015</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
+															<i class="fa fa-comments"></i><a href="/">15</a>
 														</li>
 													</ul>
 												</div>
@@ -1948,42 +705,27 @@
 						</ul>
 					</div>
 
-
 					<!-- Categories -->
 					<div class="widget categories">
 						<h3 class="widget-title heading relative heading-small uppercase bottom-line style-2 left-align">Categories</h3>
 						<ul class="list-dividers">
+							{% for category in categories %}
 							<li>
-								<a href="#">Business<span>106</span></a>
+								<a href="#">{{category}}<span>{% getCategoryCount category %}</span></a>
 							</li>
-							<li class="active-cat">
-								<a href="#">Entertainment<span>77</span></a>
-							</li>
-							<li>
-								<a href="#">Sport<span>68</span></a>
-							</li>
-							<li>
-								<a href="#">Politics<span>57</span></a>
-							</li>
-							<li>
-								<a href="#">Economics<span>125</span></a>
-							</li>
-							<li>
-								<a href="#">STEM<span>344</span></a>
-							</li>
-							<li>
-								<a href="#">Travel<span>128</span></a>
-							</li>
+							{% endfor %}
 						</ul>
 					</div>
+				</aside>
+				<!-- end sidebar -->
+				{% endblock aside %}
+	
+				</div> <!-- end row -->
+			</div> <!-- end container -->
+		</section> <!-- end blog standard -->
+		{% endblock content %}
 
-
-				</aside> <!-- end sidebar -->
-
-			</div> <!-- end content -->
-		</div> <!-- end main container -->
-
-{% endblock %}
+		{% block footer %}
 		<!-- Footer Type-4 -->
 		<footer class="footer footer-type-4">
 			<div class="container">
@@ -2061,11 +803,9 @@
 							<div class="widget footer-links small-space">
 								<h5 class="uppercase">Quick Links</h5>
 								<ul>
-									<li><a href="#">Entertainment</a></li>
-									<li><a href="#">Science</a></li>
-									<li><a href="#">Sport</a></li>
-									<li><a href="#">Politics</a></li>
-									<li><a href="#">Economics</a></li>
+								{% for category in categories %}
+									<li><a href="#">{{category}}</a></li>
+								{% endfor %}
 								</ul>
 							</div>
 						</div> <!-- end useful links -->
@@ -2083,6 +823,7 @@
 								© 2017 Yes or No Live
 							</span>
 						</div>
+
 
 						<div class="col-md-5 col-xs-12">
 							<ul class="bottom-footer-links style-2">
@@ -2104,7 +845,9 @@
 					</div>
 				</div>
 			</div> <!-- end bottom footer -->
-		</footer> <!-- end footer -->
+		</footer> 
+		<!-- end footer -->
+		{% endblock footer %}
 
 		<div id="back-to-top">
 			<a href="#top"><i class="fa fa-angle-up"></i></a>
@@ -2140,6 +883,5 @@
 	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.migration.min.js' %}"></script>
 
 	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.parallax.min.js' %}"></script>
-	  
 </body>
 </html>

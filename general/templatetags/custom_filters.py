@@ -1,7 +1,7 @@
 from django import template
 from django.template.defaultfilters import stringfilter
 from datetime import date, timedelta
-from general.models import UserAccount, MessageCenter, MessageCenterComment
+from general.models import UserAccount, MessageCenter, MessageCenterComment, Event
 
 #from export.models import *
 import datetime
@@ -42,6 +42,11 @@ def check_last_comment_user(request,value):
 		return all_comments.count()
 
 
+@register.simple_tag
+def getCategoryCount(value):
+	category = Event.objects.filter(category=value,deleted=False)
+	return category.count()
+	
 # @register.simple_tag
 # def get_comments_count(request,value):
 # 	if value == 'new':

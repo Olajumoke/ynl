@@ -1,4 +1,5 @@
 {% extends 'general/homepage.html' %}
+{% load custom_filters %}
 {% load staticfiles %}
 
 {% block title %}<title>YesorNoLIVE.com | Event</title>{% endblock %}
@@ -25,7 +26,7 @@
 									<i class="fa fa-clock-o"></i><a href="#">{{event.created_on}}</a>
 								</li>
 								<li class="entry-category">
-									<i class="fa fa-folder-open"></i><a href="#">Economics</a>
+									<i class="fa fa-folder-open"></i><a href="#">{{event.category}}</a>
 								</li>
 								<li class="entry-author">
 									<i class="fa fa-user"></i><a href="#">Admin</a>
@@ -49,10 +50,10 @@
 											
 											<div class="yesorno-bar">
 												<div class="progress-bar progress-bar-success" style="width: 67%">
-													<span class="sr-only">10% Complete (success)</span>Yes <!-- Text  -->
+													<span class="sr-only">90% Complete (success)</span>Yes <!-- Text  -->
 												</div>
 												<div class="progress-bar progress-bar-danger" style="width: 33%">
-													<span class="sr-only">90% Complete (danger)</span>No
+													<span class="sr-only">10% Complete (danger)</span>No
 												</div>
 											</div>
 										</div>
@@ -64,48 +65,7 @@
 
 
 
-						<div class="row icon-boxes style-3">
-							<div class="col-md-3 mb-30">
-								<div class="service-item-box text-center">
-									<a href="#">
-										<i class="icon_currency"></i>
-									</a>
-									<h3 class="uppercase">N9,000,254</h3>
-									<span>To be won<span>			
-								</span></span></div>						
-							</div> <!-- end service item -->
-
-							<div class="col-md-3 mb-30">
-								<div class="service-item-box text-center">
-									<a href="#">
-										<i class="icon-profile-male"></i>
-									</a>
-									<h3 class="uppercase">2005</h3>
-									<span>Players<span>			
-								</span></span></div>						
-							</div> <!-- end service item -->
-
-							<div class="col-md-3 mb-30">
-								<div class="service-item-box text-center">
-									<a href="#">
-										<i class=" icon-calendar"></i>
-									</a>
-									<h3 class="uppercase">START: 22-05-2017</h3>
-									<span>12:00PM<span>			
-								</span></span></div>						
-							</div> <!-- end service item -->
-
-							<div class="col-md-3 mb-30">
-								<div class="service-item-box text-center">
-									<a href="#">
-										<i class=" icon-calendar"></i>
-									</a>
-									<h3 class="uppercase">END: 22-05-2017</h3>
-									<span>12:00PM<span>			
-								</span></span></div>						
-							</div> <!-- end service item -->
-
-						</div>
+						
 
 
 
@@ -121,14 +81,6 @@
 										</p>
 										<span>Bernard M. Baruch</span>
 									</blockquote>
-
-									<p>Incididunt in nostrud occaecat quis minim sint. Culpa in officia amet laboris incididunt reprehenderit cupidatat. Culpa aliquip qui sunt proident anim amet duis elit occaecat ipsum enim. Nulla anim cillum pariatur voluptate esse dolor anim enim nulla sunt non elit ex qui. Qui ad cillum in ad. Ex irure proident veniam aliquip ad commodo anim officia aute velit adipisicing. Quis do sit ea quis laborum ut adipisicing incididunt ad.</p>
-
-									<h5>Cupidatat reprehenderit incididunt et eiusmod amet cupidatat eu.</h5>
-
-									<p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos. Lorem ipsum dolor sit amet, consectetur adipiscing elit. And finally the subconscious is the mechanism through which thought impulses which are repeated regularly with feeling and emotion are quickened, charged. And finally the subconscious is the mechanism through which thought impulses which are repeated regularly with feeling and emotion are quickened, charged and changed into their physical equivalent.</p>
-
-									
 
 									<!-- entry share -->
 									<div class="entry-share">
@@ -175,7 +127,7 @@
 														<a href="#">
 															<i class=" icon-calendar"></i>
 														</a>
-														<h3 class="uppercase">START: 22-05-2017</h3>
+														<h3 class="uppercase">START DATE: {{event.start_time}}</h3>
 														<span>12:00PM<span>			
 													</span></span></div>						
 												</div> <!-- end service item -->
@@ -185,7 +137,7 @@
 														<a href="#">
 															<i class=" icon-calendar"></i>
 														</a>
-														<h3 class="uppercase">END: 22-05-2017</h3>
+														<h3 class="uppercase">END DATE: {{event.start_time}}</h3>
 														<span>12:00PM<span>			
 													</span></span></div>						
 												</div> <!-- end service item -->
@@ -194,11 +146,11 @@
 
 											<div class="entry">
 												<div class="yesorno-bar">
-													<div class="progress-bar progress-bar-success" style="width: 35%">
-														<span class="sr-only">10% Complete (success)</span>Yes <!-- Text  -->
+													<div class="progress-bar progress-bar-success" style="width: 67%">
+														<span class="sr-only">90% Complete (success)</span>Yes <!-- Text  -->
 													</div>
-													<div class="progress-bar progress-bar-danger" style="width: 65%">
-														<span class="sr-only">90% Complete (danger)</span>No
+													<div class="progress-bar progress-bar-danger" style="width: 33%">
+														<span class="sr-only">10% Complete (danger)</span>No
 													</div>
 												</div>
 											</div>
@@ -207,7 +159,8 @@
 
 											<div style=" padding-bottom: 10px;">
 												<div class="bet-question">
-													<strong>Will Buhari win the presidential election in 2019? YES or NO</strong>
+
+													<strong>{{event.admin_text|striptags}} YES or NO</strong>
 												</div>
 											</div>
 
@@ -732,31 +685,13 @@
 					<div class="widget categories">
 						<h3 class="widget-title heading relative heading-small uppercase bottom-line style-2 left-align">Categories</h3>
 						<ul class="list-dividers">
+							{% for category in categories %}
 							<li>
-								<a href="#">Business<span>106</span></a>
+								<a href="#">{{category}}<span>{% getCategoryCount category %}</span></a>
 							</li>
-							<li class="active-cat">
-								<a href="#">Entertainment<span>77</span></a>
-							</li>
-							<li>
-								<a href="#">Sport<span>68</span></a>
-							</li>
-							<li>
-								<a href="#">Politics<span>57</span></a>
-							</li>
-							<li>
-								<a href="#">Economics<span>125</span></a>
-							</li>
-							<li>
-								<a href="#">STEM<span>344</span></a>
-							</li>
-							<li>
-								<a href="#">Travel<span>128</span></a>
-							</li>
+							{% endfor %}
 						</ul>
 					</div>
-
-
 				</aside> <!-- end sidebar -->
 
 				</div> <!-- end row -->

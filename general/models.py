@@ -48,13 +48,12 @@ class Event(models.Model):
 	start_time                = models.DateField(null=True, blank=True)
 	end_time                  = models.DateField(null=True, blank=True)
 	publish     			  = models.BooleanField(default=False)
-	large_event_image         = models.ImageField(upload_to="media/event/%Y/%M/%d/", null=True, blank=True)
-	medium_event_image        = models.ImageField(upload_to="media/event/%Y/%M/%d/", null=True, blank=True)
-	small_event_image         = models.ImageField(upload_to="media/event/%Y/%M/%d/", null=True, blank=True)
-	admin_text                = HTMLField(null=True, blank=True)
+	event_image               = models.ImageField(upload_to="media/event/%Y/%M/%d/", null=True, blank=True)
+	event_msg_body            = models.TextField(null=True, blank=True)
 	closed					  = models.BooleanField(default=False)
 	deleted                   = models.BooleanField(default=False)
-	tracking_number			  = models.CharField(max_length=50, null=True, blank=True)
+	event_id      			  = models.CharField(max_length=50, null=True, blank=True)
+	bet_question			  = models.CharField(max_length=50, null=True, blank=True)
 
 	def __unicode__(self):
 	    return '%s' %(self.author)
