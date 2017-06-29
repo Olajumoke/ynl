@@ -35,6 +35,11 @@
 								</div>
 
 								<div class="form-group">
+								<label class="label-controller">Question</label>
+									{{event_form.bet_question}}
+								</div>
+
+								<div class="form-group">
 								<label class="label-controller">Start Date</label>
 									{{event_form.start_time}}
 								</div>
@@ -51,22 +56,12 @@
 
 								<div class="form-group">
 								<label class="label-controller">Description</label>
-									{{event_form.admin_text}}
+									{{event_form.event_msg_body}}
 								</div>
 
 								<div class="form-group">
-								<label>Upload Lagre Event Image(770x400)</label>
-									{{event_form.large_event_image}}
-								</div>
-
-								<div class="form-group">
-								<label>Upload Medium Event Image(370x215)</label>
-									{{event_form.medium_event_image}}
-								</div>
-
-								<div class="form-group">
-								<label>Upload Small Event Image(100x72)</label>
-									{{event_form.small_event_image}}
+								<label>Upload Event Image(770x400)</label>
+									{{event_form.event_image}}
 								</div>
 
 							    <button type="submit" id="submit-form-events" class="btn btn-success pull-right">Submit</button><br />
