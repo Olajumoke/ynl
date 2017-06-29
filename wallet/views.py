@@ -13,6 +13,7 @@ from wallet.Transfer import Transfer
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from general.views import paginate_list
+from gameplay.models import Gameplay
 # Create your views here.
 
 paystack_secret_key = "sk_test_9fe140b2bf798accdc2aade269cac47bc2de7ecc"  
@@ -25,10 +26,11 @@ def view_wallet(request):
     except Exception as e :
         print "e", e
         user = None
+    game    = Gameplay.objects.filter(user=user)
     balance = account_standing(request,request.user)
     wallet = paginate_list(request, Bank.objects.filter(user=request.user),5)
     
-    return render(request, 'wallet/topup.html', {'balance':balance, 'wallet':wallet, 'user':user}) 
+    return render(request, 'wallet/topup.html', {'balance':balance, 'wallet':wallet, 'user':user, 'game':game}) 
 
 
 def generate_purchaseRef():
