@@ -35,15 +35,13 @@ class EventForm(forms.ModelForm):
 	start_time          = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
 	end_time            = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
 	publish        		= forms.BooleanField(required = False)
-	large_event_image   = forms.ImageField(required = False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
-	medium_event_image  = forms.ImageField(required = False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
-	small_event_image   = forms.ImageField(required = False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
-	admin_text          = HTMLField()
+	event_image         = forms.ImageField(required = False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
+	event_msg_body      = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
 
 
 	class Meta:
 	    model = Event
-	    fields = ('title', 'category', 'start_time', 'end_time', 'publish', 'large_event_image', 'medium_event_image','small_event_image','admin_text',)
+	    fields = ('title', 'category', 'start_time', 'end_time', 'publish', 'event_image','event_msg_body',)
 
 
 

@@ -47,7 +47,7 @@
                     <tbody>
                     {% for event in all_events %}
                         <tr>
-                            <td>{{event.tracking_number}}</td>
+                            <td>{{event.event_id}}</td>
                             <td>{{event.title}}</td>
                             <td>{{event.category}}</td>
                             <td>{{event.start_time}}</td>
@@ -71,7 +71,7 @@
                     
                 </table>
 
-                <div class="pagination" style="position:relative; font-size:20px; margin:0px; left:500px;">
+            <div class="pagination" style="position:relative; font-size:20px; margin:0px; left:500px;">
                 <span class="step-links">
                     {% if all_events.has_previous %}
                         <a style="font-size:20px;" href="?page={{ all_events.previous_page_number }}">&laquo;</a>

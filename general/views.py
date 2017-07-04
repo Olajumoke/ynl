@@ -34,17 +34,6 @@ from wallet.account_standing import account_standing
 from gameplay.models import Gameplay
 # Create your views here.
 
-
-def homepage(request):
-	context = {}
-	event_obj = Event.objects.filter(deleted=False)
-	most_recent = event_obj[0]
-	template_name = 'general/homepage.html'
-	context['events'] = event_obj
-	context['most_recent'] = most_recent
-	return render(request, template_name, context)
-
-
 def paginate_list(request, objects_list, num_per_page):
     paginator   =   Paginator(objects_list, num_per_page) # show number of jobs per page
     page  = request.GET.get('page')
@@ -57,6 +46,24 @@ def paginate_list(request, objects_list, num_per_page):
         #if page is out of range(e.g 9999), deliver last page of results
         paginated_list      =   paginator.page(paginator.num_pages)
     return paginated_list
+
+
+def homepage(request):
+	context = {}
+	# most_recent = event_obj[0]
+	template_name = 'general/homepage.html'
+	# context['most_recent'] = most_recent
+	events_all = Event.objects.filter(deleted=False)
+	all_events = paginate_list(request,events_all,4)
+	categories = []
+	for event in events_all:
+		if event.category in categories:
+			pass
+		else:
+			categories.append(event.category)
+	context['categories'] = categories
+	context['events'] = all_events
+	return render(request, template_name, context)
 
 
 def user_login(request):
@@ -152,6 +159,14 @@ def register(request):
 
 def event_details(request,pk):
 	context = {}
+	events_all = Event.objects.filter(deleted=False)
+	categories = []
+	for event in events_all:
+		if event.category in categories:
+			pass
+		else:
+			categories.append(event.category)
+	context['categories'] = categories
 	event_obj = Event.objects.get(pk=pk)
 	context['event'] = event_obj
 	return render(request, 'general/magazine-single-article.html',context)
