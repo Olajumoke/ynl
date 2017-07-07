@@ -40,7 +40,8 @@
                             <th>Start Date</th>
                             <th>End Date</th>
 <!--                             <th>Closed</th>
- -->                            <th>Action</th>
+ -->                        <th>Action</th>
+							<th>Event Status</th>
                         </tr>
                     </thead>
                     
@@ -54,15 +55,16 @@
                             <td>{{event.end_time}}</td>
 <!--                             <td>{event.closed}}</td>
  -->                            <td>
-                                <span><a class="view_event" identifier="view" event_track_num="{{event.tracking_number}}"><i class="fa fa-eye"  title="View"
+                                <span><a class="view_event" identifier="view" event_track_num="{{event.event_id}}"><i class="fa fa-eye"  title="View"
                                 style="cursor: pointer;"></i></a>
                                 </span>&nbsp;&nbsp;
-                                <span><a class="edit_event" identifier="edit" event_track_num="{{event.tracking_number}}"><i class="fa fa-pencil" title="Edit" 
+                                <span><a class="edit_event" identifier="edit" event_track_num="{{event.event_id}}"><i class="fa fa-pencil" title="Edit" 
                                 style="cursor: pointer;"></i></a>
                                 </span>&nbsp;&nbsp;
                                 <span><a style="cursor: pointer;" href="{% url 'ynladmin:delete_event' event.id %}" onclick="return confirm('Are you sure you want to delete this event?')"><i class="fa fa-trash" title="Delete"></i></a>
                                 </span>
                             </td>
+							<td>{% if event.closed %}CLOSED{% else %} <span><a style="cursor: pointer;" href="{% url 'ynladmin:close_event' event.id %}" onclick="return confirm('Are you sure you want to Close this event?')">CLOSE EVENT{% endif %}</a></span></td>
                         </tr>
                     {% empty %}
                         <p>No Event</p>

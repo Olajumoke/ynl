@@ -33,6 +33,7 @@ from django.core.mail import EmailMessage
 from general.models import *
 from general.forms import *
 from general.views import paginate_list
+from gameplay.models import Gameplay
 # Create your views here.
 
 
@@ -228,7 +229,7 @@ def view_edit_event(request):
 	else:
 		template_name = 'ynladmin/view_event.html'
 	event_track_num = request.GET.get('event_track_num')
-	event_obj = Event.objects.get(tracking_number=event_track_num)
+	event_obj = Event.objects.get(event_id=event_track_num)
 	event_form = EventForm(instance=event_obj)
 	context['event_track_num'] = event_track_num
 	context['event_form'] = event_form
@@ -328,6 +329,12 @@ def archive_message(request,pk):
 		
 
 
+def close_event(request, event_id):
+	event = Event.objects.get(id=event_id)
+	gameplay = Gameplay.objects.filter(event=event)
+	total_value = event.gameplay_total_value()
+	print "Total",total_value
+	return redirect(request.META['HTTP_REFERER'])
 
 
 

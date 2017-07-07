@@ -165,7 +165,7 @@
                                     <tbody>
                                         {% for games in game %}
                                         <tr>
-                                            <td><a href="javascript:void(0)" class="btn-link">{{games.event.tracking_number}}</a></td>
+                                            <td><a href="javascript:void(0)" class="btn-link">{{games.event.event_id}}</a></td>
                                             <td>{{games.event.title}}</td>
                                             <td><span class="text-muted"><i class="fa fa-clock-o"></i>{{games.date}}</span></td>
                                             <td>₦{{games.amount|floatformat:2|intcomma}}</td>

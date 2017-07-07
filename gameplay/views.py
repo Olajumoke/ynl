@@ -27,6 +27,13 @@ def betting(request):
             print 'choice',choice
             event = Event.objects.get(id=request.POST.get('event'))
             user = UserAccount.objects.get(user=request.user)
+            try:
+                gameplay = Gameplay.objects.get(event=event, user=user)
+                print gameplay
+                messages.warning(request, "You have already Participated in this Event")
+                return redirect(request.META['HTTP_REFERER'])
+            except Exception as e:
+                print "e",e
             gameplay = Gameplay.objects.create(user=user,event=event,amount=amount,choice=choice,date=timezone.now(),status="OPEN")
             gameplay.save()
             random_ref = purchase_ref()

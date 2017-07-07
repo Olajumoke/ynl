@@ -264,7 +264,7 @@
 						<article class="entry-item">
 							<div class="entry-img hover-scale">
 								<a href="{% url 'general:event_details' event.pk %}">
-									<img src="{{event.large_event_image.url}}" alt="">
+									<img src="{{event.event_image.url}}" alt="">
 								</a>
 								<div class="entry-inner-bottom">
 									<div class="entry">
@@ -301,7 +301,7 @@
 									</li>							
 								</ul>
 								<div class="entry-content">
-									<p>{{event.}}</p>
+									<p>{{event.event_msg_body}}</p>
 									<a href="{% url 'general:event_details' event.pk %}" class="read-more dark-link">
 										Read More <i class="fa fa-angle-right"></i>
 									</a>
