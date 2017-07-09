@@ -50,7 +50,7 @@
 									<ul class="slides clearfix">
 										<li>
 											<a href="#">
-												<img src="{{event.large_event_image.url}}" alt="">
+												<img src="{{event.event_image.url}}" alt="">
 											</a>
 										</li>
 									</ul>
@@ -82,7 +82,7 @@
 
 							<div class="entry">					
 								<div class="entry-content">
-									<p>We possess within us two minds. So far I have written only of the conscious mind. It's the fastest-funded project and also the most funded - by far. We possess within us two minds. So far I have written only of the conscious mind. I would now like to introduce you to your second mind. And finally the subconscious is the mechanism through which thought impulses which are repeated regularly with feeling and emotion are quickened, charged and changed into their physical equivalent.</p>
+									<p>{{event.event_msg_body|striptags}}</p>
 
 									<blockquote class="blockquote-style-2 mt-30 mb-30">
 										<p>
@@ -170,7 +170,7 @@
 												<form method="POST" action="{% url 'gameplay:betting' %}">
 												<div class="bet-question">
 
-													<strong>{{event.admin_text|striptags}} YES or NO</strong>
+													<strong>{{event.bet_question|striptags}} YES or NO</strong>
 												</div>
 											</div>
 												{% csrf_token %}

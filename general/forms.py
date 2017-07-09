@@ -30,20 +30,22 @@ class UserForm(forms.ModelForm):
 
 class EventForm(forms.ModelForm):
 
-	title               = forms.CharField(help_text="Title", required = True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
-	category 	        = forms.ChoiceField(choices = CATEGORY, error_messages = {'required': 'Please select a category.'},widget=forms.Select(attrs={'class':'form-control','required':'required'}))
-	start_time          = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
-	end_time            = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
-	publish        		= forms.BooleanField(required = False)
-	event_image         = forms.ImageField(required = False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
-	event_msg_body      = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
+
+    title               = forms.CharField(help_text="Title", required = True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
+    category            = forms.ChoiceField(choices = CATEGORY, error_messages = {'required': 'Please select a category.'},widget=forms.Select(attrs={'class':'form-control','required':'required'}))
+    start_time          = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
+    end_time            = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
+    publish             = forms.BooleanField(required = False)
+    event_image         = forms.ImageField(required = False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
+    event_msg_body      = HTMLField()
+    bet_question        = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
 
 
-	class Meta:
-	    model = Event
-	    fields = ('title', 'category', 'start_time', 'end_time', 'publish', 'event_image','event_msg_body',)
+    class Meta:
+        model = Event
+        fields = ('title', 'category', 'start_time', 'end_time', 'publish', 'event_image','event_msg_body','bet_question',)
 
-
+	
 
 class UserProfileForm(forms.ModelForm):
     first_name      = forms.CharField(help_text="First Name", required = True,widget=forms.TextInput(attrs={'placeholder':'First Name', 'required':'required', 'class':'form-control'}))
@@ -65,6 +67,8 @@ class UserAccountForm(forms.ModelForm):
     bank            = forms.ChoiceField(help_text="Bank", choices=BANK, required = True, widget=forms.Select(attrs={'placeholder':'Bank', 'required':'required','class':'form-control'}))
     account_number  = forms.CharField(help_text="Account Number", required = True,widget=forms.TextInput(attrs={'placeholder':'Account Number', 'required':'required', 'class':'form-control'}))
     user_image      = forms.ImageField(help_text="User Image", required = False, widget=forms.ClearableFileInput(attrs={'class':'dropify'}))
+
+    
     class Meta:
         model = UserAccount
         fields = ('bank', 'dob', 'account_number', 'gender', 'phone_number', 'user_image')

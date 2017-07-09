@@ -301,7 +301,7 @@
 									</li>							
 								</ul>
 								<div class="entry-content">
-									<p>{{event.event_msg_body}}</p>
+									<p>{{event.event_msg_body|striptags}}</p>
 									<a href="{% url 'general:event_details' event.pk %}" class="read-more dark-link">
 										Read More <i class="fa fa-angle-right"></i>
 									</a>
@@ -883,6 +883,10 @@
 	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.migration.min.js' %}"></script>
 
 	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.parallax.min.js' %}"></script>
+
+	{% if request.user.is_authenticated %}
+    <script src="{% static 'ynl/client_livechat.js' %}"></script>
+    {% endif %}
 
 {% block customscripts %}
 

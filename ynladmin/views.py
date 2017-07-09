@@ -158,7 +158,7 @@ def create_event(request):
 		# print 'rp:', rp
 		if rp.has_key('edit_event'):
 			print "i wanna edit"
-			event_obj = Event.objects.get(tracking_number=rp.get('event_track_num'))
+			event_obj = Event.objects.get(event_id=rp.get('event_track_num'))
 			form = EventForm(request.POST, request.FILES, instance=event_obj)
 			if form.is_valid:
 				print 'The form is valid'
@@ -171,7 +171,7 @@ def create_event(request):
 					print "you may proceed"
 				create_event_form = form.save(commit=False)
 				create_event_form.author = request.user
-				create_event_form.tracking_number = rp.get('event_track_num')
+				create_event_form.event_id = rp.get('event_track_num')
 				create_event_form.save()
 				return redirect(reverse('ynladmin:admin_pages', args=['events']))
 			else:
@@ -198,7 +198,7 @@ def create_event(request):
 					pass
 				create_event_form = form.save(commit=False)
 				create_event_form.author = request.user
-				create_event_form.tracking_number = randomNumber(str(rp.get('category'))[:2])
+				create_event_form.event_id = randomNumber(str(rp.get('category'))[:2])
 				create_event_form.save()
 				return redirect(reverse('ynladmin:admin_pages', args=['events']))
 			else:
