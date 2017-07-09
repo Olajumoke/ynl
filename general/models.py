@@ -54,7 +54,7 @@ class Event(models.Model):
 	deleted                   = models.BooleanField(default=False)
 	event_id      			  = models.CharField(max_length=50, null=True, blank=True)
 	bet_question			  = models.CharField(max_length=250, null=True, blank=True)
-
+	event_decision			  = models.CharField(max_length=5,choices=CHOICES, null=True, blank=True)
 
 	def __unicode__(self):
 	    return '%s' %(self.author)
@@ -63,6 +63,8 @@ class Event(models.Model):
 		verbose_name_plural = 'Event'
 		ordering = ['-created_on']
 	
+	def gameplay_total_value(self):
+		return self.gameplay_set.all().aggregate(Sum('amount'))['amount__sum']
 
 class Comments(models.Model):
 	""" comments for individual events """
