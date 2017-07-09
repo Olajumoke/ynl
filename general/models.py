@@ -49,11 +49,12 @@ class Event(models.Model):
 	end_time                  = models.DateField(null=True, blank=True)
 	publish     			  = models.BooleanField(default=False)
 	event_image               = models.ImageField(upload_to="media/event/%Y/%M/%d/", null=True, blank=True)
-	event_msg_body            = models.TextField(null=True, blank=True)
+	event_msg_body            = HTMLField(null=True, blank=True)
 	closed					  = models.BooleanField(default=False)
 	deleted                   = models.BooleanField(default=False)
 	event_id      			  = models.CharField(max_length=50, null=True, blank=True)
-	bet_question			  = models.CharField(max_length=50, null=True, blank=True)
+	bet_question			  = models.CharField(max_length=250, null=True, blank=True)
+
 
 	def __unicode__(self):
 	    return '%s' %(self.author)
@@ -61,8 +62,7 @@ class Event(models.Model):
 	class Meta:
 		verbose_name_plural = 'Event'
 		ordering = ['-created_on']
-
-
+	
 
 class Comments(models.Model):
 	""" comments for individual events """

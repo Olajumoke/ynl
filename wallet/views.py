@@ -45,9 +45,6 @@ def purchase_ref():
     return ref
 
 
-
-    
-
 def main(request):
     try:
         user_account = UserAccount.objects.get(user=request.user)
