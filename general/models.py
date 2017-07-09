@@ -65,6 +65,23 @@ class Event(models.Model):
 
 	def gameplay_total_value(self):
 		return self.gameplay_set.all().aggregate(Sum('amount'))['amount__sum']
+	
+	def event_winnings(self):
+		return self.gameplay_set.filter(choice=self.event_decision).aggregate(Sum('amount'))['amount__sum']
+	
+	def total_players(self):
+		return self.gameplay_set.all().count()
+	
+	def total_amount_won(self):
+		return self.gameplay_set.all().aggregate(Sum('amount_won'))['amount_won__sum']
+	
+	def total_winners(self):
+		return self.gameplay_set.filter(choice=self.event_decision).count()
+
+	def total_losers(self):
+		return self.gameplay_set.filter(~Q(choice=self.event_decision)).count()
+
+
 
 class Comments(models.Model):
 	""" comments for individual events """

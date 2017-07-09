@@ -237,7 +237,9 @@ def user_account(request):
 		user = None
 	balance = account_standing(request,request.user)
 	game = Gameplay.objects.filter(user=user)
-	return render(request, 'general/user_account.html', {'user':user, 'balance':balance, 'game':game})
+	game_won = game.filter(decision="WIN")
+	print "game-won", game_won
+	return render(request, 'general/user_account.html', {'user':user, 'balance':balance, 'game':game, 'game_won':game_won})
 
 
 def about_us(request):
