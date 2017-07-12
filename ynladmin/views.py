@@ -358,7 +358,8 @@ def percentage(percent, whole):
 
 def close_event(request, event_id):
 	event = Event.objects.get(id=event_id)
-	stakeholders_percentage = CostSetting.objects.get(id=1)
+	cost_amt = CostSetting.objects.get(id=1)
+	stakeholders_percentage = cost_amt.amount * 0.01
 	#gameplay = Gameplay.objects.filter(event=event)
 	total_value = event.gameplay_total_value()
 	print "Total",total_value
@@ -370,7 +371,7 @@ def close_event(request, event_id):
 	print "half_value",half_value
 	if win_amt >= half_value and lose_amt != 0:
 		print "winnings greater than 50% of total amount"
-		stakeholders_amt = lose_amt * float(stakeholders_percentage/100)
+		stakeholders_amt = lose_amt * stakeholders_percentage
 		left_over = lose_amt - stakeholders_amt
 		print "left_amt", left_over
 		gameplay = Gameplay.objects.filter(event=event, choice=event.event_decision)
