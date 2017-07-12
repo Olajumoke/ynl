@@ -354,10 +354,11 @@ def archive_message(request,pk):
 def percentage(percent, whole):
 	return math.floor((percent*whole)/100.0)
 
-stakeholders_percentage = CostSetting.objects.get(id=1)
+
 
 def close_event(request, event_id):
 	event = Event.objects.get(id=event_id)
+	stakeholders_percentage = CostSetting.objects.get(id=1)
 	#gameplay = Gameplay.objects.filter(event=event)
 	total_value = event.gameplay_total_value()
 	print "Total",total_value
