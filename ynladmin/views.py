@@ -370,7 +370,7 @@ def close_event(request, event_id):
 	print "half_value",half_value
 	if win_amt >= half_value and lose_amt != 0:
 		print "winnings greater than 50% of total amount"
-		stakeholders_amt = lose_amt * (stakeholders_percentage/100)
+		stakeholders_amt = lose_amt * float(stakeholders_percentage/100)
 		left_over = lose_amt - stakeholders_amt
 		print "left_amt", left_over
 		gameplay = Gameplay.objects.filter(event=event, choice=event.event_decision)
@@ -402,7 +402,7 @@ def close_event(request, event_id):
 			game.amount_won = game.amount
 			game.status = "CLOSED"
 			game.save()
-			bank_record, created = Bank.objects.get_or_create(user=game.user.user,txn_type="Add",amount=amount_won, ref_no=purchase_ref(),
+			bank_record, created = Bank.objects.get_or_create(user=game.user.user,txn_type="Add",amount=game.amount_won, ref_no=purchase_ref(),
                         created_at=timezone.now(), message="Amount won for Event" + " " +event.event_id, bank="YNL", status="Successful")
 		event.closed = True
 		event.save()
