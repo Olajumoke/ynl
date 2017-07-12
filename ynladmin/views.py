@@ -35,6 +35,8 @@ from general.forms import *
 from general.views import paginate_list
 from gameplay.models import Gameplay
 from wallet.models import Bank
+from ynladmin.models import CostSetting
+from ynladmin.forms import CostSettingForm
 from wallet.views import purchase_ref, generate_purchaseRef
 # Create your views here.
 
@@ -138,6 +140,22 @@ def admin_pages(request,pages_to):
 		template_name = 'ynladmin/gameplay.html'
 		event = Event.objects.all()
 		context['event'] = event
+	elif pages_to == "settings":
+		if request.method == "POST":
+			form = CostSettingForm(request.POST)
+			if form.is_valid():
+				form.save()
+				messages.success(request,"Amount Updated Successfully")
+			else:
+				print form.errors
+				messages.error(request,"Please try again")
+		template_name = 'ynladmin/settings.html'
+		try:
+			cost = CostSetting.objects.get(id=1)
+			form = CostSettingForm(instance=cost)
+		except:
+			form = CostSettingForm()
+		context['form']=form
 	return render(request,template_name,context)
 
 
@@ -336,6 +354,8 @@ def archive_message(request,pk):
 def percentage(percent, whole):
 	return math.floor((percent*whole)/100.0)
 
+stakeholders_percentage = CostSetting.objects.get(id=1)
+
 def close_event(request, event_id):
 	event = Event.objects.get(id=event_id)
 	#gameplay = Gameplay.objects.filter(event=event)
@@ -349,7 +369,7 @@ def close_event(request, event_id):
 	print "half_value",half_value
 	if win_amt >= half_value and lose_amt != 0:
 		print "winnings greater than 50% of total amount"
-		stakeholders_amt = lose_amt * 0.2
+		stakeholders_amt = lose_amt * (stakeholders_percentage/100)
 		left_over = lose_amt - stakeholders_amt
 		print "left_amt", left_over
 		gameplay = Gameplay.objects.filter(event=event, choice=event.event_decision)
