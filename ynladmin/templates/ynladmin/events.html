@@ -58,13 +58,15 @@
                                 <span><a class="view_event" identifier="view" event_track_num="{{event.event_id}}"><i class="fa fa-eye"  title="View"
                                 style="cursor: pointer;"></i></a>
                                 </span>&nbsp;&nbsp;
+								{% if not event.closed %}
                                 <span><a class="edit_event" identifier="edit" event_track_num="{{event.event_id}}"><i class="fa fa-pencil" title="Edit" 
                                 style="cursor: pointer;"></i></a>
                                 </span>&nbsp;&nbsp;
+								{% endif %}
                                 <span><a style="cursor: pointer;" href="{% url 'ynladmin:delete_event' event.id %}" onclick="return confirm('Are you sure you want to delete this event?')"><i class="fa fa-trash" title="Delete"></i></a>
                                 </span>
                             </td>
-							<td>{% if event.closed %}CLOSED{% else %} <span><a style="cursor: pointer;" href="{% url 'ynladmin:close_event' event.id %}" onclick="return confirm('Are you sure you want to Close this event?')">CLOSE EVENT{% endif %}</a></span></td>
+							<td>{% if event.closed %}CLOSED{% else %} <span><a style="cursor: pointer;" href="{% url 'ynladmin:close_event' event.id %}" onclick="return confirm('Are you sure you want to Close this Event? and has a DECISION been SET?')">CLOSE EVENT{% endif %}</a></span></td>
                         </tr>
                     {% empty %}
                         <p>No Event</p>
