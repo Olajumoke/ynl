@@ -43,7 +43,7 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ('title', 'category', 'start_time', 'end_time', 'publish', 'event_image','event_msg_body','bet_question','event_decision')
+        fields = ('title', 'category', 'start_time', 'end_time', 'publish', 'event_image','event_msg_body','bet_question','event_decision','event_id')
 
 	
 

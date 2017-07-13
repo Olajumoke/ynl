@@ -138,7 +138,7 @@ def admin_pages(request,pages_to):
 		context['payments'] = payments
 	elif pages_to == "game":
 		template_name = 'ynladmin/gameplay.html'
-		event = Event.objects.all()
+		event = paginate_list(request,Event.objects.all(),10)
 		context['event'] = event
 	elif pages_to == "settings":
 		if request.method == "POST":
