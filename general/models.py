@@ -100,6 +100,22 @@ class Comments(models.Model):
 		ordering = ['-created_on']
 
 
+class Replies(models.Model):
+	""" replies to comments for individual events """
+	reply 				= models.TextField()
+	comment_obj         = models.ForeignKey(Comments, null=True, blank=True)
+	created_on			= models.DateTimeField(default = timezone.now)
+	name                = models.CharField(max_length=150, null=True, blank=True)
+	email               = models.CharField(max_length=150, null=True, blank=True)
+
+	def __unicode__(self):
+	    return '%s' %(self.username)
+
+	class Meta:
+		verbose_name_plural = 'Responses'
+		ordering = ['-created_on']
+
+
 
 class MessageCenter(models.Model):
     user                = models.ForeignKey(User, null=True, blank=True)
