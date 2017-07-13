@@ -50,7 +50,10 @@
                             <td>{{event.end_time|date:"SHORT_DATE_FORMAT"}}</td>
                             <td>{{event.total_players}}</td>
 							<td>{{event.total_winners}}</td>
+							{% if event.closed %}
 							<td>{{event.total_losers}}</td>
+							{% else %}
+							<td>0</td>{% endif %}
 							<td>₦{{event.gameplay_total_value|floatformat:2|intcomma}}</td>
 							<td>₦{{event.total_amount_won|floatformat:2|intcomma}}</td>
                             <td>{% if event.closed %}CLOSED{% else %}OPEN{% endif %}</td>
