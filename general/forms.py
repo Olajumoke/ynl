@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from general.models import UserAccount, Event
 from general.modelchoices import *
 from tinymce.models import HTMLField
-from general.models import UserAccount, MessageCenterComment
+from general.models import UserAccount, MessageCenterComment, Replies
 from general.modelchoices import BANK, GENDER
 
 
@@ -87,6 +87,17 @@ class MessageCenterCommentForm(forms.ModelForm):
     class Meta:
         model = MessageCenterComment
         fields = ('message', 'image_obj',)
+
+
+
+class RepliesForm(forms.ModelForm):
+    reply          = forms.CharField(max_length = 128, help_text = "", widget=forms.Textarea(attrs={'required':'true','class':'form-control'}))
+    name           = forms.CharField(help_text="Name", required = True,widget=forms.TextInput(attrs={'placeholder':'Mame', 'required':'required', 'class':'form-control', 'readonly':'readonly'}))
+    email          = forms.EmailField(help_text="E-Mail", required = True, widget=forms.EmailInput(attrs={'placeholder':'E-mail', 'required':'required','class':'form-control'}))
+   
+    class Meta:
+        model = Replies
+        fields = ('reply', 'name', 'email')
 
 
 

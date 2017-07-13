@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response, render, redirect, get_object_or
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import Http404, HttpResponse , HttpResponseRedirect, JsonResponse
 from django.forms.models import model_to_dict
-from general.forms import UserForm, UserAccountForm, UserProfileForm, MessageCenterCommentForm
+from general.forms import UserForm, UserAccountForm, UserProfileForm, MessageCenterCommentForm, RepliesForm
 from general.models import UserAccount, Event, MessageCenter, MessageCenterComment
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required,user_passes_test
