@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from django.utils import timezone
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, render, redirect, get_object_or_404
 from django.core.serializers.json import DjangoJSONEncoder
@@ -23,7 +23,7 @@ import re
 import hashlib
 import random, datetime, string
 import urllib
-import time
+import time, math
 from django.core.urlresolvers import reverse
 import json
 from django.db.models import Sum
@@ -34,6 +34,10 @@ from general.models import *
 from general.forms import *
 from general.views import paginate_list
 from gameplay.models import Gameplay
+from wallet.models import Bank
+from ynladmin.models import CostSetting
+from ynladmin.forms import CostSettingForm
+from wallet.views import purchase_ref, generate_purchaseRef
 # Create your views here.
 
 
@@ -132,6 +136,26 @@ def admin_pages(request,pages_to):
 		template_name = 'ynladmin/payment.html'
 		payments = paginate_list(request,Bank.objects.all(),10)
 		context['payments'] = payments
+	elif pages_to == "game":
+		template_name = 'ynladmin/gameplay.html'
+		event = Event.objects.all()
+		context['event'] = event
+	elif pages_to == "settings":
+		if request.method == "POST":
+			form = CostSettingForm(request.POST)
+			if form.is_valid():
+				form.save()
+				messages.success(request,"Amount Updated Successfully")
+			else:
+				print form.errors
+				messages.error(request,"Please try again")
+		template_name = 'ynladmin/settings.html'
+		try:
+			cost = CostSetting.objects.get(id=1)
+			form = CostSettingForm(instance=cost)
+		except:
+			form = CostSettingForm()
+		context['form']=form
 	return render(request,template_name,context)
 
 
@@ -327,13 +351,91 @@ def archive_message(request,pk):
 	get_msg.save()
 	return redirect(request.META['HTTP_REFERER'])
 		
+def percentage(percent, whole):
+	return math.floor((percent*whole)/100.0)
+
 
 
 def close_event(request, event_id):
 	event = Event.objects.get(id=event_id)
-	gameplay = Gameplay.objects.filter(event=event)
+	cost_amt = CostSetting.objects.get(id=1)
+	stakeholders_percentage = cost_amt.amount * 0.01
+	#gameplay = Gameplay.objects.filter(event=event)
 	total_value = event.gameplay_total_value()
 	print "Total",total_value
+	win_amt = event.event_winnings()
+	lose_amt = total_value - win_amt
+	print "losers",lose_amt
+	print "winners", win_amt
+	half_value = total_value * 0.5
+	print "half_value",half_value
+	if win_amt >= half_value and lose_amt != 0:
+		print "winnings greater than 50% of total amount"
+		stakeholders_amt = lose_amt * stakeholders_percentage
+		left_over = lose_amt - stakeholders_amt
+		print "left_amt", left_over
+		gameplay = Gameplay.objects.filter(event=event, choice=event.event_decision)
+		print "gameplay", gameplay
+		for game in gameplay:
+			percentage_won = math.floor((100 * game.amount)/win_amt)
+			print "%",percentage_won
+			amount_won = percentage(percentage_won, left_over) + game.amount
+			print "amt_won", amount_won
+			game.decision = "WIN"
+			game.amount_won = amount_won
+			game.status = "CLOSED"
+			game.save()
+			bank_record, created = Bank.objects.get_or_create(user=game.user.user,txn_type="Add",amount=amount_won, ref_no=purchase_ref(),
+                        created_at=timezone.now(), message="Amount won for Event" + " " +event.event_id, bank="YNL", status="Successful")
+		event.closed = True
+		event.save()
+		lost_game = Gameplay.objects.filter(event=event,status="OPEN")
+		for game in lost_game:
+			game.status = "CLOSED"
+			game.decision = "LOST"
+			game.save()
+		messages.success(request, "This Event has been Successfully CLOSED!!!")
+	elif win_amt == total_value:
+		gameplay = Gameplay.objects.filter(event=event, choice=event.event_decision)
+		print "gameplay", gameplay
+		for game in gameplay:
+			game.decision = "WIN"
+			game.amount_won = game.amount
+			game.status = "CLOSED"
+			game.save()
+			bank_record, created = Bank.objects.get_or_create(user=game.user.user,txn_type="Add",amount=game.amount_won, ref_no=purchase_ref(),
+                        created_at=timezone.now(), message="Amount won for Event" + " " +event.event_id, bank="YNL", status="Successful")
+		event.closed = True
+		event.save()
+	elif win_amt < half_value and win_amt != 0:
+		print "winnings lesser than 50% of total amount"
+		left_over = half_value - win_amt
+		print "left_amt", left_over
+		gameplay = Gameplay.objects.filter(event=event, choice=event.event_decision)
+		print "gameplay", gameplay
+		for game in gameplay:
+			percentage_won = math.floor((100 * game.amount)/win_amt)
+			print "%",percentage_won
+			amount_won = percentage(percentage_won, left_over) + game.amount
+			print "amt_won", amount_won
+			game.decision = "WIN"
+			game.amount_won = amount_won
+			game.status = "CLOSED"
+			game.save()
+			bank_record, created = Bank.objects.get_or_create(user=game.user.user,txn_type="Add",amount=amount_won, ref_no=purchase_ref(),
+                        created_at=timezone.now(), message="Amount won for Event" + " " +event.event_id, bank="YNL", status="Successful")
+		event.closed = True
+		event.save()
+		lost_game = Gameplay.objects.filter(event=event,status="OPEN")
+		for game in lost_game:
+			game.status = "CLOSED"
+			game.decision = "LOST"
+			game.save()
+		messages.success(request, "This Event has been Successfully CLOSED!!!")
+	# elif win_amt == half_value:
+	# 	print "winnings equal to 50% of total amount"
+	else:
+		print "I rep o"
 	return redirect(request.META['HTTP_REFERER'])
 
 

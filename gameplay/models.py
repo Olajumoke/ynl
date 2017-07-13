@@ -20,7 +20,7 @@ class Gameplay(models.Model):
     
     
     class Meta:
-        ordering = ['date']
+        ordering = ['-date']
 
     def __unicode__(self):
         return unicode(self.user)
