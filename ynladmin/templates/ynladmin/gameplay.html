@@ -1,6 +1,6 @@
 {% extends 'ynladmin/adminHome.html' %}
 {% load staticfiles %}
-
+{% load humanize %}
 
 {% block events_won %}
 {% endblock events_won %}
@@ -36,8 +36,8 @@
 							<th>Total Players</th>
                             <th>Total Winners</th>
 							<th>Total Losers</th>
-                            <th>Total amount<br/>(₦)</th>
-							<th>Total amount(Winners)<br/>(₦)</th>
+                            <th>Total amount</th>
+							<th>Total amount(Winners)</th>
 							<th>Event Status</th>
                         </tr>
                     </thead>
@@ -51,8 +51,8 @@
                             <td>{{event.total_players}}</td>
 							<td>{{event.total_winners}}</td>
 							<td>{{event.total_losers}}</td>
-							<td>{{event.gameplay_total_value}}</td>
-							<td>{{event.total_amount_won}}</td>
+							<td>₦{{event.gameplay_total_value|floatformat:2|intcomma}}</td>
+							<td>₦{{event.total_amount_won|floatformat:2|intcomma}}</td>
                             <td>{% if event.closed %}CLOSED{% else %}OPEN{% endif %}</td>
 	                    </tr>
                     {% empty %}
