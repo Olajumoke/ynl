@@ -142,7 +142,11 @@ def admin_pages(request,pages_to):
 		context['event'] = event
 	elif pages_to == "settings":
 		if request.method == "POST":
-			form = CostSettingForm(request.POST)
+			try:
+				cost = CostSetting.objects.get(id=1)
+				form = CostSettingForm(request.POST, instance=cost)
+			except:
+				form = CostSettingForm(request.POST)
 			if form.is_valid():
 				form.save()
 				messages.success(request,"Amount Updated Successfully")
