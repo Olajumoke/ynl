@@ -52,10 +52,13 @@ def getCategoryCount(value):
 def getPercent(value,pk):
 	if value == 0:
 		percent_value = 0
+		print value
 		return percent_value
 	else:
 		event_total_players = Event.objects.get(pk=pk)
-		percent_value = (float(value) / float(event_total_players.total_players)) * 100
+		print event_total_players
+		print value
+		percent_value = (float(value) / float(event_total_players.total_players())) * 100
 		return percent_value
 	
 # @register.simple_tag
