@@ -1,6 +1,7 @@
 {% extends 'general/homepage.html' %}
 {% load custom_filters %}
 {% load staticfiles %}
+{% load humanize %}
 
 {% block title %}<title>YesorNoLIVE.com | Event</title>{% endblock %}
 {% block content %}
@@ -143,7 +144,7 @@
 														<a href="#">
 															<i class="icon_currency"></i>
 														</a>
-														<h3 class="uppercase">₦9,000,254</h3>
+														<h3 class="uppercase">₦₦{{event.gameplay_total_value|floatformat:2|intcomma}}</h3>
 														<span>To be won<span>			
 													</span></span></div>						
 												</div> <!-- end service item -->
@@ -153,7 +154,7 @@
 														<a href="#">
 															<i class="icon-profile-male"></i>
 														</a>
-														<h3 class="uppercase">2005</h3>
+														<h3 class="uppercase">{{event.total_players}}</h3>
 														<span>Players<span>			
 													</span></span></div>						
 												</div> <!-- end service item -->
@@ -180,28 +181,28 @@
 
 											</div>
 
-											{% if event.total_players == 0 %}
+											<!--  if event.total_players == 0 %}
 											<div class="entry hidden"></div>
-											{% else %}
+											else %}
 											<div class="entry">
 												<div class="yesorno-bar">
 											
 			      										<div class="progress-bar progress-bar-success" style="width: 
-			      										{% getPercent event.total_yes_choice event.pk %}%">
+			      										 getPercent event.total_yes_choice event.pk %}%">
 			       											 <span class="sr-only">
-			       											 {% getPercent event.total_yes_choice event.pk %}% 
-			       											 Complete (success)</span>Yes <!-- Text  -->
+			       											 getPercent event.total_yes_choice event.pk %}% 
+			       											 Complete (success)</span>Yes <!-- Text->
 			      										</div>
 
 			      										<div class="progress-bar progress-bar-danger" style="width: 
-			      										{% getPercent event.total_no_choice event.pk %}%">
+			      										getPercent event.total_no_choice event.pk %}%">
 			        										<span class="sr-only">
-			        										{% getPercent event.total_no_choice event.pk %}% 
+			        										getPercent event.total_no_choice event.pk %}% 
 			        										Complete (danger)</span>No
 			      										</div>
 												</div>
 											</div>
-											{% endif %}
+											 endif %} -->
 
 										{% if event.end_time < today.date %}
 										<div>
