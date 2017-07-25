@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load custom_filters %}
+{% load humanize %}
 {% block header %}
 <!DOCTYPE html>
 <html lang="en">
@@ -272,15 +273,38 @@
 								</a>
 								<div class="entry-inner-bottom">
 									<div class="entry">
-										<h2 class="entry-title color-white"><a>₦9,987,230</a> <span style="font-size: 10px !important;">to be won</span></h2>
+										<h2 class="entry-title color-white">
+										{% if event.gameplay_total_value == None %}
+											<a>₦0.00</a>
+										{% else %} 	
+											<a>₦{{event.gameplay_total_value|floatformat:2|intcomma}}</a>
+										{% endif %} 
+										<span style="font-size: 10px !important;">to be won</span></h2>
+
+
 										<div class="yesorno-bar">
-      										<div class="progress-bar progress-bar-success" style="width: 10%">
-       											 <span class="sr-only">10% Complete (success)</span>Yes <!-- Text  -->
-      										</div>
-      										<div class="progress-bar progress-bar-danger" style="width: 90%">
-        										<span class="sr-only">90% Complete (danger)</span>No
-      										</div>
+											{% if event.total_players == 0 %}
+												<div class="progress-bar progress-bar-warning" style="width: 100%">
+	       											 <span class="sr-only"></span>Play Now!!! <!-- Text  -->
+	      										</div>
+
+											{% else %}
+	      										<div class="progress-bar progress-bar-success" style="width: 
+	      										{% getPercent event.total_yes_choice event.pk %}%">
+	       											 <span class="sr-only">{% getPercent event.total_yes_choice event.pk %}% 
+	       											 Complete (success)</span>Yes <!-- Text  -->
+	      										</div>
+
+	      										<div class="progress-bar progress-bar-danger" style="width: 
+	      										{% getPercent event.total_no_choice event.pk %}%">
+	        										<span class="sr-only">{% getPercent event.total_no_choice event.pk %}% 
+	        										Complete (danger)</span>No
+	      										</div>
+	      									{% endif %}
+
 										</div>
+
+
 									</div>
 									
 								</div>

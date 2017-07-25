@@ -81,6 +81,12 @@ class Event(models.Model):
 	def total_losers(self):
 		return self.gameplay_set.filter(~Q(choice=self.event_decision)).count()
 
+	def total_yes_choice(self):
+		return self.gameplay_set.filter(choice="YES").count()
+
+	def total_no_choice(self):
+		return self.gameplay_set.filter(choice="NO").count()
+
 
 
 class Comments(models.Model):

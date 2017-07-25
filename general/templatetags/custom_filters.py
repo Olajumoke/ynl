@@ -46,6 +46,17 @@ def check_last_comment_user(request,value):
 def getCategoryCount(value):
 	category = Event.objects.filter(category=value,deleted=False)
 	return category.count()
+
+
+@register.simple_tag
+def getPercent(value,pk):
+	if value == 0:
+		percent_value = 0
+		return percent_value
+	else:
+		event_total_players = Event.objects.get(pk=pk)
+		percent_value = (float(value) / float(event_total_players.total_players)) * 100
+		return percent_value
 	
 # @register.simple_tag
 # def get_comments_count(request,value):
