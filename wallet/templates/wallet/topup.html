@@ -6,43 +6,76 @@
 {% block pg_title %}<h4 class="page-title">Wallet</h4> </div>{% endblock %}
 
             {% block body %}
-                <div class="row">
-                    <div class="col-lg-3 col-sm-6 col-xs-12">
-                        <div class="white-box">
-                            <h3 class="box-title">Events Won</h3>
-                            <ul class="list-inline two-part">
-                                <li><i class="icon-trophy text-info"></i></li>
-                                <li class="text-right"><span class="counter">23</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 col-xs-12">
-                        <div class="white-box">
-                            <h3 class="box-title">Played Events</h3>
-                            <ul class="list-inline two-part">
-                                <li><i class="icon-game-controller text-purple"></i></li>
-                                <li class="text-right"><span class="counter">{{game.count}}</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="col-lg-6 col-sm-6 col-xs-12">
-                        <div class="white-box">
-                            <h3 class="box-title">Wallet Balance</h3>
-                            <ul class="list-inline two-part">
-                                <li><i class="ti-wallet text-success"></i></li>
-                                <li class="text-right"><span class="counter">₦{{balance|floatformat:2|intcomma}}</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                
-
-
 
                 <!--row -->
                 <div class="row">
+                        <div class="col-lg-6">
+                        <div class="white-box">
+                            
+                            
+                            <p class="text-muted m-b-30">Choose from the options below to top up your wallet</p>
+                            <div class="row">
+                                
+                                <div class="col-lg-6 col-sm-4 col-xs-12">
+                                    <button class="btn btn-block btn-info btn-rounded" id="paystack">Top Up</button>
+                                </div>
+                               
+                            </div>
+                            
+                        </div>
+                        <div class="white-box hidden" id = 'paydiv'>
+
+                            <div class="row">
+                                <form method="post" action="{% url 'wallet:main' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="Amount">Amount(&#8358;)</label>
+                                        <div class="input-group">
+                                            <input type="number" name="amount" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-block btn-info btn-rounded">Pay Now</button>
+                                    </div>                               
+                                </form>
+                                
+                            </div>
+                            
+                        </div>
+                        </div>
+                        
+                        <div class="col-lg-6">
+                        <div class="white-box">
+                            <p class="text-muted m-b-30">Choose from the options below to cash out your wallet</p>
+                            <div class="row">
+                        
+                                <div class="col-lg-6 col-sm-4 col-xs-12">
+                                    <button id="transfer" class="btn btn-block btn-danger btn-rounded">Transfer to Bank</button>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="white-box hidden" id="transferdiv">
+
+                            <div class="row">
+                                <form method="post" action="{% url 'wallet:cashout' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="Amount">Amount(&#8358;)</label>
+                                        <div class="input-group">
+                                            <input type="number" name="amount" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-block btn-info btn-rounded">Cash out</button>
+                                    </div>                               
+                                </form>
+                                
+                            </div>
+                            
+                        </div>
+                        </div>
                         <div class="col-lg-12">
                         <div class="white-box">
                             <h3 class="box-title">Wallet Transaction History</h3>
@@ -132,73 +165,7 @@
                         </div>
                         </div>
 
-                        <div class="col-lg-6">
-                        <div class="white-box">
-                            
-                            
-                            <p class="text-muted m-b-30">Choose from the options below to top up your wallet</p>
-                            <div class="row">
-                                
-                                <div class="col-lg-6 col-sm-4 col-xs-12">
-                                    <button class="btn btn-block btn-info btn-rounded" id="paystack">Top Up</button>
-                                </div>
-                               
-                            </div>
-                            
-                        </div>
-                        <div class="white-box hidden" id = 'paydiv'>
-
-                            <div class="row">
-                                <form method="post" action="{% url 'wallet:main' %}">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <label for="Amount">Amount(&#8358;)</label>
-                                        <div class="input-group">
-                                            <input type="number" name="amount" required />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-block btn-info btn-rounded">Pay Now</button>
-                                    </div>                               
-                                </form>
-                                
-                            </div>
-                            
-                        </div>
-                        </div>
                         
-                        <div class="col-lg-6">
-                        <div class="white-box">
-                            <p class="text-muted m-b-30">Choose from the options below to cash out your wallet</p>
-                            <div class="row">
-                        
-                                <div class="col-lg-6 col-sm-4 col-xs-12">
-                                    <button id="transfer" class="btn btn-block btn-danger btn-rounded">Transfer to Bank</button>
-                                </div>
-                                
-                            </div>
-                            
-                        </div>
-                        <div class="white-box hidden" id="transferdiv">
-
-                            <div class="row">
-                                <form method="post" action="{% url 'wallet:cashout' %}">
-                                    {% csrf_token %}
-                                    <div class="form-group">
-                                        <label for="Amount">Amount(&#8358;)</label>
-                                        <div class="input-group">
-                                            <input type="number" name="amount" required />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-block btn-info btn-rounded">Cash out</button>
-                                    </div>                               
-                                </form>
-                                
-                            </div>
-                            
-                        </div>
-                        </div>
                         
                         <!--<div class="col-lg-6">
                         <div class="white-box">
@@ -226,10 +193,39 @@
                             
                         </div>
                         </div>-->
-                    </div>
+                    <!--</div>-->
                 </div>
                 <!--row -->
-                
+                <!--<div class="row">
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Events Won</h3>
+                            <ul class="list-inline two-part">
+                                <li><i class="icon-trophy text-info"></i></li>
+                                <li class="text-right"><span class="counter">23</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Played Events</h3>
+                            <ul class="list-inline two-part">
+                                <li><i class="icon-game-controller text-purple"></i></li>
+                                <li class="text-right"><span class="counter">{game.count}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Wallet Balance</h3>
+                            <ul class="list-inline two-part">
+                                <li><i class="ti-wallet text-success"></i></li>
+                                <li class="text-right"><span class="counter">₦balance|floatformat:2|intcomma}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>-->
                
                 
                 

@@ -158,18 +158,19 @@ def register(request):
 
 
 def event_details(request,pk):
-	context = {}
-	events_all = Event.objects.filter(deleted=False)
-	categories = []
-	for event in events_all:
-		if event.category in categories:
-			pass
-		else:
-			categories.append(event.category)
-	context['categories'] = categories
-	event_obj = Event.objects.get(pk=pk)
-	context['event'] = event_obj
-	return render(request, 'general/magazine-single-article.html',context)
+    context = {}
+    events_all = Event.objects.filter(deleted=False)
+    categories = []
+    for event in events_all:
+        if event.category in categories:
+            pass
+        else:
+            categories.append(event.category)
+    context['categories'] = categories
+    event_obj = Event.objects.get(pk=pk)
+    context['event'] = event_obj
+    context['today'] = timezone.now()
+    return render(request, 'general/magazine-single-article.html',context)
 
 
 @login_required

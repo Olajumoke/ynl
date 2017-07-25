@@ -6,6 +6,7 @@
 {% block content %}
 	<div class="main-wrapper magazine oh">
 		{% for msg in messages %}
+			{% if msg.tags == 'success' %}
                     <script>
                         function show_alert(){
                         var alert = '<p style="color:green; text-align:center;"><b>{{ msg }}</b></p>';
@@ -14,6 +15,16 @@
                         display = window.setTimeout(show_alert(), 1000);
                         window.clearTimeout(display);
                     </script>
+			{% else %}
+					<script>
+                        function show_alert(){
+                        var alert = '<p style="color:red; text-align:center;"><b>{{ msg }}</b></p>';
+                        document.write(alert);
+                        }
+                        display = window.setTimeout(show_alert(), 1000);
+                        window.clearTimeout(display);
+                    </script>
+			{% endif %}
                 {% endfor %}
 		
 
@@ -194,8 +205,8 @@
 												</div>
 											</div>
 
-
-
+										{% if event.end_time < today.date %}
+										<div>
 											<div style=" padding-bottom: 10px;">
 												<form method="POST" action="{% url 'gameplay:betting' %}">
 												<div class="bet-question">
@@ -231,6 +242,8 @@
 													</div>
 												</div>
 												</form>
+										</div>
+										{% endif %}
 										</div>
 										
 									<!-- prev / next entry -->
@@ -753,7 +766,7 @@
 	<script>
 		$('body').on('click','input[name="choice"]',function(){
 			var choice = $(this).val();
-			alert(choice);
+			//alert(choice);
 			$('#choice').val(choice);
 			});
 	</script>
