@@ -272,23 +272,17 @@
 									{% endif %}
 								</a>
 								<div class="entry-inner-bottom">
+									{% if event.total_players == 0 %}
+									<div class="entry hidden"></div>
+									{% else %}
 									<div class="entry">
-										<h2 class="entry-title color-white">
-										{% if event.gameplay_total_value == None %}
-											<a>₦0.00</a>
-										{% else %} 	
+										<h2 class="entry-title color-white">	
 											<a>₦{{event.gameplay_total_value|floatformat:2|intcomma}}</a>
-										{% endif %} 
 										<span style="font-size: 10px !important;">to be won</span></h2>
 
 
 										<div class="yesorno-bar">
-											{% if event.total_players == 0 %}
-												<div class="progress-bar progress-bar-warning" style="width: 100%">
-	       											 <span class="sr-only"></span>Play Now!!! <!-- Text  -->
-	      										</div>
-
-											{% else %}
+											
 	      										<div class="progress-bar progress-bar-success" style="width: 
 	      										{% getPercent event.total_yes_choice event.pk %}%">
 	       											 <span class="sr-only">{% getPercent event.total_yes_choice event.pk %}% 
@@ -300,12 +294,11 @@
 	        										<span class="sr-only">{% getPercent event.total_no_choice event.pk %}% 
 	        										Complete (danger)</span>No
 	      										</div>
-	      									{% endif %}
-
 										</div>
 
 
 									</div>
+									{% endif %}
 									
 								</div>
 							</div>

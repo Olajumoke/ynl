@@ -70,29 +70,29 @@
 										</li>
 									</ul>
 									<div class="entry-inner-bottom">
-										<div class="entry">
+
+										{% if event.total_players == 0 %}
+											<div class="entry hidden"></div>
+											{% else %}
+											<div class="entry">
+												<div class="yesorno-bar">
 											
-											<div class="yesorno-bar">
-												{% if event.total_players == 0 %}
-													<div class="progress-bar progress-bar-warning" style="width: 100%">
-		       											 <span class="sr-only"></span>Play Now!!! <!-- Text  -->
-		      										</div>
+			      										<div class="progress-bar progress-bar-success" style="width: 
+			      										{% getPercent event.total_yes_choice event.pk %}%">
+			       											 <span class="sr-only">
+			       											 {% getPercent event.total_yes_choice event.pk %}% 
+			       											 Complete (success)</span>Yes <!-- Text  -->
+			      										</div>
 
-												{% else %}
-		      										<div class="progress-bar progress-bar-success" style="width: 
-		      										{% getPercent event.total_yes_choice event.pk %}%">
-		       											 <span class="sr-only">{% getPercent event.total_yes_choice event.pk %}% 
-		       											 Complete (success)</span>Yes <!-- Text  -->
-		      										</div>
-
-		      										<div class="progress-bar progress-bar-danger" style="width: 
-		      										{% getPercent event.total_no_choice event.pk %}%">
-		        										<span class="sr-only">{% getPercent event.total_no_choice event.pk %}% 
-		        										Complete (danger)</span>No
-		      										</div>
-		      									{% endif %}
+			      										<div class="progress-bar progress-bar-danger" style="width: 
+			      										{% getPercent event.total_no_choice event.pk %}%">
+			        										<span class="sr-only">
+			        										{% getPercent event.total_no_choice event.pk %}% 
+			        										Complete (danger)</span>No
+			      										</div>
+												</div>
 											</div>
-										</div>
+											{% endif %}
 										
 									</div>
 								</div>
@@ -180,14 +180,12 @@
 
 											</div>
 
+											{% if event.total_players == 0 %}
+											<div class="entry hidden"></div>
+											{% else %}
 											<div class="entry">
 												<div class="yesorno-bar">
-													{% if event.total_players == 0 %}
-														<div class="progress-bar progress-bar-warning" style="width: 100%">
-			       											 <span class="sr-only"></span>Play Now!!! <!-- Text  -->
-			      										</div>
-
-													{% else %}
+											
 			      										<div class="progress-bar progress-bar-success" style="width: 
 			      										{% getPercent event.total_yes_choice event.pk %}%">
 			       											 <span class="sr-only">
@@ -201,9 +199,9 @@
 			        										{% getPercent event.total_no_choice event.pk %}% 
 			        										Complete (danger)</span>No
 			      										</div>
-			      									{% endif %}
 												</div>
 											</div>
+											{% endif %}
 
 										{% if event.end_time < today.date %}
 										<div>
