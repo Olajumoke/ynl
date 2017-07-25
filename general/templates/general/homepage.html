@@ -264,7 +264,11 @@
 						<article class="entry-item">
 							<div class="entry-img hover-scale">
 								<a href="{% url 'general:event_details' event.pk %}">
-									<img src="{{event.event_image.url}}" alt="">
+									{% if event.event_image %}
+										<img src="{{event.event_image.url}}" alt="">
+									{% else %}
+										<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
+									{% endif %}
 								</a>
 								<div class="entry-inner-bottom">
 									<div class="entry">
@@ -312,16 +316,7 @@
 
 						{% endfor %}
 
-						<!-- Pagination -->
-						<!-- <nav class="pagination clear">
-							<a href="#"><i class="fa fa-angle-left"></i></a>
-							<span class="page-numbers current">1</span>
-							<a href="#">2</a>
-							<a href="#">3</a>
-							<a href="#">4</a>
-							<a href="#"><i class="fa fa-angle-right"></i></a>
-						</nav>
- -->
+		
  							<nav class="clear">
 
 			                    {% if events.has_previous %}
