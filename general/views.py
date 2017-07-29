@@ -57,8 +57,11 @@ def homepage(request):
 	events_all = Event.objects.filter(deleted=False)
 	all_events = paginate_list(request,events_all,4)
 	categories = []
-	most_recent = events_all[0]
-	context['most_recent'] = most_recent
+	try:
+		most_recent = events_all[0]
+		context['most_recent'] = most_recent
+	except:
+		pass
 	for event in events_all:
 		if event.category in categories:
 			pass
