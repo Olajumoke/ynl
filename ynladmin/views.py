@@ -451,7 +451,7 @@ def close_event(request, event_id):
 def delete_approve_comment(request,action,pk):
 	comment_obj = Comments.objects.get(pk=pk)
 	if action == "delete":
-		comment_obj.delete = True()
+		comment_obj.deleted = True
 	else:
 		comment_obj.approved = True
 	comment_obj.save()
