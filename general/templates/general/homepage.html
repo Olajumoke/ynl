@@ -73,12 +73,22 @@
 								<a href="#"><i class="fa fa-facebook"></i></a>				
 								<!--<a href="#"><i class="fa fa-google-plus"></i></a>
 								<a href="#"><i class="fa fa-vimeo"></i></a> -->
-								<a href="#"><i class="fa fa-instagram"></i></a>
-							</li>
+<!-- 								<a href="#"><i class="fa fa-instagram"></i></a>
+ -->							</li>
 							
 
 							{% if request.user.is_authenticated %}
 							<li class="top-bar-link"><a href="{% url 'general:user_account' %}">Hi, {{request.user.first_name}}</a></li>
+							
+							<li class="top-bar-link">
+							<a href="{% url 'general:user_account' %}">
+								{% if request.user.bank.amount == None %}
+								₦0.00
+								{% else %}
+								₦{{request.user.bank.amount|floatformat:2|intcomma}}
+								{% endif %}
+							</a></li>
+
 							<li class="top-bar-link"><a href="{% url 'general:logout' %}">Logout</a></li>
 								
 							{% else %}
@@ -162,7 +172,7 @@
 												<a href="/">Home</a>
 											</li>
 
-											<li class="dropdown">
+											<!-- <li class="dropdown">
 												<a href="#" class="dropdown-toggle" data-toggle="dropdown">Category</a>
 												<ul class="dropdown-menu">
 													<li><a href="/">Services</a></li>
@@ -173,26 +183,26 @@
 													<li><a href="/">F.A.Q</a></li>
 													<li><a href="/">404</a></li>
 												</ul>
-											</li>
+											</li> -->
 
 
-											<li class="dropdown-toggle">
-												<a href="#">Politics</a>
+											<li class="">
+												<a href="{% url 'general:getCategory' 'Politics' %}">Politics</a>
 											</li> <!-- end portfolio -->
 
-											<li class="dropdown-toggle">
-												<a href="#">Sport</a>
+											<li class="">
+												<a href="{% url 'general:getCategory' 'Sport' %}">Sport</a>
 											</li>
 
-											<li class="dropdown-toggle">
-												<a href="#">Entertainment</a>
+											<li class="">
+												<a href="{% url 'general:getCategory' 'Entertainment' %}">Entertainment</a>
 											</li>
 
-											<li class="dropdown-toggle">
-												<a href="#">STEM</a>
+											<li class="">
+												<a href="{% url 'general:getCategory' 'Stem' %}">Stem</a>
 											</li>
-											<li class="dropdown-toggle">
-												<a href="#">Economics</a>
+											<li class="">
+												<a href="{% url 'general:getCategory' 'Economics' %}">Economics</a>
 											</li>
 											 <!-- end features -->
 
@@ -314,11 +324,11 @@
 									<li class="entry-category">
 										<i class="fa fa-folder-open"></i><a href="#">{{event.category}}</a>
 									</li>
-									<li class="entry-author">
+									<!-- <li class="entry-author">
 										<i class="fa fa-user"></i><a href="#">Admin</a>
-									</li>										
+									</li>										 -->
 									<li class="entry-comments">
-										<i class="fa fa-comments"></i><a href="{% url 'general:event_details' event.pk %}">15</a>
+										<i class="fa fa-comments"></i><a href="{% url 'general:event_details' event.pk %}">{{event.get_comments_count}}</a>
 									</li>							
 								</ul>
 								<div class="entry-content">
@@ -330,7 +340,8 @@
 							</div>
 						</article> 
 						<!-- end standard post -->
-
+						{% empty %}
+							<h2>No event posted for this category</h2>
 						{% endfor %}
 
 		
@@ -368,9 +379,9 @@
 							<a href="#" class="social-facebook" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
 							<a href="#" class="social-twitter" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
 							<a href="#" class="social-google-plus" data-toggle="tooltip" data-placement="top" title="Google +"><i class="fa fa-google-plus"></i></a>
-							<a href="#" class="social-instagram" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram"></i></a>
+							<!-- <a href="#" class="social-instagram" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram"></i></a>
 							<a href="#" class="social-youtube" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube"></i></a>
-							<a href="#" class="social-rss" data-toggle="tooltip" data-placement="top" title="Rss"><i class="fa fa-rss"></i></a>
+							<a href="#" class="social-rss" data-toggle="tooltip" data-placement="top" title="Rss"><i class="fa fa-rss"></i></a> -->
 						</div>
 					</div>
 
@@ -394,211 +405,56 @@
 								
 								<div class="tab-pane fade in active" id="popular-news">
 									<ul class="posts-list no-top-pad">
+										{% for event in events %}
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
+													<a href="{% url 'general:event_details' event.pk %}">
+														<img src="{{event.event_image.url}}" style="width:100px;height:72px;" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' event.pk %}">{{event.title}}</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
+															<a href="{% url 'general:event_details' event.pk %}">{{event.created_on}}</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' event.pk %}">{{event.get_comments_count}}</a>
 														</li>
 													</ul>
 												</div>
 											</article>
 										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="/">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">7 Traits That Define Work Productivity Superstars</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="/">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
+									{% endfor %}
 									</ul>
 								</div> <!-- end popular news tab -->
 
 								<div class="tab-pane fade" id="recent-news">
 									<ul class="posts-list no-top-pad">
+										{% for event in events %}
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
+													<a href="{% url 'general:event_details' event.pk %}">
+														<img src="{{event.event_image.url}}" style="width:100px;height:72px;" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' event.pk %}">{{event.title}}</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
+															<a href="{% url 'general:event_details' event.pk %}">{{event.created_on}}</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' event.pk %}">{{event.get_comments_count}}</a>
 														</li>
 													</ul>
 												</div>
 											</article>
 										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">7 Traits That Define Work Productivity Superstars</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
+									{% endfor %}
+										
 									</ul>
 								</div> <!-- end recent news tab -->
  
@@ -616,7 +472,7 @@
 					</div> <!-- end ad 336x280 -->
 
 					<!-- Editor's pick' -->
-					<div class="widget top-rated">
+					<!-- <div class="widget top-rated">
 						<h3 class="widget-title heading relative heading-small uppercase bottom-line style-2 left-align">Editor's pick</h3>
 
 						<ul class="posts-list no-top-pad">
@@ -715,7 +571,7 @@
 											</article>
 										</li>
 						</ul>
-					</div>
+					</div> -->
 
 					<!-- Categories -->
 					<div class="widget categories">
@@ -723,7 +579,7 @@
 						<ul class="list-dividers">
 							{% for category in categories %}
 							<li>
-								<a href="#">{{category}}<span>{% getCategoryCount category %}</span></a>
+								<a href="{% url 'general:getCategory' category %}">{{category}}<span>{% getCategoryCount category %}</span></a>
 							</li>
 							{% endfor %}
 						</ul>
@@ -747,7 +603,7 @@
 						<div class="col-md-4 col-sm-6 col-xs-12">
 							<div class="widget footer-about-us">
 								<h5 class="uppercase">About Us</h5>
-								<p class="mb-20">Proident mollit pariatur eu anim dolore laboris Lorem amet. Consectetur adipisicing ea est est exercitation ex culpa fugiat sint duis. Mollit magna laboris est ullamco dolor consequat aliquip.</p>
+								<p class="mb-20">Go to our social links for more details</p>
 
 								<p>Subscribe to our newsletter:</p>
 								<form class="relative newsletter-form style-2">
@@ -765,27 +621,31 @@
 								<div class="footer-entry-list">
 
 									<ul class="posts-list no-top-pad">
+										{% if most_recent %}
 										<li class="footer-entry">
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_11.jpg' %}" alt="">
+													<a href="{% url 'general:event_details' most_recent.pk %}">
+														<img src="{{most_recent.event_image.url}}" style="width:100px; height:72px;" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' most_recent.pk %}">{{most_recent.title}}</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
+															<a href="{% url 'general:event_details' most_recent.pk %}">{{most_recent.created_on}}</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' most_recent.pk %}">{{most_recent.get_comments_count}}</a>
 														</li>
 													</ul>
 												</div>
 											</article>
 										</li>
-										<li class="footer-entry">
+										{% else %}
+										<li></li>
+										{% endif %}
+										<!-- <li class="footer-entry">
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="#">
@@ -804,7 +664,7 @@
 													</ul>
 												</div>
 											</article>
-										</li>
+										</li> -->
 									</ul>
 
 								</div>
@@ -816,7 +676,7 @@
 								<h5 class="uppercase">Quick Links</h5>
 								<ul>
 								{% for category in categories %}
-									<li><a href="#">{{category}}</a></li>
+									<li><a href="{% url 'general:getCategory' category %}">{{category}}</a></li>
 								{% endfor %}
 								</ul>
 							</div>
@@ -850,8 +710,8 @@
 							<div class="social-icons dark">
 								<a href="#"><i class="fa fa-twitter"></i></a>
 								<a href="#"><i class="fa fa-facebook"></i></a>
-								<a href="#"><i class="fa fa-instagram"></i></a>
-							</div>
+<!-- 								<a href="#"><i class="fa fa-instagram"></i></a>
+ -->							</div>
 						</div>
 
 					</div>

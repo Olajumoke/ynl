@@ -49,11 +49,11 @@
 								<li class="entry-category">
 									<i class="fa fa-folder-open"></i><a href="#">{{event.category}}</a>
 								</li>
-								<li class="entry-author">
+								<!-- <li class="entry-author">
 									<i class="fa fa-user"></i><a href="#">Admin</a>
-								</li>										
+								</li> -->										
 								<li class="entry-comments">
-									<i class="fa fa-comments"></i><a href="#">15</a>
+									<i class="fa fa-comments"></i><a href="#">{{event.get_comments_count}}</a>
 								</li>							
 							</ul>
 
@@ -127,9 +127,9 @@
 												<a href="#" class="social-twitter" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
 												<a href="#" class="social-facebook" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
 												<a href="#" class="social-google-plus" data-toggle="tooltip" data-placement="top" title="Google +"><i class="fa fa-google-plus"></i></a>
-												<a href="#" class="social-pinterest" data-toggle="tooltip" data-placement="top" title="Pinterest"><i class="fa fa-pinterest-p"></i></a>
+												<!-- <a href="#" class="social-pinterest" data-toggle="tooltip" data-placement="top" title="Pinterest"><i class="fa fa-pinterest-p"></i></a>
 												<a href="#" class="social-instagram" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram"></i></a>
-												<a href="#" class="social-email" data-toggle="tooltip" data-placement="top" title="Email"><i class="fa fa-envelope"></i></a>
+												<a href="#" class="social-email" data-toggle="tooltip" data-placement="top" title="Email"><i class="fa fa-envelope"></i></a> -->
 											</div>
 										</div>
 									</div>
@@ -144,7 +144,13 @@
 														<a href="#">
 															<i class="icon_currency"></i>
 														</a>
-														<h3 class="uppercase">₦₦{{event.gameplay_total_value|floatformat:2|intcomma}}</h3>
+														<h3 class="uppercase">
+														{% if event.gameplay_total_value == 0 %}
+															₦0.00
+														{% else %}
+															₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+														{% endif %}
+														</h3>
 														<span>To be won<span>			
 													</span></span></div>						
 												</div> <!-- end service item -->
@@ -248,19 +254,33 @@
 									<!-- prev / next entry -->
 									<div class="entry-prev-next">
 										<div class="row">
+											{% if next_event %}
 											<div class="col-sm-6 prev-entry">
-												<span><i class="fa fa-angle-left"></i>Previous Post</span>
-												<h4><a href="#">The New Development Bank will have an African regional branch</a></h4>
+												<a href="{% url 'general:event_details' next_event.pk %}"><span><i class="fa fa-angle-left"></i>Previous Post</span></a>
+												<h4><a href="{% url 'general:event_details' next_event.pk %}">{{next_event.title}}</a></h4>
 											</div>
+											{% else %}
+											<div class="col-sm-6 prev-entry">
+												<span>No more posts</span>
+											</div>
+											{% endif %}
+
+											{% if previous_event %}
 											<div class="col-sm-6 next-entry">
-												<span>Next Post<i class="fa fa-angle-right"></i></span>
-												<h4><a href="#">Eiusmod pariatur ad id est dolor in.</a></h4>
+												<a href="{% url 'general:event_details' previous_event.pk %}"><span>Next Post<i class="fa fa-angle-right"></i></span></a>
+												<h4><a href="{% url 'general:event_details' previous_event.pk %}">{{previous_event.title}}</a></h4>
 											</div>
+											{% else %}
+											<div class="col-sm-6 next-entry">
+												<span>No more posts</span>
+												
+											</div>
+											{% endif %}
 										</div>
 									</div>
 									
 									<!-- related posts -->
-									<div class="related-posts mt-40">
+									<!-- <div class="related-posts mt-40">
 										<h3 class="heading relative heading-small uppercase bottom-line style-2 left-align mb-30">Related Posts</h3>
 										<div class="row">
 											<div class="col-sm-4">
@@ -300,25 +320,35 @@
 												</article>
 											</div>
 										</div>
-									</div>
+									</div> -->
 
 									<!-- Comments -->
-									<div class="entry-comments mt-20">
-										<h3 class="heading relative heading-small uppercase bottom-line style-2 left-align mb-40">4 comments</h3>
+									<div class="entry-comments mt-20" style="overflow-y: scroll;">
+										<h3 class="heading relative heading-small uppercase bottom-line style-2 left-align mb-40">
+
+										{% if event.get_comments_count == 0 %}
+											No comment
+										{% else %}
+											{{event.get_comments_count}} comment(s)
+										{% endif %}
+										</h3>
 
 										<ul class="comment-list">
 											<li>
 												<div class="comment-body">
+												{% for comment in event.get_comments %}
 													<img src="{% static 'img/blog/comment_1.jpg' %}" class="comment-avatar" alt="">
+													
 													<div class="comment-content">
-														<span class="comment-author">Joeby Ragpa</span>
-														<span><a href="#">May 6, 2014 at 12:48 pm</a></span>		
-														<p>This template is so awesome. I didn’t expect so many features inside. E-commerce pages are very useful, you can launch your online store in few seconds. I will rate 5 stars.</p>
-														<a href="#">Reply</a>
+														<span class="comment-author">{{comment.username}}</span>
+														<span><a href="#">{{comment.created_on}}</a></span>		
+														<p>{{comment.text}}</p>
 													</div>
+
+												{% endfor %}
 												</div>
 
-												<ul class="comment-reply">
+												<!-- <ul class="comment-reply">
 													<li>
 														<div class="comment-body">
 															<img src="{% static 'img/blog/comment_2.jpg' %}" class="comment-avatar" alt="">
@@ -329,12 +359,12 @@
 																<a href="#">Reply</a>
 															</div>
 														</div>
-													</li> <!-- end reply comment -->
-												</ul>
-
+													</li> <!- end reply comment -->
+<!-- 												</ul>
+ -->
 											</li> <!-- end 1-2 comment -->
 
-											<li>
+											<!-- <li>
 												<div class="comment-body">
 													<img src="{% static 'img/blog/comment_3.jpg' %}" class="comment-avatar" alt="">
 													<div class="comment-content">
@@ -344,29 +374,33 @@
 														<a href="#">Reply</a>
 													</div>
 												</div>
-											</li> <!-- end 3 comment -->
+											</li> --> <!-- end 3 comment -->
 
 										</ul>					
 									</div> <!--  end comments -->
 
 									<!-- Leave a Comment -->
 									<div class="comment-form mt-60 mb-50">
-										<h3 class="heading relative heading-small uppercase bottom-line style-2 left-align">leave a reply</h3>
-										<form id="form" method="post" action="#">
+										<h3 class="heading relative heading-small uppercase bottom-line style-2 left-align">leave a Comment</h3>
+
+										<form id="user_comment_form" method="post" action="{% url 'general:user_comment' %}">
+											{% csrf_token %}
 											<div class="row row-16">
 												<div class="col-md-4">
-													<input name="name" id="name" type="text" placeholder="Name*">
+													<input name="name" id="name" required type="text" placeholder="Name*">
 												</div>
 												<div class="col-md-4">
-													<input name="mail" id="mail" type="email" placeholder="E-mail*">
+													<input name="mail" id="mail" required type="email" placeholder="E-mail*">
 												</div>
 												<div class="col-md-12">
-													<textarea name="comment" id="comment" placeholder="Comment" rows="8"></textarea>
+													<textarea name="comment" maxlength="150" required id="comment" placeholder="Comment" rows="8"></textarea>
 												</div>
+												<input type="hidden" name="event_pk" value="{{event_pk}}">
 											</div>
 
-											<input type="submit" class="btn btn-md btn-color" value="Post Comment" id="submit-message">
+											<input type="submit" class="btn btn-md btn-color" value="Post Comment">
 										</form>
+
 									</div>
 
 								</div>
@@ -385,9 +419,9 @@
 							<a href="#" class="social-facebook" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
 							<a href="#" class="social-twitter" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
 							<a href="#" class="social-google-plus" data-toggle="tooltip" data-placement="top" title="Google +"><i class="fa fa-google-plus"></i></a>
-							<a href="#" class="social-instagram" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram"></i></a>
+							<!-- <a href="#" class="social-instagram" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram"></i></a>
 							<a href="#" class="social-youtube" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube"></i></a>
-							<a href="#" class="social-rss" data-toggle="tooltip" data-placement="top" title="Rss"><i class="fa fa-rss"></i></a>
+							<a href="#" class="social-rss" data-toggle="tooltip" data-placement="top" title="Rss"><i class="fa fa-rss"></i></a> -->
 						</div>
 					</div>
 
@@ -411,106 +445,28 @@
 								
 								<div class="tab-pane fade in active" id="popular-news">
 									<ul class="posts-list no-top-pad">
+									{% for event in all_events %}
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
+													<a href="{% url 'general:event_details' event.pk %}">
+														<img src="{{event.event_image.url}}" style="width:100px;height:72px;" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' event.pk %}">{{event.title}}</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
+															<a href="{% url 'general:event_details' event.pk %}">{{event.created_on}}</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
+															<i class="fa fa-comments"></i><a href="#">{{event.get_comments_count}}</a>
 														</li>
 													</ul>
 												</div>
 											</article>
 										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">7 Traits That Define Work Productivity Superstars</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
+									{% endfor %}
 									</ul>
 								</div> <!-- end popular news tab -->
 
@@ -519,98 +475,18 @@
 										<li>
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
+													<a href="{% url 'general:event_details' event.pk %}">
+														<img src="{{event.event_image.url}}" style="width:100px;height:72px;" alt="">
 													</a>
 												</div>
 												<div class="entry">
-													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
+													<h3 class="entry-title"><a href="{% url 'general:event_details' event.pk %}">{{event.title}}</a></h3>
 													<ul class="entry-meta list-inline">
 														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
+															<a href="{% url 'general:event_details' event.pk %}">{{event.created_on}}</a>
 														</li>
 														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_7.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">7 Traits That Define Work Productivity Superstars</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
+															<i class="fa fa-comments"></i><a href="#">{{event.get_comments_count}}</a>
 														</li>
 													</ul>
 												</div>
@@ -633,7 +509,7 @@
 					</div> <!-- end ad 336x280 -->
 
 					<!-- Editor's pick' -->
-					<div class="widget top-rated">
+					<!-- <div class="widget top-rated">
 						<h3 class="widget-title heading relative heading-small uppercase bottom-line style-2 left-align">Editor's pick</h3>
 
 						<ul class="posts-list no-top-pad">
@@ -732,7 +608,7 @@
 											</article>
 										</li>
 						</ul>
-					</div>
+					</div> -->
 
 
 					<!-- Categories -->
@@ -741,7 +617,7 @@
 						<ul class="list-dividers">
 							{% for category in categories %}
 							<li>
-								<a href="#">{{category}}<span>{% getCategoryCount category %}</span></a>
+								<a href="{% url 'general:getCategory' category %}">{{category}}<span>{% getCategoryCount category %}</span></a>
 							</li>
 							{% endfor %}
 						</ul>
@@ -752,6 +628,134 @@
 			</div> <!-- end main container -->						
 		</section> <!-- end post-single -->
 {% endblock %}
+
+{% block footer %}
+		<!-- Footer Type-4 -->
+		<footer class="footer footer-type-4">
+			<div class="container">
+				<div class="footer-widgets">
+					<div class="row">
+
+						<div class="col-md-4 col-sm-6 col-xs-12">
+							<div class="widget footer-about-us">
+								<h5 class="uppercase">About Us</h5>
+								<p class="mb-20">Go to our social links for more details</p>
+
+								<p>Subscribe to our newsletter:</p>
+								<form class="relative newsletter-form style-2">
+									<input type="email" class="newsletter-input" placeholder="Enter your email">
+									<i class="icon_mail"></i>
+									<input type="submit" class="btn btn-md btn-dark newsletter-submit" value="Subscribe">
+								</form>
+
+							</div>
+						</div> <!-- end about us -->
+
+						<div class="col-md-4 col-sm-6 col-xs-12">
+							<div class="widget footer-posts with-thumbs">
+								<h5 class="uppercase">Recent Posts</h5>
+								<div class="footer-entry-list">
+
+									<ul class="posts-list no-top-pad">
+										{% if most_recent %}
+										<li class="footer-entry">
+											<article class="post-small clearfix">
+												<div class="entry-img hover-scale">
+													<a href="{% url 'general:event_details' most_recent.pk %}">
+														<img src="{{most_recent.event_image.url}}" style="width:100px; height:72px;" alt="">
+													</a>
+												</div>
+												<div class="entry">
+													<h3 class="entry-title"><a href="{% url 'general:event_details' most_recent.pk %}">{{most_recent.title}}</a></h3>
+													<ul class="entry-meta list-inline">
+														<li class="entry-date">
+															<a href="{% url 'general:event_details' most_recent.pk %}">{{most_recent.created_on}}</a>
+														</li>
+														<li class="entry-comments">
+															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' most_recent.pk %}">{{most_recent.get_comments_count}}</a>
+														</li>
+													</ul>
+												</div>
+											</article>
+										</li>
+										{% else %}
+										<li></li>
+										{% endif %}
+										<!-- <li class="footer-entry">
+											<article class="post-small clearfix">
+												<div class="entry-img hover-scale">
+													<a href="#">
+														<img src="{% static 'img/magazine/thumb_12.jpg' %}" alt="">
+													</a>
+												</div>
+												<div class="entry">
+													<h3 class="entry-title"><a href="#">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
+													<ul class="entry-meta list-inline">
+														<li class="entry-date">
+															<a href="#">19 Dec, 2015</a>
+														</li>
+														<li class="entry-comments">
+															<i class="fa fa-comments"></i><a href="#">15</a>
+														</li>
+													</ul>
+												</div>
+											</article>
+										</li> -->
+									</ul>
+
+								</div>
+							</div>
+						</div> <!-- end recent posts -->
+
+						<div class="col-md-4 col-sm-6 col-xs-12">
+							<div class="widget footer-links small-space">
+								<h5 class="uppercase">Quick Links</h5>
+								<ul>
+								{% for category in categories %}
+									<li><a href="{% url 'general:getCategory' category %}">{{category}}</a></li>
+								{% endfor %}
+								</ul>
+							</div>
+						</div> <!-- end useful links -->
+
+					</div>
+				</div>		
+			</div> <!-- end container -->
+
+			<div class="bottom-footer">
+				<div class="container">
+					<div class="row">
+
+						<div class="col-md-4 col-xs-12 copyright">
+							<span>
+								© 2017 Yes or No Live
+							</span>
+						</div>
+
+
+						<div class="col-md-5 col-xs-12">
+							<ul class="bottom-footer-links style-2">
+								<li><a href="#">Privacy Policy</a></li>
+								<li><a href="#">Terms of Use</a></li>
+								<li><a href="#">Contact Us</a></li>
+								<li><a href="#">Advertisement</a></li>
+							</ul>
+						</div>
+							
+						<div class="col-md-3 col-xs-12 footer-socials mt-mdm-10 text-right">
+							<div class="social-icons dark">
+								<a href="#"><i class="fa fa-twitter"></i></a>
+								<a href="#"><i class="fa fa-facebook"></i></a>
+<!-- 								<a href="#"><i class="fa fa-instagram"></i></a>
+ -->							</div>
+						</div>
+
+					</div>
+				</div>
+			</div> <!-- end bottom footer -->
+		</footer> 
+		<!-- end footer -->
+		{% endblock footer %}
 
 
 {% block customscripts %}

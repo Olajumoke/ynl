@@ -136,6 +136,10 @@ def admin_pages(request,pages_to):
 		template_name = 'ynladmin/payment.html'
 		payments = paginate_list(request,Bank.objects.all(),10)
 		context['payments'] = payments
+	elif pages_to == "comments":
+		template_name = 'ynladmin/comments.html'
+		comments = paginate_list(request,Comments.objects.all(),10)
+		context['comments'] = comments
 	elif pages_to == "game":
 		template_name = 'ynladmin/gameplay.html'
 		event = paginate_list(request,Event.objects.all(),10)
@@ -441,6 +445,19 @@ def close_event(request, event_id):
 	else:
 		print "I rep o"
 	return redirect(request.META['HTTP_REFERER'])
+
+
+@login_required
+def delete_approve_comment(request,action,pk):
+	comment_obj = Comments.objects.get(pk=pk)
+	if action == "delete":
+		comment_obj.delete = True()
+	else:
+		comment_obj.approved = True
+	comment_obj.save()
+	return redirect(request.META['HTTP_REFERER'])
+
+
 
 
 

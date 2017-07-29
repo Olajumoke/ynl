@@ -4,7 +4,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.http import Http404, HttpResponse , HttpResponseRedirect, JsonResponse
 from django.forms.models import model_to_dict
 from general.forms import UserForm, UserAccountForm, UserProfileForm, MessageCenterCommentForm, RepliesForm
-from general.models import UserAccount, Event, MessageCenter, MessageCenterComment
+from general.models import UserAccount, Event, MessageCenter, MessageCenterComment, Comments
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
@@ -31,6 +31,7 @@ from django.template import Context
 from django.core.mail import EmailMessage
 from django.utils import timezone
 from wallet.account_standing import account_standing
+from wallet.models import Bank
 from gameplay.models import Gameplay
 # Create your views here.
 
@@ -50,12 +51,14 @@ def paginate_list(request, objects_list, num_per_page):
 
 def homepage(request):
 	context = {}
-	# most_recent = event_obj[0]
 	template_name = 'general/homepage.html'
 	# context['most_recent'] = most_recent
+	
 	events_all = Event.objects.filter(deleted=False)
 	all_events = paginate_list(request,events_all,4)
 	categories = []
+	most_recent = events_all[0]
+	context['most_recent'] = most_recent
 	for event in events_all:
 		if event.category in categories:
 			pass
@@ -64,6 +67,30 @@ def homepage(request):
 	context['categories'] = categories
 	context['events'] = all_events
 	return render(request, template_name, context)
+
+
+def getCategory(request,value):
+	context = {}
+	template_name = 'general/homepage.html'
+	# context['most_recent'] = most_recent
+	value_to_upperCase = value.upper()
+	events_all = Event.objects.filter(deleted=False,category=value_to_upperCase)
+	all_events = paginate_list(request,events_all,4)
+	categories = []
+	try:
+		most_recent = events_all[0]
+		context['most_recent'] = most_recent
+	except:
+		pass
+	for event in events_all:
+		if event.category in categories:
+			pass
+		else:
+			categories.append(event.category)
+	context['categories'] = categories
+	context['events'] = all_events
+	return render(request, template_name, context)
+
 
 
 def user_login(request):
@@ -158,19 +185,38 @@ def register(request):
 
 
 def event_details(request,pk):
-    context = {}
-    events_all = Event.objects.filter(deleted=False)
-    categories = []
-    for event in events_all:
-        if event.category in categories:
-            pass
-        else:
-            categories.append(event.category)
-    context['categories'] = categories
-    event_obj = Event.objects.get(pk=pk)
-    context['event'] = event_obj
-    context['today'] = timezone.now()
-    return render(request, 'general/magazine-single-article.html',context)
+	context = {}
+	events_all = Event.objects.filter(deleted=False)
+	categories = []
+	for event in events_all:
+	    if event.category in categories:
+	        pass
+	    else:
+	        categories.append(event.category)
+	context['categories'] = categories
+	events_all = Event.objects.filter(deleted=False)
+	event_obj = Event.objects.get(pk=pk)
+	try:
+		next_event = Event.get_previous_by_created_on(event_obj)
+		context['next_event'] = next_event
+	except:
+		pass
+	try:
+		previous_event = Event.get_next_by_created_on(event_obj)
+		context['previous_event'] = previous_event
+	except:
+		pass
+
+	event_pk = event_obj.pk
+	most_recent = events_all[0]
+
+	context['event'] = event_obj
+	context['today'] = timezone.now()
+	context['all_events'] = events_all
+	context['event_pk'] = event_pk
+	context['most_recent'] = most_recent
+	
+	return render(request, 'general/magazine-single-article.html',context)
 
 
 @login_required
@@ -319,6 +365,15 @@ def user_messages(request):
 		context['user'] = user
 		template_name = 'general/user_messages.html'
 		return render(request,template_name,context)
+
+
+def user_comment(request):
+	rp = request.POST
+	print rp
+	event_obj = Event.objects.get(pk=rp.get('event_pk'))
+	create_comment = Comments.objects.create(username=rp.get('name'),text=rp.get('comment'),email=rp.get('mail'),event=event_obj)
+	messages.success(request,'Message sent successfully')
+	return redirect(request.META['HTTP_REFERER'])
 
 
 

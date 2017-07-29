@@ -87,15 +87,23 @@ class Event(models.Model):
 	def total_no_choice(self):
 		return self.gameplay_set.filter(choice="NO").count()
 
+	def get_comments(self):
+		return self.comments_set.filter(deleted=False,approved=True)
+
+	def get_comments_count(self):
+		return self.get_comments().count()
+
 
 
 class Comments(models.Model):
 	""" comments for individual events """
-	username                  = models.CharField(max_length=50, null=True, blank=True)
-	text                      = models.CharField(max_length=1000, null=True, blank=True)
+	username                  = models.CharField(max_length=150, null=True, blank=True)
+	text                      = models.CharField(max_length=2000, null=True, blank=True)
 	created_on				  = models.DateTimeField(default=timezone.now)
 	email					  = models.EmailField(blank=True, null=True)
 	event 					  = models.ForeignKey('Event', null=True, blank=True)
+	deleted                   = models.BooleanField(default=False)
+	approved                   = models.BooleanField(default=False)
 
 
 	def __unicode__(self):
@@ -104,6 +112,7 @@ class Comments(models.Model):
 	class Meta:
 		verbose_name_plural = 'Comment'
 		ordering = ['-created_on']
+
 
 
 class Replies(models.Model):
@@ -148,8 +157,6 @@ class MessageCenter(models.Model):
     def get_comments_count(self):
 		comments_count = self.getComments().count()
 		return comments_count
-
-	
 
 
 
