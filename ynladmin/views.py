@@ -63,7 +63,10 @@ def randomNumber(value):
 def admin_pages(request,pages_to):
 	context = {}
 	user_obj = request.user
-	user_acc_obj = UserAccount.objects.get(user=user_obj)
+	try:
+		user_acc_obj = UserAccount.objects.get(user=user_obj)
+	except:
+		return redirect(request.META['HTTP_REFERER'])
 	context['user_acc_obj'] = user_acc_obj
 	if request.POST.has_key('events'):
 		query = request.POST.get('search_for')
