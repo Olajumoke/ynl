@@ -164,7 +164,13 @@
             <div class="wp-sidebar-nav">
                 <div class="user-profile">
                     <div class="dropdown user-pro-body">
-                        <div><img src="{{user_acc_obj.user_image.url}}" alt="user-img" class="img-circle"></div> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user.username}}<span class="caret"></span></a>
+                        <div>
+                        {% if user_acc_obj.user_image %}
+                        <img src="{{user_acc_obj.user_image.url}}" alt="user-img" class="img-circle">
+                        {% else %}
+                        <img src="{% static 'user/plugins/images/users/varun.jpg' %}" alt="user-img" class="img-circle">
+                        {% endif %}
+                        </div> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user.username}}<span class="caret"></span></a>
                         <ul class="dropdown-menu animated flipInY">
                              <li><a href="#">Hi, {{request.user.username}}</a></li>
                              <li><a href="{% url 'general:logout' %}"><i class="fa fa-power-off"></i> Logout</a></li>

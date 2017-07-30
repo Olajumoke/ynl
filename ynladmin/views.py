@@ -366,7 +366,6 @@ def percentage(percent, whole):
 	return math.floor((percent*whole)/100.0)
 
 
-
 def close_event(request, event_id):
 	event = Event.objects.get(id=event_id)
 	cost_amt = CostSetting.objects.get(id=1)
