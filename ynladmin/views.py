@@ -198,11 +198,11 @@ def create_event(request):
 					return redirect(request.META['HTTP_REFERER'])
 				else:
 					print "you may proceed"
-				create_event_form = form.save(commit=False)
-				create_event_form.author = request.user
-				create_event_form.event_id = rp.get('event_track_num')
-				create_event_form.save()
-				return redirect(reverse('ynladmin:admin_pages', args=['events']))
+					create_event_form = form.save(commit=False)
+					create_event_form.author = request.user
+					create_event_form.event_id = rp.get('event_track_num')
+					create_event_form.save()
+					return redirect(reverse('ynladmin:admin_pages', args=['events']))
 			else:
 				print form.errors
 		elif rp.has_key('edit_user'):
@@ -223,13 +223,14 @@ def create_event(request):
 				end_date = rp.get('end_time')
 				if start_date >= end_date:
 					messages.error(request,'Unsuccessful...Start date cannot be less than or equal to end date')
+					return redirect(request.META['HTTP_REFERER'])
 				else:
 					pass
-				create_event_form = form.save(commit=False)
-				create_event_form.author = request.user
-				create_event_form.event_id = randomNumber(str(rp.get('category'))[:2])
-				create_event_form.save()
-				return redirect(reverse('ynladmin:admin_pages', args=['events']))
+					create_event_form = form.save(commit=False)
+					create_event_form.author = request.user
+					create_event_form.event_id = randomNumber(str(rp.get('category'))[:2])
+					create_event_form.save()
+					return redirect(reverse('ynladmin:admin_pages', args=['events']))
 			else:
 				print form.errors
 			return render(request,template_name,context)
@@ -260,6 +261,7 @@ def view_edit_event(request):
 	# print request.GET
 	template_name = ""
 	if request.GET.has_key('edit'):
+		print "editing"
 		template_name = 'ynladmin/edit_event.html'
 	else:
 		template_name = 'ynladmin/view_event.html'
@@ -364,6 +366,7 @@ def archive_message(request,pk):
 		
 def percentage(percent, whole):
 	return math.floor((percent*whole)/100.0)
+
 
 
 def close_event(request, event_id):
