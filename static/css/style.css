@@ -4302,6 +4302,8 @@ article img {
   padding-bottom: 5px;
   color: #fff;
   z-index: 2;
+  background-color: rgba(0, 0, 0, 0.30);                     
+  padding: 0px 30px 30px 30px;
 }
 
 .entry-inner.small {
