@@ -18,7 +18,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from general.staff_access import *
 # Create your views here.
 
-paystack_secret_key = "sk_test_9fe140b2bf798accdc2aade269cac47bc2de7ecc"  
+paystack_secret_key = "sk_test_3aecbec3433069bc0d7461895b17fe9c79369f24"  
 paystack = Paystack(secret_key=paystack_secret_key)
 
 @login_required
