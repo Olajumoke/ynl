@@ -95,7 +95,7 @@ class Comments(models.Model):
 	text                      = models.CharField(max_length=1000, null=True, blank=True)
 	created_on				  = models.DateTimeField(default=timezone.now)
 	email					  = models.EmailField(blank=True, null=True)
-	event 					  = models.ForeignKey('Event', null=True, blank=True)
+	event 					  = models.ForeignKey(Event, null=True, blank=True)
 
 
 	def __unicode__(self):
