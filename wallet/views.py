@@ -14,12 +14,15 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from general.views import paginate_list
 from gameplay.models import Gameplay
+from django.contrib.auth.decorators import login_required,user_passes_test
+from general.staff_access import *
 # Create your views here.
 
 paystack_secret_key = "sk_test_9fe140b2bf798accdc2aade269cac47bc2de7ecc"  
 paystack = Paystack(secret_key=paystack_secret_key)
 
-
+@login_required
+@user_passes_test(staff_check_for_gameplay, login_url='/backend/admin/all/events/', redirect_field_name=None)
 def view_wallet(request):
     try:
         user = UserAccount.objects.get(user=request.user)
@@ -46,7 +49,7 @@ def purchase_ref():
     print "ref",ref
     return ref
 
-
+@login_required
 def main(request):
     try:
         user_account = UserAccount.objects.get(user=request.user)
@@ -103,15 +106,15 @@ def main(request):
 def verify_payment(request):
     ref = request.session['ref_no']
     response_dict = Transaction.verify(reference=ref)
-    # data = response.get('data')
-    print 'status', response_dict['status']
-    if response_dict['status'] == True:
+    data = response_dict.get('data')
+    print 'status', data['status']
+    if data['status'] == 'success':
         status = "Successful"
     else:
-        status = response_dict['status']
+        status = data['status']
     bank_record = Bank.objects.get(ref_no=ref)
     bank_record.status = status
-    bank_record.message = response_dict['message']
+    bank_record.message = data['gateway_response']
     bank_record.save()
     return redirect('wallet:wallet')
 
@@ -141,7 +144,7 @@ def create_recipient(request):
     finalize = Transfer.finalize_transfer(transfer_code=transfer_code,otp=otp)
     return redirect('wallet:wallet')
     
-
+@login_required
 def cash_out(request):
     if request.method == "POST":
         credit = account_standing(request, request.user)
@@ -158,6 +161,7 @@ def cash_out(request):
                             created_at=timezone.now(), bank=bank,message="Cash out from YNLwallet to Bank")
             messages.info(request, "Your request is being processed!!!")
     return redirect('wallet:wallet')
+
 
 def initiate_transfer(request):
     print "I started transfer"

@@ -82,11 +82,8 @@
 							
 							<li class="top-bar-link">
 							<a href="{% url 'general:user_account' %}">
-								{% if request.user.bank.amount == None %}
-								₦0.00
-								{% else %}
-								₦{{request.user.bank.amount|floatformat:2|intcomma}}
-								{% endif %}
+								₦{{balance|floatformat:2|intcomma}}
+								
 							</a></li>
 
 							<li class="top-bar-link"><a href="{% url 'general:logout' %}">Logout</a></li>

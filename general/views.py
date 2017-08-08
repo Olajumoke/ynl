@@ -50,26 +50,27 @@ def paginate_list(request, objects_list, num_per_page):
 
 
 def homepage(request):
-	context = {}
-	template_name = 'general/homepage.html'
-	# context['most_recent'] = most_recent
-	
-	events_all = Event.objects.filter(deleted=False)
-	all_events = paginate_list(request,events_all,4)
-	categories = []
-	try:
-		most_recent = events_all[0]
-		context['most_recent'] = most_recent
-	except:
-		pass
-	for event in events_all:
-		if event.category in categories:
-			pass
-		else:
-			categories.append(event.category)
-	context['categories'] = categories
-	context['events'] = all_events
-	return render(request, template_name, context)
+    context = {}
+    template_name = 'general/homepage.html'
+    # context['most_recent'] = most_recent
+    events_all = Event.objects.filter(deleted=False)
+    all_events = paginate_list(request,events_all,4)
+    balance = account_standing(request,request.user)
+    categories = []
+    try:
+        most_recent = events_all[0]
+        context['most_recent'] = most_recent
+    except:
+        pass
+    for event in events_all:
+        if event.category in categories:
+            pass
+        else:
+            categories.append(event.category)
+    context['categories'] = categories
+    context['events'] = all_events
+    context['balance'] = balance
+    return render(request, template_name, context)
 
 
 def getCategory(request,value):
@@ -188,38 +189,40 @@ def register(request):
 
 
 def event_details(request,pk):
-	context = {}
-	events_all = Event.objects.filter(deleted=False)
-	categories = []
-	for event in events_all:
-	    if event.category in categories:
-	        pass
-	    else:
-	        categories.append(event.category)
-	context['categories'] = categories
-	events_all = Event.objects.filter(deleted=False)
-	event_obj = Event.objects.get(pk=pk)
-	try:
-		next_event = Event.get_previous_by_created_on(event_obj)
-		context['next_event'] = next_event
-	except:
-		pass
-	try:
-		previous_event = Event.get_next_by_created_on(event_obj)
-		context['previous_event'] = previous_event
-	except:
-		pass
+    context = {}
+    events_all = Event.objects.filter(deleted=False)
+    categories = []
+    balance = account_standing(request,request.user)
+    for event in events_all:
+        if event.category in categories:
+            pass
+        else:
+            categories.append(event.category)
+    context['categories'] = categories
+    events_all = Event.objects.filter(deleted=False)
+    event_obj = Event.objects.get(pk=pk)
+    try:
+        next_event = Event.get_previous_by_created_on(event_obj)
+        context['next_event'] = next_event
+    except:
+        pass
+    try:
+        previous_event = Event.get_next_by_created_on(event_obj)
+        context['previous_event'] = previous_event
+    except:
+        pass
 
-	event_pk = event_obj.pk
-	most_recent = events_all[0]
+    event_pk = event_obj.pk
+    most_recent = events_all[0]
 
-	context['event'] = event_obj
-	context['today'] = timezone.now()
-	context['all_events'] = events_all
-	context['event_pk'] = event_pk
-	context['most_recent'] = most_recent
-	
-	return render(request, 'general/magazine-single-article.html',context)
+    context['event'] = event_obj
+    context['today'] = timezone.now()
+    context['all_events'] = events_all
+    context['event_pk'] = event_pk
+    context['most_recent'] = most_recent
+    context['balance'] = balance
+    
+    return render(request, 'general/magazine-single-article.html',context)
 
 
 @login_required

@@ -20,19 +20,19 @@ PAYMENT_TYPE = (
 
 class CustomManager(models.Manager):
     def all_credits(self):
-        return super(CustomManager, self).get_queryset().filter(Q(txn_type = "Add"), ( Q(status__icontains = "Successful") | Q(status__icontains = "Approved") ) )
+        return super(CustomManager, self).get_queryset().filter(Q(txn_type = "Add"), ( Q(status__icontains = "Successful") | Q(status__icontains = "Approved") | Q(status__icontains = "success") ) )
 
     def all_debits(self):
         return super(CustomManager, self).get_queryset().filter(Q(txn_type = "Remove"), ( Q(status__icontains = "Successful") | Q(status__icontains = "Approved") ) )
 
     def user_add_credit(self, user):
-        return super(CustomManager, self).get_queryset().filter(Q(user = user), Q(txn_type = "Add"), ( Q(status__icontains = "Successful") | Q(status__icontains = "Approved") ) )
+        return super(CustomManager, self).get_queryset().filter(Q(user = user), Q(txn_type = "Add"), ( Q(status__icontains = "Successful") | Q(status__icontains = "Approved") | Q(status__icontains = "success") ) )
 
     def user_remove_credit(self, user):
-        return super(CustomManager, self).get_queryset().filter(Q(user = user), Q(txn_type = "Remove"), ( Q(status__icontains = "Successful") | Q(status__icontains = "Approved") ) )
+        return super(CustomManager, self).get_queryset().filter(Q(user = user), Q(txn_type = "Remove"), ( Q(status__icontains = "Successful") | Q(status__icontains = "Approved") | Q(status__icontains = "Approved") | Q(status__icontains = "success") ) )
 
     def user_refund_credit(self, user):
-        return super(CustomManager, self).get_queryset().filter(Q(user = user), Q(txn_type = "Refund"), ( Q(status__icontains = "Successful") | Q(status__icontains = "Approved") ) )
+        return super(CustomManager, self).get_queryset().filter(Q(user = user), Q(txn_type = "Refund"), ( Q(status__icontains = "Successful") | Q(status__icontains = "Approved") | Q(status__icontains = "success") ) )
 
 
 
