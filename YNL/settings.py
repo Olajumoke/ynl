@@ -25,6 +25,10 @@ SECRET_KEY = '2q_*um)ya-(3y1f6d^anann5y#f0y!3xs1+o!3i*y35bi7_u75'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# elif os.environ.get('yesnolive$yesornolive', ''):
+#     DEBUG = False
+# 
+
 ALLOWED_HOSTS = [
     'localhost',
     'yesnolive.pythonanywhere.com',

@@ -397,6 +397,7 @@ def user_comment(request):
 	rp = request.POST
 	print rp
 	event_obj = Event.objects.get(pk=rp.get('event_pk'))
+	print event_obj
 	create_comment = Comments.objects.create(username=rp.get('name'),text=rp.get('comment'),email=rp.get('mail'),event=event_obj)
 	messages.success(request,'Message sent successfully')
 	return redirect(request.META['HTTP_REFERER'])
