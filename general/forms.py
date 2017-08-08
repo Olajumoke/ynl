@@ -33,8 +33,8 @@ class EventForm(forms.ModelForm):
 
     title               = forms.CharField(help_text="Title", required = True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
     category            = forms.ChoiceField(choices = CATEGORY, error_messages = {'required': 'Please select a category.'},widget=forms.Select(attrs={'class':'form-control','required':'required'}))
-    start_time          = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
-    end_time            = forms.DateField(required=True, widget=DateInput(attrs={'class':'form-control','required':'required'}))
+    start_time          = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control','required':'required', 'type': 'date'}))
+    end_time            = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control','required':'required', 'type': 'date'}))
     publish             = forms.BooleanField(required = False)
     event_image         = forms.ImageField(required=False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
     event_msg_body      = HTMLField()

@@ -445,8 +445,16 @@ def close_event(request, event_id):
 			game.decision = "LOST"
 			game.save()
 		messages.success(request, "This Event has been Successfully CLOSED!!!")
-	# elif win_amt == half_value:
-	# 	print "winnings equal to 50% of total amount"
+	elif win_amt == 0:
+	 	print "Nobody won!!!"
+		event.closed = True
+		event.save()
+		lost_game = Gameplay.objects.filter(event=event,status="OPEN")
+		for game in lost_game:
+			game.status = "CLOSED"
+			game.decision = "LOST"
+			game.save()
+		messages.success(request, "This Event has been Successfully CLOSED!!!")
 	else:
 		print "I rep o"
 	return redirect(request.META['HTTP_REFERER'])
