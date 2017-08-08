@@ -171,7 +171,7 @@
 															<i class=" icon-calendar"></i>
 														</a>
 														<h3 class="uppercase">START DATE: {{event.start_time}}</h3>
-														<span>12:00PM<span>			
+														<span><span>			
 													</span></span></div>						
 												</div> <!-- end service item -->
 
@@ -180,8 +180,8 @@
 														<a href="#">
 															<i class=" icon-calendar"></i>
 														</a>
-														<h3 class="uppercase">END DATE: {{event.start_time}}</h3>
-														<span>12:00PM<span>			
+														<h3 class="uppercase">END DATE: {{event.end_time}}</h3>
+														<span><span>			
 													</span></span></div>						
 												</div> <!-- end service item -->
 
@@ -210,7 +210,7 @@
 											</div>
 											 endif %} -->
 									{% if not request.user.is_staff %}
-										{% if event.end_time < today.date %}
+										{% if event.end_time >= today %}
 										<div>
 											<div style=" padding-bottom: 10px;">
 												<form method="POST" action="{% url 'gameplay:betting' %}">

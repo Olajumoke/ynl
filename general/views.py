@@ -33,6 +33,7 @@ from django.utils import timezone
 from wallet.account_standing import account_standing
 from wallet.models import Bank
 from gameplay.models import Gameplay
+from general.staff_access import *
 # Create your views here.
 
 def paginate_list(request, objects_list, num_per_page):
@@ -214,9 +215,9 @@ def event_details(request,pk):
 
     event_pk = event_obj.pk
     most_recent = events_all[0]
-
+    today = timezone.now()
     context['event'] = event_obj
-    context['today'] = timezone.now()
+    context['today'] = today.date()
     context['all_events'] = events_all
     context['event_pk'] = event_pk
     context['most_recent'] = most_recent
@@ -282,6 +283,7 @@ def user_profile(request):
 
 
 @login_required
+@user_passes_test(staff_check_for_gameplay, login_url='/backend/admin/all/events/', redirect_field_name=None)
 def user_account(request):
 	try:
 	 	user = UserAccount.objects.get(user=request.user)
