@@ -232,53 +232,57 @@ def user_profile(request):
 	# 	user_account = UserAccount.objects.get(user=request.user)
 	# except Exception as e :
 	# 	print "e", e
-	if UserAccount.objects.filter(user=request.user).exists():
-		print "I exist"
-		user = UserAccount.objects.get(user=request.user)
-		if request.method == "POST":
-			user_form = UserProfileForm(request.POST, instance=request.user)
-			user_account_form = UserAccountForm(request.POST, request.FILES, instance=user)
-			if user_account_form.is_valid() and user_form.is_valid():
-				form1 = user_form.save()
-				form1.first_name = request.POST.get('first_name')
-				form1.last_name = request.POST.get('last_name')
-				form1.save()
-				form2 = user_account_form.save(commit=False)
-				form2.user = form1
-				form2.created_on = timezone.now()
-				form2.save()
-				#user =  UserAccount.objects.get(user=request.user)
-				messages.success(request, "User Details Updated Succesfully!!")
-				return redirect(request.META.get('HTTP_REFERER', '/'))
-			else:
-				print user_account_form.errors, user_form.errors
-		else:
-			form1 = UserProfileForm(instance=request.user)
-			form2 = UserAccountForm(instance=user)
-		#print "form1", form1
-	else:
-		print "I do not exist"
-		if request.method == "POST":
-			#print "I got here", request.POST
-			user_form = UserProfileForm(request.POST, instance=request.user)
-			user_account_form = UserAccountForm(request.POST, request.FILES)
-			if user_account_form.is_valid() and user_form.is_valid():
-				form1 = user_form.save()
-				form1.first_name = request.POST.get('first_name')
-				form1.last_name = request.POST.get('last_name')
-				form1.save()
-				form2 = user_account_form.save(commit=False)
-				form2.user = form1
-				form2.created_on = timezone.now()
-				form2.save()
-				#user =  UserAccount.objects.get(user=request.user)
-				return redirect(request.META.get('HTTP_REFERER', '/'))
-			else:
-				print user_account_form.errors, user_form.errors
-		else:
-			form1 = UserProfileForm(instance=request.user)
-			form2 = UserAccountForm()
-			user = None
+    if UserAccount.objects.filter(user=request.user).exists():
+        print "I exist"
+        user = UserAccount.objects.get(user=request.user)
+        if request.method == "POST":
+            user_form = UserProfileForm(request.POST, instance=request.user)
+            user_account_form = UserAccountForm(request.POST, request.FILES, instance=user)
+            if user_account_form.is_valid() and user_form.is_valid():
+                form1 = user_form.save()
+                form1.first_name = request.POST.get('first_name')
+                form1.last_name = request.POST.get('last_name')
+                form1.save()
+                form2 = user_account_form.save(commit=False)
+                form2.user = form1
+                form2.created_on = timezone.now()
+                form2.save()
+                #user =  UserAccount.objects.get(user=request.user)
+                messages.success(request, "User Details Updated Succesfully!!!")
+                return redirect(request.META.get('HTTP_REFERER', '/'))
+            else:
+                print user_account_form.errors, user_form.errors
+        else:
+            form1 = UserProfileForm(instance=request.user)
+            form2 = UserAccountForm(instance=user)
+        #print "form1", form1
+    else:
+        print "I do not exist"
+        if request.method == "POST":
+            #print "I got here", request.POST
+            user_form = UserProfileForm(request.POST, instance=request.user)
+            user_account_form = UserAccountForm(request.POST, request.FILES)
+            if user_account_form.is_valid() and user_form.is_valid():
+                form1 = user_form.save()
+                form1.first_name = request.POST.get('first_name')
+                form1.last_name = request.POST.get('last_name')
+                form1.save()
+                form2 = user_account_form.save(commit=False)
+                form2.user = form1
+                form2.created_on = timezone.now()
+                form2.save()
+                #user =  UserAccount.objects.get(user=request.user)
+                return redirect(request.META.get('HTTP_REFERER', '/'))
+            else:
+                form1 = UserProfileForm(instance=request.user)
+                form2 = UserAccountForm()
+                user = None
+                print user_account_form.errors, user_form.errors
+                
+        else:
+            form1 = UserProfileForm(instance=request.user)
+            form2 = UserAccountForm()
+            user = None
 	return render(request, 'general/profile.html', { 'form1':form1, 'form2':form2, 'user':user})
 
 
