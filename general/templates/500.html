@@ -106,97 +106,18 @@
 {% block content %}
 	<div class="main-wrapper oh">
 
-		<!-- Social Sign up -->
-		<section class="page-title style-2 text-center">
-			
-			<div class="col-md-12">
-				<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-lg btn-blue rounded">Sign in with facebook</a>
-			</div>
-			<div class="col-md-12" style="padding-top: 10px">
-				<a href="{% url 'social:begin' 'google-plus' %}" class="btn btn-lg btn-red rounded">Sign in with Google+</a>
-			</div>
-			<div class="col-md-12" style="padding-top: 10px">
-				<a href="{% url 'social:begin' 'twitter' %}" class="btn btn-lg btn-lavender rounded">Sign in with Twitter</a>
-			</div>
-			
-								
-		</section> <!-- end page title -->
-
 
 		<section class="section-wrap_2">
 			<div class="container" style="width: 100% !important; max-width: 640px !important;">
 
 				<div class="row">
 					<div class="col-md-12">
-							<p><center>Or sign in with email. New account? <a href="{% url 'general:register' %}">Register</a></center></p>
+							<p><center>Oops something went wrong and our engineers have been alerted!!!</a></center></p>
 					</div>
 				</div>
 			</div>
 		</section>
 
-
-		<!-- Animations -->
-		<section class="section-wrap_3">
-			<div class="container" style="width: 100% !important; max-width: 640px !important;">
-
-				<div class="row">
-					<div class="col-sm-12">
-						<form action="{% url 'general:login' %}" method="POST">
-						{% csrf_token %}
-						<div class="row">
-						
-							<div class="col-md-12">
-
-								<input required name="username" type="text" placeholder="Username or E-mail">
-								<input required name="password" id="password" type="password" placeholder="Password">
-
-								{% if error_msg %}
-								<p style="color: red; text-align: center;">{{ error_msg }}</p>
-								{% endif %}
-
-								
-							</div> <!-- end col -->
-
-							<div class="col-md-12">
-								<div class="col-md-12">
-									<div class="col-md-12">
-									
-										<div class="form-group"> 
-											<div class="col-md-12">
-												<button type="submit" class="btn btn-lg btn-color">Sign In</button>
-											</div>
-										</div>
-									</div>					
-								</div>
-							</div>
-						</form>
-						</div>
-						
-				   
-					</div> <!-- end col -->
-
-
-					
-
-	
-				</div> <!-- end row -->
-			</div> <!-- end container -->
-		</section> <!-- end alert boxes -->
-
-		<section class="section-wrap_2">
-			<div class="container" style="width: 100% !important; max-width: 640px !important;">
-
-				<div class="row">
-					<div class="col-md-12">
-							<p><a href="/resetpassword/">Forgot Password</a></p>
-					</div>
-				</div>
-			</div>
-		</section>
-		
-
-
-		
 
 		<div id="back-to-top">
 			<a href="#top"><i class="fa fa-angle-up"></i></a>
@@ -222,9 +143,7 @@
 	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.navigation.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.migration.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.parallax.min.js' %}"></script>
-
 {% block custom-script %}
 {% endblock %}
-
 </body>
 </html>

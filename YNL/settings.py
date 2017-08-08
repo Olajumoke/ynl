@@ -25,7 +25,10 @@ SECRET_KEY = '2q_*um)ya-(3y1f6d^anann5y#f0y!3xs1+o!3i*y35bi7_u75'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    'yesnolive.pythonanywhere.com',
+]
 
 
 ROOT_URLCONF = 'YNL.urls'
@@ -101,6 +104,7 @@ YNL_APPS= (
     'django.contrib.admin',
     'social_django',
     'tinymce',
+    'session_security',
 )
 
 
@@ -149,6 +153,11 @@ EMAIL_HOST_PASSWORD = '6xqnap01d0i2' #my gmail password
 EMAIL_HOST_USER = 'olaoguns@zoho.com' #my gmail username
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+SESSION_SECURITY_WARN_AFTER = 60 * 60 #one hour
+SESSION_SECURITY_EXPIRE_AFTER = 60 * 60 #one hour
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 
 # Password validation

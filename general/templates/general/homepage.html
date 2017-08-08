@@ -407,7 +407,11 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="{% url 'general:event_details' event.pk %}">
-														<img src="{{event.event_image.url}}" style="width:100px;height:72px;" alt="">
+														{% if event.event_image %}
+															<img src="{{event.event_image.url}}" style="width:100px;height:72px;" alt="">
+														{% else %}
+															<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
+														{% endif %}
 													</a>
 												</div>
 												<div class="entry">
@@ -434,7 +438,11 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="{% url 'general:event_details' event.pk %}">
-														<img src="{{event.event_image.url}}" style="width:100px;height:72px;" alt="">
+														{% if event.event_image %}
+															<img src="{{event.event_image.url}}" style="width:100px;height:72px;" alt="">
+														{% else %}
+															<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
+														{% endif %}
 													</a>
 												</div>
 												<div class="entry">
@@ -623,7 +631,11 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="{% url 'general:event_details' most_recent.pk %}">
-														<img src="{{most_recent.event_image.url}}" style="width:100px; height:72px;" alt="">
+														{% if event.event_image %}
+															<img src="{{most_recent.event_image.url}}" style="width:100px; height:72px;" alt="">
+														{% else %}
+															<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
+														{% endif %}
 													</a>
 												</div>
 												<div class="entry">

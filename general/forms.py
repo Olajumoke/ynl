@@ -36,7 +36,7 @@ class EventForm(forms.ModelForm):
     start_time          = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control','required':'required', 'type': 'date'}))
     end_time            = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control','required':'required', 'type': 'date'}))
     publish             = forms.BooleanField(required = False)
-    event_image         = forms.ImageField(required = True, help_text='Photo', widget=forms.widgets.ClearableFileInput())
+    event_image         = forms.ImageField(required=False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
     event_msg_body      = HTMLField()
     bet_question        = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
 

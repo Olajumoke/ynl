@@ -204,12 +204,18 @@ def event_details(request,pk):
     event_obj = Event.objects.get(pk=pk)
     try:
         next_event = Event.get_previous_by_created_on(event_obj)
-        context['next_event'] = next_event
+        if next_event.deleted:
+        	pass
+        else:
+        	context['next_event'] = next_event
     except:
         pass
     try:
         previous_event = Event.get_next_by_created_on(event_obj)
-        context['previous_event'] = previous_event
+        if previous_event.deleted:
+        	pass
+        else:
+        	context['previous_event'] = previous_event
     except:
         pass
 
