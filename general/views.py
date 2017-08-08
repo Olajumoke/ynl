@@ -57,6 +57,10 @@ def homepage(request):
     events_all = Event.objects.filter(deleted=False)
     all_events = paginate_list(request,events_all,4)
     balance = account_standing(request,request.user)
+    if UserAccount.objects.filter(user=request.user).exists():
+        useraccount = True
+    else:
+        useraccount = False
     categories = []
     try:
         most_recent = events_all[0]
@@ -71,6 +75,7 @@ def homepage(request):
     context['categories'] = categories
     context['events'] = all_events
     context['balance'] = balance
+    context['useraccount']= useraccount
     return render(request, template_name, context)
 
 
@@ -257,10 +262,13 @@ def user_profile(request):
                 messages.success(request, "User Details Updated Succesfully!!!")
                 return redirect(request.META.get('HTTP_REFERER', '/'))
             else:
+                form1 = UserProfileForm(instance=request.user)
+                form2 = UserAccountForm(instance=user)
                 print user_account_form.errors, user_form.errors
         else:
             form1 = UserProfileForm(instance=request.user)
             form2 = UserAccountForm(instance=user)
+            return render(request, 'general/profile.html', { 'form1':form1, 'form2':form2, 'user':user})
         #print "form1", form1
     else:
         print "I do not exist"

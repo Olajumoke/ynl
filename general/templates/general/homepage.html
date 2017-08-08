@@ -78,6 +78,7 @@
 							
 
 							{% if request.user.is_authenticated %}
+							{% if useraccount %}
 							<li class="top-bar-link"><a href="{% url 'general:user_account' %}">Hi, {{request.user.first_name}}</a></li>
 							
 							<li class="top-bar-link">
@@ -85,6 +86,7 @@
 								₦{{balance|floatformat:2|intcomma}}
 								
 							</a></li>
+							{%endif %}
 
 							<li class="top-bar-link"><a href="{% url 'general:logout' %}">Logout</a></li>
 								
