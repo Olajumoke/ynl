@@ -57,9 +57,10 @@ def homepage(request):
     events_all = Event.objects.filter(deleted=False)
     all_events = paginate_list(request,events_all,4)
     balance = account_standing(request,request.user)
-    if UserAccount.objects.filter(user=request.user).exists():
+    try:
+        user = UserAccount.objects.filter(user=request.user).exists()
         useraccount = True
-    else:
+    except:
         useraccount = False
     categories = []
     try:
