@@ -70,12 +70,15 @@
 											</a>
 										</li>
 									</ul>
-									<div class="entry-inner-bottom">
+									<div class="entry-inner-bottom" style="background-color: rgba(0, 0, 0, 0.30)!important; padding: 0px 30px 30px 30px!important;">
 
 										{% if event.total_players == 0 %}
 											<div class="entry hidden"></div>
 											{% else %}
 											<div class="entry">
+												<h2 class="entry-title color-white">	
+													<a>₦{{event.gameplay_total_value|floatformat:2|intcomma}}</a>
+												<span style="font-size: 10px !important;">to be won</span></h2>
 												<div class="yesorno-bar">
 											
 			      										<div class="progress-bar progress-bar-success" style="width: 

@@ -375,8 +375,12 @@ def close_event(request, event_id):
 	stakeholders_percentage = cost_amt.amount * 0.01
 	#gameplay = Gameplay.objects.filter(event=event)
 	total_value = event.gameplay_total_value()
+	if total_value == None:
+		total_value = 0
 	print "Total",total_value
 	win_amt = event.event_winnings()
+	if win_amt == None:
+		win_amt = 0
 	lose_amt = total_value - win_amt
 	print "losers",lose_amt
 	print "winners", win_amt
