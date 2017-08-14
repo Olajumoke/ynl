@@ -128,7 +128,7 @@ class Comments(models.Model):
 
 class Replies(models.Model):
 	""" replies to comments for individual events """
-	user                = models.ForeignKey(User, null=True, blank=True)
+	# user                = models.ForeignKey(User, null=True, blank=True)
 	reply 				= models.TextField()
 	comment_obj         = models.ForeignKey(Comments, null=True, blank=True)
 	created_on			= models.DateTimeField(default = timezone.now)
