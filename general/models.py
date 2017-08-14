@@ -104,8 +104,8 @@ class Comments(models.Model):
 	email					  = models.EmailField(blank=True, null=True)
 	event 					  = models.ForeignKey(Event, null=True, blank=True)
 	# approved                  = models.BooleanField(default=True)
-	deleted                   = models.BooleanField(default=False)
-	liked                     = models.BooleanField(default=False)
+	# deleted                   = models.BooleanField(default=False)
+	# liked                     = models.BooleanField(default=False)
 
 
 
