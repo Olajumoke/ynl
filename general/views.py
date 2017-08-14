@@ -4,7 +4,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.http import Http404, HttpResponse , HttpResponseRedirect, JsonResponse
 from django.forms.models import model_to_dict
 from general.forms import UserForm, UserAccountForm, UserProfileForm, MessageCenterCommentForm, RepliesForm
-from general.models import UserAccount, Event, MessageCenter, MessageCenterComment, Comments
+from general.models import UserAccount, Event, MessageCenter, MessageCenterComment, Comments, Likes
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
@@ -35,6 +35,8 @@ from wallet.models import Bank
 from gameplay.models import Gameplay
 from general.staff_access import *
 # Create your views here.
+
+
 
 def paginate_list(request, objects_list, num_per_page):
     paginator   =   Paginator(objects_list, num_per_page) # show number of jobs per page
@@ -394,12 +396,15 @@ def user_messages(request):
 		return render(request,template_name,context)
 
 
+
+@login_required
 def user_comment(request):
+	user_obj = request.user
 	rp = request.POST
 	print rp
 	event_obj = Event.objects.get(pk=rp.get('event_pk'))
 	print event_obj
-	create_comment = Comments.objects.create(username=rp.get('name'),text=rp.get('comment'),email=rp.get('mail'),event=event_obj)
+	create_comment = Comments.objects.create(username=user_obj.username,text=rp.get('comment'),email=user_obj.email,event=event_obj, user=user_obj)
 	messages.success(request,'Message sent successfully')
 	return redirect(request.META['HTTP_REFERER'])
 
@@ -435,5 +440,29 @@ def view_comment_message(request):
 		context['all_comments'] = all_comments
 		context['message_id'] = message_id
 		return render(request,template_name,context)
+
+
+
+@login_required
+def like_comments(request,action,pk):
+	user_obj = request.user
+	comment_obj = Comments.objects.get(pk=pk)
+	likes_for_comment = comment_obj.get_likes()
+	likes_for_comment_count = likes_for_comment.count()
+	if likes_for_comment_count == 0:
+		like_obj = Likes.objects.create(like=True,comment_obj=comment_obj,user=user_obj)
+		return redirect(request.META['HTTP_REFERER'])
+	else:
+		pass
+	for like in likes_for_comment:
+		if like.user == request.user:
+			like.delete()
+		else:
+			like_obj = Likes.objects.create(like=True,comment_obj=comment_obj,user=user_obj)
+		return redirect(request.META['HTTP_REFERER'])
+	return redirect(request.META['HTTP_REFERER'])
+
+
+
 	
 

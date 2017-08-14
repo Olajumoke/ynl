@@ -17,7 +17,7 @@ urlpatterns = [
             url(r'^user/messages/$',views.user_messages, name = "messages"),
             url(r'^userComment/$',views.user_comment, name = "user_comment"),
             url(r'^user/comments/$',views.view_comment_message, name = "view_comment_message"),
-
+            url(r'^like/comments/(?P<action>[-\w]+)/(?P<pk>.+)/$',views.like_comments, name = "like_comments"),
 
 
 ]

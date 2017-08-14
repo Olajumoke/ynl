@@ -468,11 +468,17 @@ def close_event(request, event_id):
 def delete_approve_comment(request,action,pk):
 	comment_obj = Comments.objects.get(pk=pk)
 	if action == "delete":
+		print "deleting"
 		comment_obj.deleted = True
 	else:
+		print "approved"
 		comment_obj.approved = True
 	comment_obj.save()
 	return redirect(request.META['HTTP_REFERER'])
+
+
+
+	
 
 
 

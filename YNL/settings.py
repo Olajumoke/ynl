@@ -108,7 +108,6 @@ YNL_APPS= (
     'django.contrib.admin',
     'social_django',
     'tinymce',
-    'session_security',
 )
 
 

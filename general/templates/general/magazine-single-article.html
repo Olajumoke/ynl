@@ -200,7 +200,7 @@
 			      										 getPercent event.total_yes_choice event.pk %}%">
 			       											 <span class="sr-only">
 			       											 getPercent event.total_yes_choice event.pk %}% 
-			       											 Complete (success)</span>Yes <!-- Text->
+			       											 Complete (success)</span>Yes <!- Text->
 			      										</div>
 
 			      										<div class="progress-bar progress-bar-danger" style="width: 
@@ -329,7 +329,7 @@
 									</div> -->
 
 									<!-- Comments -->
-									<div class="entry-comments mt-20" style="overflow-y: scroll;">
+									<div class="entry-comments mt-20" style="overflow-y: scroll;" id="comments_view">
 										<h3 class="heading relative heading-small uppercase bottom-line style-2 left-align mb-40">
 
 										{% if event.get_comments_count == 0 %}
@@ -341,33 +341,38 @@
 
 										<ul class="comment-list">
 											<li>
-												<div class="comment-body">
 												{% for comment in event.get_comments %}
+												<div class="comment-body">
+												
 													<img src="{% static 'img/blog/comment_1.jpg' %}" class="comment-avatar" alt="">
 													
 													<div class="comment-content">
 														<span class="comment-author">{{comment.username}}</span>
 														<span><a href="#">{{comment.created_on}}</a></span>		
 														<p>{{comment.text}}</p>
+														<span class="show_replies" comment_id="{{comment.pk}}" style="cursor: pointer;">Reply</span>
+
+														{% check_user_like request comment.pk as user_like %}
+														<span><a href="{% url 'general:like_comments' 'like' comment.pk %}" class="like_comment" comment_id_like="{{comment.pk}}"><i class="fa fa-thumbs-up" 
+														aria-hidden="true" style="cursor: pointer; {% if user_like %}color: blue;{% endif %}"></i>&nbsp;{{comment.get_likes_count}}</a></span>
 													</div>
 
-												{% endfor %}
-												</div>
 
-												<!-- <ul class="comment-reply">
-													<li>
-														<div class="comment-body">
-															<img src="{% static 'img/blog/comment_2.jpg' %}" class="comment-avatar" alt="">
-															<div class="comment-content">
-																<span class="comment-author">Alexander Samokhin</span>
-																<span><a href="#">May 6, 2014 at 12:48 pm</a></span>		
-																<p>This template is so awesome. I didn’t expect so many features inside. E-commerce pages are very useful, you can launch your online store in few seconds. I will rate 5 stars.</p>
-																<a href="#">Reply</a>
-															</div>
-														</div>
-													</li> <!- end reply comment -->
-<!-- 												</ul>
- -->
+
+												</div>
+											
+												<div class="comment-reply hidden">
+													<img src="{% static 'img/blog/comment_2.jpg' %}" class="comment-avatar" alt="">
+													<div class="comment-content">
+														<span class="comment-author">Alexander Samokhin</span>
+														<span><a href="#">May 6, 2014 at 12:48 pm</a></span>		
+														<p>This template is so awesome. I didn’t expect so many features inside. E-commerce pages are very useful, you can launch your online store in few seconds. I will rate 5 stars.</p>
+													</div>
+
+												</div>
+													
+
+												{% endfor %}
 											</li> <!-- end 1-2 comment -->
 
 											<!-- <li>
@@ -392,23 +397,22 @@
 										<form id="user_comment_form" method="post" action="{% url 'general:user_comment' %}">
 											{% csrf_token %}
 											<div class="row row-16">
-												<div class="col-md-4">
+												<!-- <div class="col-md-4">
 													<input name="name" id="name" required type="text" placeholder="Name*">
 												</div>
 												<div class="col-md-4">
 													<input name="mail" id="mail" required type="email" placeholder="E-mail*">
-												</div>
+												</div> -->
 												<div class="col-md-12">
 													<textarea name="comment" maxlength="150" required id="comment" placeholder="Comment" rows="8"></textarea>
 												</div>
 												<input type="hidden" name="event_pk" value="{{event_pk}}">
 											</div>
 
-											<input type="submit" class="btn btn-md btn-color" value="Post Comment">
+											<input type="submit" id="send_in_comments" class="btn btn-md btn-color" value="submit">
 										</form>
 
 									</div>
-
 								</div>
 							</div>
 						</div> <!-- end gallery post -->
@@ -790,7 +794,18 @@
 			var choice = $(this).val();
 			//alert(choice);
 			$('#choice').val(choice);
-			});
+		});
+
+		// $('body').on('click','.show_replies', function(e){
+		// 	var parent = $(this).parent().parent().parent().find('.comment-reply').removeClass('hidden');
+		// 	alert(parent);
+		// });
+
+		// $('body').on('click','.like_comment', function(e){
+		//       var comment_id = $(this).attr('comment_id_like');
+		//       alert(comment_id);
+
+		// });
 	</script>
 
 {% endblock %}
