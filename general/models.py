@@ -97,7 +97,7 @@ class Event(models.Model):
 
 class Comments(models.Model):
 	""" comments for individual events """
-	user                      = models.ForeignKey(User, null=True, blank=True)
+	# user                      = models.ForeignKey(User, null=True, blank=True)
 	username                  = models.CharField(max_length=50, null=True, blank=True)
 	text                      = models.CharField(max_length=1000, null=True, blank=True)
 	created_on				  = models.DateTimeField(default=timezone.now)
