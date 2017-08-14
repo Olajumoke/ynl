@@ -88,7 +88,7 @@ class Event(models.Model):
 		return self.gameplay_set.filter(choice="NO").count()
 
 	def get_comments(self):
-		return self.comments_set.filter(deleted=False, approved=True)
+		return self.comments_set.filter(approved=True)
 
 	def get_comments_count(self):
 		return self.get_comments().count()
