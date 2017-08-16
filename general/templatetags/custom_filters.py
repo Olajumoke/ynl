@@ -1,7 +1,7 @@
 from django import template
 from django.template.defaultfilters import stringfilter
 from datetime import date, timedelta
-from general.models import UserAccount, MessageCenter, MessageCenterComment, Event
+from general.models import UserAccount, MessageCenter, MessageCenterComment, Event, Comments
 
 #from export.models import *
 import datetime
@@ -59,32 +59,20 @@ def getPercent(value,pk):
 		event_total_players = Event.objects.get(pk=pk)
 		percent_value = (float(value) / float(event_total_players.total_players())) * 100
 		return percent_value
-	
-# @register.simple_tag
-# def get_comments_count(request,value):
-# 	if value == 'new':
-# 		get_replied_count = MessageCenter.objects.filter(user=request.user, new=True).count()
-# 	elif value == 'replied':
-# 		get_replied_count = MessageCenter.objects.filter(user=request.user, replied=True).count()
-# 	elif value == 'archive':
-# 		get_replied_count = MessageCenter.objects.filter(user=request.user, archive=True).count()
-# 	else:
-# 		get_replied_count = MessageCenter.objects.filter(user=request.user, deleted=True).count()
-# 	return get_replied_count
 
 
+@register.assignment_tag
+def check_user_like(request,pk):
+	comment_obj = Comments.objects.get(pk=pk)
+	user_obj = request.user
+	likes_for_comment = comment_obj.get_likes()
+	for like in likes_for_comment:
+		if like.user == request.user:
+			return True
+		else:
+			return False
+			
 
-# @register.simple_tag
-# def get_admin_comments_count(request,value):
-# 	if value == 'new':
-# 		get_replied_count = MessageCenter.objects.filter(new=True).count()
-# 	elif value == 'replied':
-# 		get_replied_count = MessageCenter.objects.filter(replied=True).count()
-# 	elif value == 'archive':
-# 		get_replied_count = MessageCenter.objects.filter(archive=True).count()
-# 	else:
-# 		get_replied_count = MessageCenter.objects.filter(deleted=True).count()
-# 	return get_replied_count
 
 
 

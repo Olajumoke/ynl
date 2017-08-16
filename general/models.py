@@ -87,15 +87,26 @@ class Event(models.Model):
 	def total_no_choice(self):
 		return self.gameplay_set.filter(choice="NO").count()
 
+	def get_comments(self):
+		return self.comments_set.filter(deleted=False, approved=True)
+
+	def get_comments_count(self):
+		return self.get_comments().count()
+
 
 
 class Comments(models.Model):
 	""" comments for individual events """
+	user                      = models.ForeignKey(User, null=True, blank=True)
 	username                  = models.CharField(max_length=50, null=True, blank=True)
 	text                      = models.CharField(max_length=1000, null=True, blank=True)
 	created_on				  = models.DateTimeField(default=timezone.now)
 	email					  = models.EmailField(blank=True, null=True)
 	event 					  = models.ForeignKey(Event, null=True, blank=True)
+	approved                  = models.BooleanField(default=True)
+	deleted                   = models.BooleanField(default=False)
+	liked                     = models.BooleanField(default=False)
+
 
 
 	def __unicode__(self):
@@ -105,9 +116,19 @@ class Comments(models.Model):
 		verbose_name_plural = 'Comment'
 		ordering = ['-created_on']
 
+	def get_likes(self):
+		return self.likes_set.all()
+
+	def get_likes_count(self):
+		return self.get_likes().count()
+
+	def get_all_replies(self):
+		return self.replies_set.all()
+
 
 class Replies(models.Model):
 	""" replies to comments for individual events """
+	user                = models.ForeignKey(User, null=True, blank=True)
 	reply 				= models.TextField()
 	comment_obj         = models.ForeignKey(Comments, null=True, blank=True)
 	created_on			= models.DateTimeField(default = timezone.now)
@@ -120,6 +141,23 @@ class Replies(models.Model):
 	class Meta:
 		verbose_name_plural = 'Responses'
 		ordering = ['-created_on']
+
+
+
+class Likes(models.Model):
+	""" likes to a comment"""
+	user                = models.ForeignKey(User, null=True, blank=True)
+	like 				= models.BooleanField(default=False)
+	comment_obj         = models.ForeignKey(Comments, null=True, blank=True)
+	created_on			= models.DateTimeField(default = timezone.now)
+	
+	def __unicode__(self):
+	    return '%s' %(self.created_on)
+
+	class Meta:
+		verbose_name_plural = 'Likes'
+		ordering = ['-created_on']
+		
 
 
 

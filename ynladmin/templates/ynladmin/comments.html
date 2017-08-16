@@ -52,14 +52,14 @@
                                 <td>
                                     {% if comment.approved %}
                                     <span>
-                                    <i class="fa fa-check"  title="Approved" style="cursor: pointer; color:green"></i>
-                                    </span>&nbsp;&nbsp;
+                                        <i class="fa fa-check"  title="Approved" style="cursor: pointer; color:green"></i>
+                                        </span>&nbsp;&nbsp;
 
                                     {% else %}
                                     <span>
-                                    <a style="cursor: pointer;" href="{% url 'ynladmin:delete_approve_comment' 'approve' comment.pk %}" onclick="return confirm('Are you sure you want to approve this comment?')"><i class="fa fa-check" title="Approve"
-                                    style="cursor: pointer; color:orange;"></i>
-                                    </a>
+                                        <a style="cursor: pointer;" href="{% url 'ynladmin:delete_approve_comment' 'approve' comment.pk %}" onclick="return confirm('Are you sure you want to approve this comment?')"><i class="fa fa-check" title="Approve"
+                                        style="cursor: pointer; color:orange;"></i>
+                                        </a>
                                     </span>&nbsp;&nbsp;
                                     {% endif %}
 
