@@ -61,9 +61,10 @@ def homepage(request):
     balance = account_standing(request,request.user)
     try:
         user = UserAccount.objects.filter(user=request.user).exists()
-        useraccount = True
+        useraccount = user
     except:
-        useraccount = False
+        useraccount = None
+    print useraccount
     categories = []
     try:
         most_recent = events_all[0]
