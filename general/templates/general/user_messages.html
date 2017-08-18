@@ -11,7 +11,12 @@
 </h4>
 
 {% endblock pg_title %}
-
+{% block search %}
+                    <li>
+                        <form role="search" class="app-search hidden-xs" action="" method="get">
+                            <input type="text" name="q" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+                    </li>
+                    {% endblock %}
 {% block body %}
         
     <div class="col-md-12 view-messages">

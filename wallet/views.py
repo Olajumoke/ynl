@@ -16,6 +16,7 @@ from general.views import paginate_list
 from gameplay.models import Gameplay
 from django.contrib.auth.decorators import login_required,user_passes_test
 from general.staff_access import *
+from django.db.models import Q
 # Create your views here.
 
 paystack_secret_key = "sk_test_3aecbec3433069bc0d7461895b17fe9c79369f24"  
@@ -31,7 +32,15 @@ def view_wallet(request):
         user = None
     game    = Gameplay.objects.filter(user=user)
     balance = account_standing(request,request.user)
-    wallet = paginate_list(request, Bank.objects.filter(user=request.user),5)
+    payment = Bank.objects.filter(user=request.user)
+    query = request.GET.get('q')
+    if query:
+        payment = payment.filter(
+            Q(ref_no__iexact=query) |
+            Q(status__icontains=query) |
+            Q(message__icontains=query) 
+            )
+    wallet = paginate_list(request,payment,5)
     
     return render(request, 'wallet/topup.html', {'balance':balance, 'wallet':wallet, 'user':user, 'game':game}) 
 

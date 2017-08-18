@@ -4,7 +4,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.http import Http404, HttpResponse , HttpResponseRedirect, JsonResponse
 from django.forms.models import model_to_dict
 from general.forms import UserForm, UserAccountForm, UserProfileForm, MessageCenterCommentForm, RepliesForm
-from general.models import UserAccount, Event, MessageCenter, MessageCenterComment, Comments, Likes
+from general.models import UserAccount, Event, MessageCenter, MessageCenterComment, Comments, Likes, Replies
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
@@ -34,6 +34,7 @@ from wallet.account_standing import account_standing
 from wallet.models import Bank
 from gameplay.models import Gameplay
 from general.staff_access import *
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
@@ -57,6 +58,15 @@ def homepage(request):
     template_name = 'general/homepage.html'
     # context['most_recent'] = most_recent
     events_all = Event.objects.filter(deleted=False)
+    query = request.GET.get('q')
+    if query:
+        events_all = events_all.filter(
+                Q(title__icontains=query) |
+                Q(bet_question__icontains=query) |
+                Q(event_msg_body__icontains=query) |
+                Q(author__first_name__icontains=query) |
+                Q(author__last_name__icontains=query)
+                ).distinct()
     all_events = paginate_list(request,events_all,4)
     balance = account_standing(request,request.user)
     try:
@@ -227,7 +237,12 @@ def event_details(request,pk):
         	context['previous_event'] = previous_event
     except:
         pass
-
+    try:
+        user = UserAccount.objects.filter(user=request.user).exists()
+        useraccount = user
+    except:
+        useraccount = None
+    print useraccount
     event_pk = event_obj.pk
     most_recent = events_all[0]
     today = timezone.now()
@@ -237,6 +252,7 @@ def event_details(request,pk):
     context['event_pk'] = event_pk
     context['most_recent'] = most_recent
     context['balance'] = balance
+    context['useraccount']= useraccount
     
     return render(request, 'general/magazine-single-article.html',context)
 
@@ -307,16 +323,25 @@ def user_profile(request):
 @login_required
 @user_passes_test(staff_check_for_gameplay, login_url='/backend/admin/all/events/', redirect_field_name=None)
 def user_account(request):
-	try:
-	 	user = UserAccount.objects.get(user=request.user)
-	except Exception as e :
-		print "e", e
-		user = None
-	balance = account_standing(request,request.user)
-	game = Gameplay.objects.filter(user=user)
-	game_won = game.filter(decision="WIN")
-	print "game-won", game_won
-	return render(request, 'general/user_account.html', {'user':user, 'balance':balance, 'game':game, 'game_won':game_won})
+    try:
+        user = UserAccount.objects.get(user=request.user)
+    except Exception as e :
+        print "e", e
+        user = None
+    balance = account_standing(request,request.user)
+    game = Gameplay.objects.filter(user=user)
+    game_count = game.count()
+    game_won = game.filter(decision="WIN")
+    query = request.GET.get('q')
+    if query:
+        game = game.filter(
+           Q(event__title__icontains=query)|
+           Q(choice__icontains=query)|
+           Q(status__icontains=query) |
+           Q(decision__icontains=query)
+           )
+    print "game-won", game_won
+    return render(request, 'general/user_account.html', {'user':user, 'balance':balance, 'game':game, 'game_won':game_won, 'game_count':game_count})
 
 
 def about_us(request):
@@ -336,65 +361,53 @@ def contact(request):
 
 @login_required
 def user_messages(request):
-	context = {}
-	try:
-	 	user = UserAccount.objects.get(user=request.user)
-	except Exception as e :
-		print "e", e
-		user = None
-	if request.method == 'POST':
-		if request.POST.has_key('messages_search'):
-			context = {}
-			query = request.POST.get('search_for')
-			query = request.POST.get('search_for')
-			new_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), new=True)
-			replied_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), replied=True)
-			archived_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), archive=True)
-			comment_form = MessageCenterCommentForm()
-			context['comment_form'] = comment_form
-			context['new_messages'] = new_messages
-			context['replied_messages'] = replied_messages
-			context['archived_messages'] = archived_messages
-			context['new_count'] = new_messages.count()
-			context['replied_count'] = replied_messages.count()
-			context['archived_count'] = archived_messages.count()
-			context['user'] = user
-			template_name = 'general/user_messages.html'
-			return render(request,template_name,context)
-		else:
-			rp = request.POST
-			print "rp: ", rp	
-			message_obj = MessageCenter.objects.create(
-				subject=rp.get('subject'),
-				message=rp.get('message'),
-				user=request.user,
-				new=True
-				)
-			message_obj.save()
-			comment_obj = MessageCenterComment.objects.create(
-				message=rp.get('message'),
-				message_obj=message_obj,
-				user=request.user)
-			messages.success(request,'Message sent successfully')
-			return redirect(request.META['HTTP_REFERER'])
-	else:
-		rg = request.GET
-		print 'rg:',rg
-		context = {}
-		new_messages = MessageCenter.objects.filter(new=True)
-		replied_messages = MessageCenter.objects.filter(replied=True)
-		archived_messages = MessageCenter.objects.filter(archive=True)
-		comment_form = MessageCenterCommentForm()
-		context['comment_form'] = comment_form
-		context['new_messages'] = new_messages
-		context['replied_messages'] = replied_messages
-		context['archived_messages'] = archived_messages
-		context['new_count'] = new_messages.count()
-		context['replied_count'] = replied_messages.count()
-		context['archived_count'] = archived_messages.count()
-		context['user'] = user
-		template_name = 'general/user_messages.html'
-		return render(request,template_name,context)
+    context = {}
+    try:
+        user = UserAccount.objects.get(user=request.user)
+    except Exception as e :
+        print "e", e
+        user = None
+    if request.method == 'POST':
+        rp = request.POST
+        print "rp: ", rp	
+        message_obj = MessageCenter.objects.create(
+            subject=rp.get('subject'),
+            message=rp.get('message'),
+            user=request.user,
+            new=True
+            )
+        message_obj.save()
+        comment_obj = MessageCenterComment.objects.create(
+            message=rp.get('message'),
+            message_obj=message_obj,
+            user=request.user)
+        messages.success(request,'Message sent successfully')
+        return redirect(request.META['HTTP_REFERER'])
+    else:
+        context = {}
+        messages = MessageCenter.objects.filter(user=request.user)
+        query = request.GET.get('q')
+        if query:
+            new_messages = messages.filter((Q(subject__icontains=query) | Q(message__icontains=query)), new=True)
+            replied_messages = messages.filter((Q(subject__icontains=query) | Q(message__icontains=query)), replied=True)
+            archived_messages = messages.filter((Q(subject__icontains=query) | Q(message__icontains=query)), archive=True)
+            #deleted_messages = messages.filter((Q(subject__icontains=query) | Q(message__icontains=query)), deleted=True)
+        else:
+            new_messages = messages.filter(new=True)
+            replied_messages = messages.filter(replied=True)
+            archived_messages = messages.filter(archive=True)
+            #deleted_messages = messages.filter(deleted=True)
+        comment_form = MessageCenterCommentForm()
+        context['comment_form'] = comment_form
+        context['new_messages'] = new_messages
+        context['replied_messages'] = replied_messages
+        context['archived_messages'] = archived_messages
+        context['new_count'] = new_messages.count()
+        context['replied_count'] = replied_messages.count()
+        context['archived_count'] = archived_messages.count()
+        context['user'] = user
+        template_name = 'general/user_messages.html'
+        return render(request,template_name,context)
 
 
 
@@ -463,7 +476,21 @@ def like_comments(request,action,pk):
 		return redirect(request.META['HTTP_REFERER'])
 	return redirect(request.META['HTTP_REFERER'])
 
-
-
+# @csrf_exempt
+# def reply_comment(request):
+#     print "I got here"
+#     print "I got here too"
+#     reply = request.POST.get('reply')
+#     print reply
+#     comment_id = request.POST.get("comment_id")
+#     print comment_id
+#     reply_obj = Replies.objects.create(user=request.user,reply=reply)
+#     reply_obj.comment_obj = Comments.objects.get(id=comment_id)
+#     reply_obj.save()
+#     comment = Comments.objects.filter(id=comment_id)
+#     return render(request, 'general_snippets/reply.html', {'comment':comment})
+    
+    
+    
 	
 

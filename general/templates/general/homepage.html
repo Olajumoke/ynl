@@ -39,6 +39,14 @@
 </head>
 
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=2352656298293778";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 	<!-- Preloader -->
 	<div class="loader-mask">
@@ -69,10 +77,10 @@
 						
 						<ul class="col-sm-6 top-bar-acc text-right">
 							<li class="social-icons dark">
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-facebook"></i></a>				
-								<!--<a href="#"><i class="fa fa-google-plus"></i></a>
-								<a href="#"><i class="fa fa-vimeo"></i></a> -->
+								<a href="https://www.twitter.com/YesorNolive"><i class="fa fa-twitter"></i></a>
+								<a href="https://www.facebook.com/YesorNolive"><i class="fa fa-facebook"></i></a>			
+								<a href="https://plus.google.com/yesornolive"><i class="fa fa-google-plus"></i></a>
+								<!--<a href="#"><i class="fa fa-vimeo"></i></a><!-- -->
 <!-- 								<a href="#"><i class="fa fa-instagram"></i></a>
  -->							</li>
 							
@@ -154,8 +162,8 @@
 										<ul class="nav navbar-nav">
 
 											<li id="mobile-search" class="hidden-lg hidden-md">
-												<form method="get" class="mobile-search relative">
-													<input type="search" class="form-control" placeholder="Search...">
+												<form method="GET" action=""class="mobile-search relative">
+													<input type="search" name="q" class="form-control" placeholder="Search...">
 													<button type="submit" class="search-button">
 														<i class="icon icon_search"></i>
 													</button>
@@ -214,8 +222,8 @@
 
 											<!-- Search -->
 											<li class="nav-search type-2 hidden-sm hidden-xs">
-												<form method="get">
-													<input type="search" class="form-control" placeholder="Search here">
+												<form method="GET" action="">
+													<input type="search" name="q"class="form-control" placeholder="Search here">
 													<button type="submit" class="search-button">
 														<i class="icon icon_search"></i>
 													</button>
@@ -347,7 +355,7 @@
  							<nav class="clear">
 
 			                    {% if events.has_previous %}
-			                        <a href="?page={{ events.previous_page_number }}">&laquo;</a>
+			                        <a href="?page={{ events.previous_page_number }}&q={{request.GET.q}}">&laquo;</a>
 			                    {% else %}
 			                        <a class="hidden" >&laquo;</a>
 
@@ -358,7 +366,7 @@
 			                    </span>
 
 			                    {% if events.has_next %}
-			                        <a href="?page={{ events.next_page_number }}">&raquo;</a>
+			                        <a href="?page={{ events.next_page_number }}&q={{request.GET.q}}">&raquo;</a>
 			                    {% else %}
 			                        <a class="hidden">&raquo;</a>
 			                    {% endif %}
@@ -375,9 +383,9 @@
 					<div class="widget follow-us">
 						<h3 class="widget-title heading relative heading-small uppercase bottom-line style-2 left-align">Follow Us</h3>
 						<div class="social-icons colored large">
-							<a href="#" class="social-facebook" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
-							<a href="#" class="social-twitter" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
-							<a href="#" class="social-google-plus" data-toggle="tooltip" data-placement="top" title="Google +"><i class="fa fa-google-plus"></i></a>
+							<a href="https://www.facebook.com/YesorNolive" class="social-facebook" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
+							<a href="https://www.twitter.com/YesorNolive" class="social-twitter" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
+							<a href="https://plus.google.com/yesornolive" class="social-google-plus" data-toggle="tooltip" data-placement="top" title="Google +"><i class="fa fa-google-plus"></i></a>
 							<!-- <a href="#" class="social-instagram" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram"></i></a>
 							<a href="#" class="social-youtube" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube"></i></a>
 							<a href="#" class="social-rss" data-toggle="tooltip" data-placement="top" title="Rss"><i class="fa fa-rss"></i></a> -->
@@ -633,7 +641,7 @@
 											<article class="post-small clearfix">
 												<div class="entry-img hover-scale">
 													<a href="{% url 'general:event_details' most_recent.pk %}">
-														{% if event.event_image %}
+														{% if most_recent.event_image %}
 															<img src="{{most_recent.event_image.url}}" style="width:100px; height:72px;" alt="">
 														{% else %}
 															<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
@@ -719,8 +727,8 @@
 							
 						<div class="col-md-3 col-xs-12 footer-socials mt-mdm-10 text-right">
 							<div class="social-icons dark">
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-facebook"></i></a>
+								<a href="https://www.twitter.com/YesorNolive"><i class="fa fa-twitter"></i></a>
+								<a href="https://www.facebook.com/YesorNolive"><i class="fa fa-facebook"></i></a>
 <!-- 								<a href="#"><i class="fa fa-instagram"></i></a>
  -->							</div>
 						</div>

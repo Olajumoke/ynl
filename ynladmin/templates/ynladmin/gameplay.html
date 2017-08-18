@@ -54,8 +54,10 @@
 							<td>{{event.total_losers}}</td>
 							{% else %}
 							<td>0</td>{% endif %}
-							<td>₦{{event.gameplay_total_value|floatformat:2|intcomma}}</td>
-							<td>₦{{event.total_amount_won|floatformat:2|intcomma}}</td>
+							{% if event.gameplay_total_value %}
+							<td>₦{{event.gameplay_total_value|floatformat:2|intcomma}}</td>{% else %}<td>₦0.00</td>{% endif %}
+							{% if event.total_amount_won %}
+							<td>₦{{event.total_amount_won|floatformat:2|intcomma}}</td>{% else %}<td>₦0.00</td>{% endif %}
                             <td>{% if event.closed %}CLOSED{% else %}OPEN{% endif %}</td>
 	                    </tr>
                     {% empty %}
