@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from general.models import UserAccount, Event
 from general.modelchoices import *
-from tinymce.models import HTMLField
+# from tinymce.models import HTMLField
 from general.models import UserAccount, MessageCenterComment, Replies
 from general.modelchoices import BANK, GENDER
 
@@ -37,7 +37,7 @@ class EventForm(forms.ModelForm):
     end_time            = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control','required':'required', 'type': 'date'}))
     publish             = forms.BooleanField(required = False)
     event_image         = forms.ImageField(required=False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
-    event_msg_body      = HTMLField()
+    event_msg_body      = forms.CharField(required=True, widget=forms.Textarea(attrs={'class':'form-control','required':'required'}))
     bet_question        = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
 
 

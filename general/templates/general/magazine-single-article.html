@@ -187,7 +187,7 @@
 														<span><span>			
 													</span></span></div>						
 												</div> <!-- end service item -->
-													&nbsp;&nbsp;&nbsp;<div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
 											</div>
 
 											<!--  if event.total_players == 0 %}
@@ -330,14 +330,14 @@
 										<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
 									<!-- Comments -->
 									<div class="entry-comments mt-20 hidden" style="overflow-y: scroll;" id="comments_view">
-										<h3 class="heading relative heading-small uppercase bottom-line style-2 left-align mb-40">
-
-										% if event.get_comments_count == 0 %}
+										<!--<h3 class="heading relative heading-small uppercase bottom-line style-2 left-align mb-40">
+-->
+										<!--% if event.get_comments_count == 0 %}
 											No comment
 										% else %}
 											{event.get_comments_count}} comment(s)
-										% endif %}
-										</h3>
+										% endif %}-->
+										<!--</h3>
 
 										<ul class="comment-list">
 											<li>
@@ -359,26 +359,32 @@
 
 
 
-												</div>
+												</div>-->
+<!--<<<<<<< HEAD
 												<div id="commentsection">
 												% if comment.get_all_replies %}
 												% for reply in comment.get_all_replies %}
 												<div class="comment-reply">
 													<img src="% static 'img/blog/comment_2.jpg' %}" class="comment-avatar" alt="">
+=======
+											
+												<div class="comment-reply">
+													<img src="{% static 'img/blog/comment_2.jpg' %}" class="comment-avatar" alt="">
+>>>>>>> 4f61370802d9df2bb66c39b7c915603705273268
 													<div class="comment-content">
 														<span class="comment-author">{ reply.user }}</span>
 														<span><a href="#">{ reply.created_on }}</a></span>		
 														<p>{ reply.reply }}</p>
 														
-													</div>
+													</div>-->
 
-												</div>
+												<!--</div>
 												% endfor %}
 												% endif %}
 													
 
 												% endfor %}
-												</div>
+												</div>-->
 											</li><!-- end 1-2 comment -->
 
 											<!-- <li>
