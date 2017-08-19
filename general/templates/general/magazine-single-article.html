@@ -187,7 +187,7 @@
 														<span><span>			
 													</span></span></div>						
 												</div> <!-- end service item -->
-
+													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
 											</div>
 
 											<!--  if event.total_players == 0 %}
@@ -327,57 +327,69 @@
 											</div>
 										</div>
 									</div> -->
-
+										<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
 									<!-- Comments -->
-									<div class="entry-comments mt-20" style="overflow-y: scroll;" id="comments_view">
-										<h3 class="heading relative heading-small uppercase bottom-line style-2 left-align mb-40">
-
-										{% if event.get_comments_count == 0 %}
+									<div class="entry-comments mt-20 hidden" style="overflow-y: scroll;" id="comments_view">
+										<!--<h3 class="heading relative heading-small uppercase bottom-line style-2 left-align mb-40">
+-->
+										<!--% if event.get_comments_count == 0 %}
 											No comment
-										{% else %}
-											{{event.get_comments_count}} comment(s)
-										{% endif %}
-										</h3>
+										% else %}
+											{event.get_comments_count}} comment(s)
+										% endif %}-->
+										<!--</h3>
 
 										<ul class="comment-list">
 											<li>
-												{% for comment in event.get_comments %}
+												% for comment in event.get_comments %}
 												<div class="comment-body">
 												
-													<img src="{% static 'img/blog/comment_1.jpg' %}" class="comment-avatar" alt="">
+													<img src="% static 'img/blog/comment_1.jpg' %}" class="comment-avatar" alt="">
 													
 													<div class="comment-content">
-														<span class="comment-author">{{comment.username}}</span>
-														<span><a href="#">{{comment.created_on}}</a></span>		
-														<p>{{comment.text}}</p>
-														<span class="show_replies" comment_id="{{comment.pk}}" style="cursor: pointer;">Reply</span>
+														<span class="comment-author">{comment.username}}</span>
+														<span><a href="#">{comment.created_on}}</a></span>		
+														<p>{comment.text}}</p>
+														<span class="show_replies" comment_id="{comment.pk}}" style="cursor: pointer;">Reply</span>
+														
+														% check_user_like request comment.pk as user_like %}
+														<span><a href="% url 'general:like_comments' 'like' comment.pk %}" class="like_comment" comment_id_like="{comment.pk}}"><i class="fa fa-thumbs-up" 
+														aria-hidden="true" style="cursor: pointer; % if user_like %}color: blue;% endif %}"></i>&nbsp;{comment.get_likes_count}}</a></span>
+														<div class="hidden" id="texty"><input type="text" id="text-reply" tag="{comment.id}}"style="border-radius: 5px;" ><span class="pull-right"><button id="post" class="btn btn-md btn-color" style="position: relative; border-radius: 5px; bottom: 10px;">Post</button></span></div>													</div>
 
-														{% check_user_like request comment.pk as user_like %}
-														<span><a href="{% url 'general:like_comments' 'like' comment.pk %}" class="like_comment" comment_id_like="{{comment.pk}}"><i class="fa fa-thumbs-up" 
-														aria-hidden="true" style="cursor: pointer; {% if user_like %}color: blue;{% endif %}"></i>&nbsp;{{comment.get_likes_count}}</a></span>
-													</div>
 
 
-
-												</div>
+												</div>-->
+<!--<<<<<<< HEAD
+												<div id="commentsection">
+												% if comment.get_all_replies %}
+												% for reply in comment.get_all_replies %}
+												<div class="comment-reply">
+													<img src="% static 'img/blog/comment_2.jpg' %}" class="comment-avatar" alt="">
+=======
 											
 												<div class="comment-reply">
 													<img src="{% static 'img/blog/comment_2.jpg' %}" class="comment-avatar" alt="">
+>>>>>>> 4f61370802d9df2bb66c39b7c915603705273268
 													<div class="comment-content">
-														<span class="comment-author">Alexander Samokhin</span>
-														<span><a href="#">May 6, 2014 at 12:48 pm</a></span>		
-														<p>This template is so awesome. I didn’t expect so many features inside. E-commerce pages are very useful, you can launch your online store in few seconds. I will rate 5 stars.</p>
-													</div>
+														<span class="comment-author">{ reply.user }}</span>
+														<span><a href="#">{ reply.created_on }}</a></span>		
+														<p>{ reply.reply }}</p>
+														
+													</div>-->
 
-												</div>
+												<!--</div>
+												% endfor %}
+												% endif %}
 													
 
-												{% endfor %}
-											</li> <!-- end 1-2 comment -->
+												% endfor %}
+												</div>-->
+											</li><!-- end 1-2 comment -->
 
 											<!-- <li>
 												<div class="comment-body">
-													<img src="{% static 'img/blog/comment_3.jpg' %}" class="comment-avatar" alt="">
+													<img src="% static 'img/blog/comment_3.jpg' %}" class="comment-avatar" alt="">
 													<div class="comment-content">
 														<span class="comment-author">Christopher Robins</span>
 														<span><a href="#">May 6, 2014 at 12:48 pm</a></span>		
@@ -386,16 +398,17 @@
 													</div>
 												</div>
 											</li> --> <!-- end 3 comment -->
-
+											<div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+											
 										</ul>					
 									</div> <!--  end comments -->
 
 									<!-- Leave a Comment -->
-									<div class="comment-form mt-60 mb-50">
+									<!--<div class="comment-form mt-60 mb-50">
 										<h3 class="heading relative heading-small uppercase bottom-line style-2 left-align">leave a Comment</h3>
 
-										<form id="user_comment_form" method="post" action="{% url 'general:user_comment' %}">
-											{% csrf_token %}
+										<form id="user_comment_form" method="post" action="% url 'general:user_comment' %}">
+											% csrf_token %}
 											<div class="row row-16">
 												<!-- <div class="col-md-4">
 													<input name="name" id="name" required type="text" placeholder="Name*">
@@ -403,16 +416,16 @@
 												<div class="col-md-4">
 													<input name="mail" id="mail" required type="email" placeholder="E-mail*">
 												</div> -->
-												<div class="col-md-12">
+												<!--<div class="col-md-12">
 													<textarea name="comment" maxlength="150" required id="comment" placeholder="Comment" rows="8"></textarea>
 												</div>
-												<input type="hidden" name="event_pk" value="{{event_pk}}">
+												<input type="hidden" name="event_pk" value="{event_pk}}">
 											</div>
 
 											<input type="submit" id="send_in_comments" class="btn btn-md btn-color" value="submit">
 										</form>
 
-									</div>
+									</div>-->
 								</div>
 							</div>
 						</div> <!-- end gallery post -->
@@ -426,9 +439,9 @@
 					<div class="widget follow-us">
 						<h3 class="widget-title heading relative heading-small uppercase bottom-line style-2 left-align">Follow Us</h3>
 						<div class="social-icons colored large">
-							<a href="#" class="social-facebook" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
-							<a href="#" class="social-twitter" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
-							<a href="#" class="social-google-plus" data-toggle="tooltip" data-placement="top" title="Google +"><i class="fa fa-google-plus"></i></a>
+							<a href="https://www.facebook.com/YesorNolive" class="social-facebook" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
+							<a href="https://www.twitter.com/YesorNolive" class="social-twitter" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
+							<a href="https://plus.google.com/yesornolive" class="social-google-plus" data-toggle="tooltip" data-placement="top" title="Google +"><i class="fa fa-google-plus"></i></a>
 							<!-- <a href="#" class="social-instagram" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram"></i></a>
 							<a href="#" class="social-youtube" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube"></i></a>
 							<a href="#" class="social-rss" data-toggle="tooltip" data-placement="top" title="Rss"><i class="fa fa-rss"></i></a> -->
@@ -767,8 +780,8 @@
 							
 						<div class="col-md-3 col-xs-12 footer-socials mt-mdm-10 text-right">
 							<div class="social-icons dark">
-								<a href="#"><i class="fa fa-twitter"></i></a>
-								<a href="#"><i class="fa fa-facebook"></i></a>
+								<a href="https://www.twitter.com/YesorNolive"><i class="fa fa-twitter"></i></a>
+								<a href="https://www.facebook.com/YesorNolive"><i class="fa fa-facebook"></i></a>
 <!-- 								<a href="#"><i class="fa fa-instagram"></i></a>
  -->							</div>
 						</div>
@@ -807,6 +820,34 @@
 
 		// });
 	</script>
+	
+	<!--<script>
+		$('body').on('click','#post',function(){
+			var reply = $('#text-reply').val();
+			var comment_id = $('#text-reply').attr('tag');
+			alert(comment_id);
+			if (reply != ''){
+				$.ajax({
+					url: "% url 'general:reply_comment' %}",
+					type: 'POST',
+					data: {'reply':reply, 'comment_id':comment_id},
+					success: function(data){
+						$('#commentsection').replaceWith(data);
+						$('#commentsection').load(data);
+					},
+				});
+			} else {
+				alert("Please ensure the field is not empty!!!");
+			}
+			
+			});
+	</script>
+	
+	<script>
+		$('body').on('click','.show_replies',function(){
+			$('#texty').toggleClass('hidden');
+    });
+	</script>-->
 
 {% endblock %}
 

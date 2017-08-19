@@ -60,8 +60,8 @@
                 <ul class="nav navbar-top-links navbar-left hidden-xs">
                     <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i class="icon-arrow-left-circle ti-menu"></i></a></li>
                     <li>
-                        <form role="search" class="app-search hidden-xs">
-                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+                        <form role="search" class="app-search hidden-xs" action="" method="get">
+                            <input type="text" name="q" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
                     </li>
                 </ul>
                 <ul class="nav navbar-top-links navbar-right pull-right">
@@ -128,7 +128,7 @@
                             <h3 class="box-title">Played Events</h3>
                             <ul class="list-inline two-part">
                                 <li><i class="icon-game-controller text-purple"></i></li>
-                                <li class="text-right"><span class="counter">{{ game.count }}</span></li>
+                                <li class="text-right"><span class="counter">{{ game_count }}</span></li>
                             </ul>
                         </div>
                     </div>

@@ -68,50 +68,40 @@ def admin_pages(request,pages_to):
 	except:
 		return redirect(request.META['HTTP_REFERER'])
 	context['user_acc_obj'] = user_acc_obj
-	if request.POST.has_key('events'):
-		query = request.POST.get('search_for')
-		all_events = Event.objects.filter((Q(author__username__icontains=query) |Q(title__icontains=query) |Q(category__icontains=query) |Q(publish__icontains=query) |Q(tracking_number__icontains=query)), deleted=False)
-		all_event = paginate_list(request,all_events,10)
-		template_name = 'ynladmin/events.html'
-		event_form = EventForm()
-		context['event_form'] = event_form
-		context['all_events'] = all_event
-	elif request.POST.has_key('users'):
-		query = request.POST.get('search_for')
-		template_name = 'ynladmin/users.html'
-		all_user = UserAccount.objects.filter((Q(user__username__icontains=query) |Q(bank__icontains=query) |Q(dob__icontains=query) |Q(phone_number__icontains=query) |Q(gender__icontains=query) |Q(account_number__icontains=query)), deleted=False)
-		all_users = paginate_list(request,all_user,10)
-		useraccount_form = UserAccountForm()
-		user_form = UserForm()
-		context['useraccount_form'] = useraccount_form
-		context['all_users'] = all_users
-		context['user_form'] = user_form
-	elif request.POST.has_key('messages_search'):
-		template_name = 'ynladmin/messages.html'
-		query = request.POST.get('search_for')
-		new_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), new=True)
-		replied_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), replied=True)
-		archived_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), archive=True)
-		deleted_messages = MessageCenter.objects.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), deleted=True)
-		comment_form = MessageCenterCommentForm()
-		context['comment_form'] = comment_form
-		context['new_messages'] = new_messages
-		context['replied_messages'] = replied_messages
-		context['archived_messages'] = archived_messages
-		context['deleted_messages'] = deleted_messages
-		context['new_count'] = new_messages.count()
-		context['replied_count'] = replied_messages.count()
-		context['archived_count'] = archived_messages.count()
-		context['deleted_count'] = deleted_messages.count()		
-	elif pages_to == 'events':
-		all_event = paginate_list(request,Event.objects.filter(deleted=False),10)
+	if pages_to == 'events':
+		events = Event.objects.filter(deleted=False)
+		query = request.GET.get('q')
+		if query:
+			print "query", query
+			events = events.filter(
+				Q(title__icontains=query)|
+				Q(category__icontains=query)|
+				Q(bet_question__icontains=query)|
+				Q(event_msg_body__icontains=query) |
+				Q(event_id__icontains=query)|
+				Q(author__first_name__icontains=query)
+				).distinct()
+			print events
+		all_event = paginate_list(request,events,10)
 		template_name = 'ynladmin/events.html'
 		event_form = EventForm()
 		context['event_form'] = event_form
 		context['all_events'] = all_event
 	elif pages_to == 'users':
 		template_name = 'ynladmin/users.html'
-		all_users = paginate_list(request,UserAccount.objects.filter(user__is_staff=False, deleted=False),10)
+		users = UserAccount.objects.filter(deleted=False)
+		query = request.GET.get('q')
+		if query:
+			print "query", query
+			users = users.filter(
+				Q(user__first_name__icontains=query) |
+				Q(bank__icontains=query) |
+				Q(user__last_name__icontains=query) |
+				Q(phone_number__icontains=query) |
+				Q(gender__icontains=query) |
+				Q(account_number__icontains=query)
+				)
+		all_users = paginate_list(request,users,10)
 		useraccount_form = UserAccountForm()
 		user_form = UserForm()
 		context['useraccount_form'] = useraccount_form
@@ -119,12 +109,18 @@ def admin_pages(request,pages_to):
 		context['user_form'] = user_form
 	elif pages_to == 'messages':
 		template_name = 'ynladmin/messages.html'
-		rg = request.GET
-		# print 'rg:',rg
-		new_messages = MessageCenter.objects.filter(new=True)
-		replied_messages = MessageCenter.objects.filter(replied=True)
-		archived_messages = MessageCenter.objects.filter(archive=True)
-		deleted_messages = MessageCenter.objects.filter(deleted=True)
+		messages = MessageCenter.objects.all()
+		query = request.GET.get('q')
+		if query:
+			new_messages = messages.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), new=True)
+			replied_messages = messages.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), replied=True)
+			archived_messages = messages.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), archive=True)
+			deleted_messages = messages.filter((Q(subject__icontains=query) | Q(user__username__icontains=query)), deleted=True)
+		else:
+			new_messages = messages.filter(new=True)
+			replied_messages = messages.filter(replied=True)
+			archived_messages = messages.filter(archive=True)
+			deleted_messages = messages.filter(deleted=True)
 		comment_form = MessageCenterCommentForm()
 		context['comment_form'] = comment_form
 		context['new_messages'] = new_messages
@@ -137,7 +133,17 @@ def admin_pages(request,pages_to):
 		context['deleted_count'] = deleted_messages.count()
 	elif pages_to == "payment":
 		template_name = 'ynladmin/payment.html'
-		payments = paginate_list(request,Bank.objects.all(),10)
+		payment = Bank.objects.all()
+		query = request.GET.get('q')
+		if query:
+			print "query", query
+			payment = payment.filter(
+				Q(user__first_name__icontains=query) |
+				Q(bank__icontains=query) |
+				Q(user__last_name__icontains=query) |
+				Q(ref_no__icontains=query)
+				)
+		payments = paginate_list(request,payment,10)
 		context['payments'] = payments
 	elif pages_to == "comments":
 		template_name = 'ynladmin/comments.html'
@@ -145,7 +151,13 @@ def admin_pages(request,pages_to):
 		context['comments'] = comments
 	elif pages_to == "game":
 		template_name = 'ynladmin/gameplay.html'
-		event = paginate_list(request,Event.objects.all(),10)
+		events = Event.objects.all()
+		query = request.GET.get('q')
+		if query:
+			print "query", query
+			events = events.filter(
+				Q(event_id__icontains=query)) 
+		event = paginate_list(request,events,10)
 		context['event'] = event
 	elif pages_to == "settings":
 		if request.method == "POST":
