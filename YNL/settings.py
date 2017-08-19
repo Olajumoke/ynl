@@ -296,6 +296,7 @@ YNL_APPS= (
     'gameplay',
     'django.contrib.admin',
     'social_django',
+    'storages',
 )
 
 
