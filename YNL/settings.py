@@ -221,7 +221,7 @@ ALLOWED_HOSTS = [
     '.yesornolive.com',
     '.shop4ming.com',
     'www.shop4ming.com',
-    '54.246.93.146',
+    '46.137.191.224',
 
 ]
 
