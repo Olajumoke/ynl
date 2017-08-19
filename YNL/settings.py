@@ -205,9 +205,6 @@ else:
 
     SECRET_KEY = '2q_*um)ya-(3y1f6d^anann5y#f0y!3xs1+o!3i*y35bi7_u75'
 
-    FLUTTERWAVE_API_KEY         = "tk_WfDHIy0sdRozMqtLUBvE"
-    FLUTTERWAVE_MERCHANT_KEY    = "tk_eLBuQpHtNr"
-
     SESSION_SECURITY_WARN_AFTER = 60 * 60 * 24 * 2 #2days
     SESSION_SECURITY_EXPIRE_AFTER = 60 * 60 * 24 * 2 #2days
 
@@ -222,6 +219,7 @@ ALLOWED_HOSTS = [
     '.shop4ming.com',
     'www.shop4ming.com',
     '46.137.191.224',
+    'yesnolive-env.eu-west-1.elasticbeanstalk.com',
 
 ]
 
