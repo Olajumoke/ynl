@@ -219,7 +219,7 @@ ALLOWED_HOSTS = [
     'localhost',
     'yesnolive.pythonanywhere.com',
     '.yesornolive.com',
-    'www.shop4ming.com',
+    '.shop4ming.com',
     '54.246.93.146',
 ]
 
