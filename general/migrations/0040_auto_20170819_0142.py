@@ -2,19 +2,18 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-# import tinymce.models
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('general', '0019_auto_20170629_1234'),
+        ('general', '0039_auto_20170814_0732'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='event',
             name='event_msg_body',
-            field=models.TextField(null=True, blank=True)
+            field=models.TextField(null=True, blank=True),
         ),
     ]

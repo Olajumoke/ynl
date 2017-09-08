@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import tinymce.models
+# import tinymce.models
 
 
 class Migration(migrations.Migration):
@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='event',
             name='admin_text',
-            field=tinymce.models.HTMLField(null=True, blank=True),
+            field=models.TextField(null=True, blank=True),
         ),
     ]
