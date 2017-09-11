@@ -8,7 +8,7 @@
 	$('body').on('click', '#submit-form-events', function(e){
 		e.preventDefault();
 		var text = tinyMCE.activeEditor.getContent();
-		alert(text);
+		//alert(text);
 		if (text != "") {
 			$('#create_event').submit();
 		}else {
