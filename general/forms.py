@@ -37,7 +37,7 @@ class EventForm(forms.ModelForm):
     end_time            = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control','required':'required', 'type': 'date'}))
     publish             = forms.BooleanField(required = False)
     event_image         = forms.ImageField(required=False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
-    event_msg_body      = forms.CharField(required=True, widget=forms.Textarea(attrs={'class':'form-control','required':'required'}))
+    event_msg_body      = forms.CharField(required=True, widget=forms.Textarea(attrs={'required':'required'}))
     bet_question        = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
 
 

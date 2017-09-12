@@ -38,8 +38,8 @@ from wallet.models import Bank
 from ynladmin.models import CostSetting
 from ynladmin.forms import CostSettingForm
 from wallet.views import purchase_ref, generate_purchaseRef
-# Create your views here.
 
+# Create your views here.
 
 
 
@@ -183,7 +183,7 @@ def admin_pages(request,pages_to):
 
 
 @login_required
-def create_event(request):
+def create_new_event(request):
 	print "i got here"
 	context = {}
 	user_obj = request.user
@@ -211,6 +211,8 @@ def create_event(request):
 				else:
 					print "you may proceed"
 					create_event_form = form.save(commit=False)
+					create_event_form.event_msg_body = str(re.sub('<[^<]+?>', '', rp.get('event_msg_body'))).replace('&nbsp;','')
+					print "the message:",create_event_form.event_msg_body
 					create_event_form.author = request.user
 					create_event_form.event_id = rp.get('event_track_num')
 					create_event_form.save()

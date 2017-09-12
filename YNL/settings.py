@@ -255,9 +255,10 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GooglePlusAuth',
-    # 'backends.EmailAuthBackEnd',
-    # 'backends.UsernameAuthBackEnd',
+    
     'django.contrib.auth.backends.ModelBackend',
+    'backends.EmailAuthBackEnd',
+    'backends.UsernameAuthBackEnd',
 )
 
 SOCIAL_AUTH_PIPELINE = (
@@ -296,9 +297,11 @@ YNL_APPS= (
     'wallet',
     'ynladmin',
     'gameplay',
+    'mobileValidator',
     'django.contrib.admin',
     'social_django',
     'storages',
+
 )
 
 

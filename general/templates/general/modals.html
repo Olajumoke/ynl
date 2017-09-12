@@ -18,9 +18,8 @@
 		            <!-- Modal Body -->
 		            <div class="modal-body" style="background-color: azure;">
 		                
-		                <form name="create_event" id="create_event" method="POST" action="{% url 'ynladmin:create_event' %}" 
-						  enctype="multipart/form-data">
-						  {% csrf_token %}
+		                <form name="create_new_event" id="create_new_event" method="POST" 
+		                    action="" enctype="multipart/form-data">
 
 						  		<p>NB: Fields with <b style="color:red">'*'</b> are required</p>
 
@@ -63,9 +62,9 @@
 								<label>Upload Event Image(770x400)</label>
 									{{event_form.event_image}}
 								</div>
-																
+								<input type="submit", value="submit"/>								
 
-							    <button type="submit" id="submit-form-events" class="btn btn-success pull-right">Submit</button><br />
+							    <button type="submit" onclick="return confirm('Are you sure you want to proceed?')"  class="btn btn-success pull-right">Submit</button><br />
 
 							</form>         
 		        	</div>
