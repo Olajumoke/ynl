@@ -4,6 +4,17 @@
 		$('#eventForm').modal('show');
 	});
 
+	
+	$('body').on('click', '#submit-form-events', function(e){
+		e.preventDefault();
+		var text = tinyMCE.activeEditor.getContent();
+		//alert(text);
+		if (text != "") {
+			$('#create_event').submit();
+		}else {
+			alert("The Description Field is Required");
+		}
+	});
 
    $('body').on('click', '.edit_event', function(e){
    		   var event_track_num = $(this).attr('event_track_num');

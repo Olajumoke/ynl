@@ -33,17 +33,19 @@ class EventForm(forms.ModelForm):
 
     title               = forms.CharField(help_text="Title", required = True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
     category            = forms.ChoiceField(choices = CATEGORY, error_messages = {'required': 'Please select a category.'},widget=forms.Select(attrs={'class':'form-control','required':'required'}))
-    start_time          = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control','required':'required', 'type': 'date'}))
-    end_time            = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control','required':'required', 'type': 'date'}))
+    start_date          = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control','required':'required'}))
+    end_date            = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control','required':'required'}))
+    start_time          = forms.TimeField(required=True, widget=forms.TimeInput(attrs={'class':'form-control','required':'required'}))
+    end_time            = forms.TimeField(required=True, widget=forms.TimeInput(attrs={'class':'form-control','required':'required'}))
     publish             = forms.BooleanField(required = False)
     event_image         = forms.ImageField(required=False, help_text='Photo', widget=forms.widgets.ClearableFileInput())
-    event_msg_body      = forms.CharField(required=True, widget=forms.Textarea(attrs={'required':'required'}))
+    event_msg_body      = forms.CharField(required=True, widget=forms.Textarea(attrs={'class':'form-control'}))
     bet_question        = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
 
 
     class Meta:
         model = Event
-        fields = ('title', 'category', 'start_time', 'end_time', 'publish', 'event_image','event_msg_body','bet_question','event_decision','event_id')
+        fields = ('title', 'category', 'start_date', 'end_date', 'start_time', 'end_time','publish', 'event_image','event_msg_body','bet_question','event_decision','event_id')
 
 	
 
