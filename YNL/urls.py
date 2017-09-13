@@ -49,6 +49,8 @@ urlpatterns = [
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     #url(r'^tinymce/', include('tinymce.urls', namespace='tinymce')),
     url(r'^game/', include('gameplay.urls', namespace="gameplay")),
+
+    url(r'^mobile-validator-api/', include('mobileValidator.urls')),
     
     #change password urls
     url(r'^reset/form/$', TemplateView.as_view(template_name = 'registration/password_reset_email.html')),

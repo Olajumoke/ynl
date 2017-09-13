@@ -16,7 +16,7 @@
     <div class="modal-body" style="background-color: azure;">
         
         <form name="edit_event" id="edit_event" method="POST" 
-        	action="{% url 'ynladmin:create_event' %}" enctype="multipart/form-data">
+        	action="{% url 'ynladmin:create_new_event' %}" enctype="multipart/form-data">
 		  {% csrf_token %}
 
 		  		<p>NB: Fields with <b style="color:red">'*'</b> are required</p>
@@ -57,7 +57,7 @@
 
 				<div class="form-group">
 				<label class="label-controller">Description</label>
-					{{event_form.event_msg_body}}
+					{{event_form.event_msg_body|safe}}
 				</div>
 
 				<div class="form-group">
