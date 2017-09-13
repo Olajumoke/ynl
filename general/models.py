@@ -57,6 +57,8 @@ class Event(models.Model):
 	event_id      			  = models.CharField(max_length=50, null=True, blank=True)
 	bet_question			  = models.CharField(max_length=250, null=True, blank=True)
 	event_decision			  = models.CharField(max_length=5,choices=CHOICES, null=True, blank=True)
+	validated                 = models.BooleanField(default=False)
+	decided                   = models.BooleanField(default=False)
 
 	def __unicode__(self):
 	    return '%s' %(self.author)

@@ -19,8 +19,19 @@ from django.core.files.base import ContentFile
 
 @csrf_exempt
 def getEvents(request):
-	events_info = Event.objects.values("id", "category", "bet_question", "title", "created_on", "event_msg_body", "event_id")
-	# print events_info
+	events_obj = Event.objects.filter(validated=False)
+	events_info = events_obj.values()
+	print "i want to validate"
+	# print 'events_inf:', events_info
+	return JsonResponse({"success": 1, "error": 0, 'events_info': list(events_info)})
+
+
+@csrf_exempt
+def getEventsDecided(request):
+	events_obj = Event.objects.filter(decided=False)
+	events_info = events_obj.values()
+	print "i want to decide"
+	# print 'events_inf:', events_info
 	return JsonResponse({"success": 1, "error": 0, 'events_info': list(events_info)})
 
 
@@ -57,9 +68,20 @@ def login(request):
                 user_info = {"user_id": user.id, "full_name": user.get_full_name(),
                              "username": user.username, "email": email}
 
-                events_count = Event.objects.all().count()
-                str_events_count = str(events_count)
-                return JsonResponse({"success": 1, "error": 0, "user_info": user_info, "events_count":str_events_count})
+                events_count_not_validated = Event.objects.filter(validated=False).count()
+                events_count_not_decided = Event.objects.filter(decided=False).count()
+
+                print 'unvalidated_count:', events_count_not_validated
+                print 'undecided_count:', events_count_not_decided
+
+                str_events_not_validated_count = str(events_count_not_validated)
+                str_events_not_decided_count = str(events_count_not_decided)
+
+                return JsonResponse({
+                    "success": 1, "error": 0, 
+                    "user_info": user_info, 
+                    "events_count_not_validated":str_events_not_validated_count,
+                    "events_count_not_decided":str_events_not_decided_count})
 
             
                              #"authorization_key": auth_key}
@@ -84,14 +106,38 @@ def login(request):
 
 
 @csrf_exempt
-def validate_event(request):
-    if request.method == 'POST':
-        rp = request.POST
-        print "rp:", rp
-        return JsonResponse({"success": 1, "error": 0})
-    else:
-        print 'something went wrong'
-        return JsonResponse({"success": 0, "error": 1})
+def validate_decide_event(request):
+	if request.method == 'POST':
+		rp = request.POST
+		get_event_obj = Event.objects.get(event_id=rp.get('tracking_number'))
+		if rp.has_key('validate'):
+			get_event_obj.validated = True
+		else:
+			get_event_obj.decided = True
+		get_event_obj.save()
+		events_val_obj = Event.objects.filter(validated=False)
+		events_dcd_obj = Event.objects.filter(decided=False)
+		str_events_not_validated_count = str(events_val_obj.count())
+		str_events_not_decided_count = str(events_dcd_obj.count())
+		
+		if rp.has_key('validate'):
+			events_info = events_val_obj.values()
+			events_obj_count = events_val_obj.count()
+		else:
+			events_info = events_dcd_obj.values()
+			events_obj_count = events_dcd_obj.count()
+			
+		print "count:", events_obj_count
+			
+		if events_obj_count >= 1:
+			return JsonResponse({"success": 1, "error": 0,'events_info': list(events_info), 'count':events_obj_count})
+		else:
+			return JsonResponse({"success": 1,
+								 "error": 0,
+								 'count':events_obj_count,
+								 'events_count_not_validated':str_events_not_validated_count,
+								 'events_count_not_decided':str_events_not_decided_count})
+	return JsonResponse({"success": 0, "error": 1})
 
 
 
