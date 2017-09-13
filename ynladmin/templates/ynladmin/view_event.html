@@ -67,12 +67,12 @@
 				<label >Event Decision:</label>
 					{{event_form.event_decision.value}}
 				</div>
+				
 				{% if event_form.event_image.url %}
 				<div class="form-group">
 				<label>Event Image:</label><br/>
 					
 					<img style="max-width:50%;max-height:50%;" id="myImg" src="{{event_form.event_image.url}}" alt="{{event_form.title.value}}">
-					{% endif %}
 					<!--{event_form.event_image}}-->
 				</div>
 				{% endif %}
