@@ -26,8 +26,7 @@
 
    $('body').on('click', '.edit_event', function(e){
    		   var event_track_num = $(this).attr('event_track_num');
-         var identifier = $(this).attr('identifier');
-
+		   var identifier = $(this).attr('identifier');
 
 
    		$.ajax({
@@ -42,7 +41,18 @@
    				$('#event_edit').replaceWith(data);
    				$('#eventFormEdit').modal('show');
    				console.log('working');
-					tinymce.init({selector:'textarea',height: 300});
+				
+			    tinymce.init({selector:'textarea',height: 300});
+				
+				$( ".id_date" ).datepicker({
+						changeMonth: true,
+						changeYear: true
+			   });
+				  
+			   $('.id_time').timepicker({
+					'timeFormat': 'h:i A',
+					'scrollDefault': 'now'
+			   });
 					
    			},
 
@@ -70,7 +80,7 @@
                   $('#viewFormEdit').modal('show');
                   console.log('working');
                   tinymce.init({selector:'textarea',height: 300});
-                  
+				  
                },
 
                error:function(data){

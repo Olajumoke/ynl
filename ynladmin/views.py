@@ -282,8 +282,10 @@ def view_edit_event(request):
 	event_track_num = request.GET.get('event_track_num')
 	event_obj = Event.objects.get(event_id=event_track_num)
 	event_form = EventForm(instance=event_obj)
+	event_validated = event_obj.validated
 	context['event_track_num'] = event_track_num
 	context['event_form'] = event_form
+	context['event_validated'] = event_validated
 	return render(request,template_name,context)
 
 

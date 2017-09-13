@@ -60,10 +60,12 @@
 					{{event_form.end_time}}
 				</div>
 
+				{% if event_validated %}
 				<div class="form-group">
 					{{event_form.publish}}
 					<label>Publish</label>
 				</div>
+				{% endif %}
 
 				<div class="form-group">
 				<label class="label-controller">Description</label>
