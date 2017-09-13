@@ -116,22 +116,22 @@
     
     <script>
         $(document).ready(function() {
-        $( "#id_start_date" ).datepicker({
+        $( ".id_date" ).datepicker({
              changeMonth: true,
              changeYear: true
         });
-        $("#id_end_date").datepicker({
-             changeMonth: true,
-             changeYear: true
-        });
-        $('#id_start_time').timepicker({
+        //$("#id_end_date").datepicker({
+        //     changeMonth: true,
+        //     changeYear: true
+        //});
+        $('.id_time').timepicker({
              'timeFormat': 'h:i A',
              'scrollDefault': 'now'
         });
-        $('#id_end_time').timepicker({
-             'timeFormat': 'h:i A',
-             'scrollDefault': 'now'
-        });
+        //$('#id_end_time').timepicker({
+        //     'timeFormat': 'h:i A',
+        //     'scrollDefault': 'now'
+        //});
         });
    </script>
 </head>
