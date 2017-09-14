@@ -58,19 +58,24 @@
 					<label>Published? </label>
 					{{event_form.publish.value}}
 				</div>
-
+				
+				{% autoescape off %}
 				<div class="form-group">
 				<label >Description:</label><br/>
-					{{event_form.event_msg_body.value|striptags}}
+					{{event_form.event_msg_body.value}}
 				</div>
+				{% endautoescape %}
+				
 				<div class="form-group">
 				<label >Event Decision:</label>
 					{{event_form.event_decision.value}}
 				</div>
+
 				{% if event_form.instance.event_image %}
 				<div class="form-group">
 				<label>Event Image:</label><br/>
-					<img style="max-width:50%;max-height:50%;" id="myImg" src="{{event_form.instance.event_image.url}}" alt="{{event_form.title.value}}" >
+					
+					<img style="max-width:50%;max-height:50%;" id="myImg" src="{{event_form.instance.event_image.url}}" alt="{{event_form.title.value}}">
 					<!--{event_form.event_image}}-->
 				</div>
 				{% endif %}

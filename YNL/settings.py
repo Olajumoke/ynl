@@ -341,6 +341,8 @@ TIME_ZONE = 'Africa/Lagos'
 
 USE_L10N = True
 
+TIME_INPUT_FORMATS = ('%I:%M %p',)
+
 USE_TZ = True
 
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

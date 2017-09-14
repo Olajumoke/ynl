@@ -109,14 +109,18 @@ def login(request):
 def validate_decide_event(request):
 	if request.method == 'POST':
 		rp = request.POST
+		
 		get_event_obj = Event.objects.get(event_id=rp.get('tracking_number'))
+		
 		if rp.has_key('validate'):
 			get_event_obj.validated = True
 		else:
 			get_event_obj.decided = True
 		get_event_obj.save()
+		
 		events_val_obj = Event.objects.filter(validated=False)
 		events_dcd_obj = Event.objects.filter(decided=False)
+		
 		str_events_not_validated_count = str(events_val_obj.count())
 		str_events_not_decided_count = str(events_dcd_obj.count())
 		
