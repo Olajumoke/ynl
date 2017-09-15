@@ -57,7 +57,7 @@
     </script>
     
     <style>
-    #errmsg {
+    .input-group-addon {
         color: red;
     }
     </style>
@@ -179,9 +179,9 @@
                                         <div class="form-group">
                                             <label for="exampleInputpwd1">Phone Number</label>
                                             <div class="input-group">
-                                                {{ form2.phone_number }}&nbsp;<span id="errmsg"></span>
+                                                {{ form2.phone_number }}<!--&nbsp;<span id="errmsg"></span>-->
                                                 <!--<input type="number" name="phone_number" class="form-control" id="exampleInputpwd1" placeholder="Phone Number" required>-->
-                                                <div class="input-group-addon"></div>
+                                                <div class="input-group-addon"><span id="phone_errmsg"></span></div>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -199,7 +199,17 @@
                                                 
                                                 <!--<option value="">Male</option>
                                                 <option value="">Female</option>
-                                            </select> --> 
+                                            </select> -->
+                                              
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputpwd2">Referred By:</label>
+                                            <div class="input-group">
+                                                {{ form2.referred_by }}
+                                                <!--<input type="date" name="dob" class="form-control" id="exampleInputpwd2" placeholder="dd/mm/yyyy" required>-->
+                                                <div class="input-group-addon"><span id="ref_errmsg"></span></div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="checkbox checkbox-success">
@@ -248,9 +258,9 @@
                                             <label for="exampleInputpwd1">Account Number</label>
                                             <div class="input-group">
                                                 {{ form2.account_number }}
-                                                &nbsp;<span id="errmsg"></span>
+                                                <!--&nbsp;<span id="errmsg"></span>-->
                                                 <!--<input type="number" name="account_number" maxlength="10" class="form-control" id="acc_number" placeholder="1234567890" required>-->
-                                                <div class="input-group-addon"></div>
+                                                <div class="input-group-addon"><span id="acc_errmsg"></span></div>
                                             </div>
                                         </div>
                                         
@@ -428,7 +438,7 @@
          //if the letter is not digit then display error and don't type anything
          if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
             //display error message
-            $("#errmsg").html("Digits Only").show().fadeOut("slow");
+            $("#acc_errmsg").html("Digits Only").show().fadeOut("slow");
                    return false;
         }
        });
@@ -442,7 +452,21 @@
          //if the letter is not digit then display error and don't type anything
          if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
             //display error message
-            $("#errmsg").html("Digits Only").show().fadeOut("slow");
+            $("#phone_errmsg").html("Digits Only").show().fadeOut("slow");
+                   return false;
+        }
+       });
+    });
+    </script>
+    
+    <script>
+        $(document).ready(function () {
+      //called when key is pressed in textbox
+      $("#id_referred_by").keypress(function (e) {
+         //if the letter is not digit then display error and don't type anything
+         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+            //display error message
+            $("#ref_errmsg").html("Digits Only").show().fadeOut("slow");
                    return false;
         }
        });

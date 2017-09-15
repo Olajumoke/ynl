@@ -69,11 +69,12 @@ class UserAccountForm(forms.ModelForm):
     bank            = forms.ChoiceField(help_text="Bank", choices=BANK, required = True, widget=forms.Select(attrs={'placeholder':'Bank', 'required':'required','class':'form-control'}))
     account_number  = forms.CharField(help_text="Account Number", required = True,widget=forms.TextInput(attrs={'placeholder':'Account Number', 'required':'required', 'class':'form-control'}))
     user_image      = forms.ImageField(help_text="User Image", required = False, widget=forms.ClearableFileInput(attrs={'class':'dropify'}))
+    referred_by     = forms.CharField(help_text="Referred By", required = True,widget=forms.TextInput(attrs={'placeholder':"Referral's Phone Number", 'required':'required', 'class':'form-control'}))
 
     
     class Meta:
         model = UserAccount
-        fields = ('bank', 'dob', 'account_number', 'gender', 'phone_number', 'user_image')
+        fields = ('bank', 'dob', 'account_number', 'gender', 'phone_number', 'user_image','referred_by')
         
     def validate_bank_account_no(value):
         len_value = len(value)

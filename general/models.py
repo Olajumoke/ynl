@@ -28,6 +28,7 @@ class UserAccount(models.Model):
 	user_image               = models.ImageField(upload_to="media/user_image/%Y/%M/%d/", null=True, blank=True)
 	gender					 = models.CharField(max_length=10, null=True, blank=True, choices=GENDER)
 	deleted                  = models.BooleanField(default=False)
+	referred_by				 = models.CharField(max_length=50, null=True, blank=True)
 	
 	
 	def __unicode__(self):
@@ -45,8 +46,8 @@ class Event(models.Model):
 	title                     = models.CharField(max_length=250, null=True, blank=True)
 	category                  = models.CharField(max_length=50, null=True, blank=True, choices=CATEGORY)
 	created_on                = models.DateTimeField(auto_now_add = True)
-	start_time				  = models.TimeField(default=timezone.now(),auto_now_add=False)
-	end_time				  = models.TimeField(default=timezone.now(),auto_now_add=False)
+	start_time				  = models.TimeField(default=timezone.now,auto_now_add=False)
+	end_time				  = models.TimeField(default=timezone.now,auto_now_add=False)
 	start_date                = models.DateField(null=True, blank=True)
 	end_date                  = models.DateField(null=True, blank=True)
 	publish     			  = models.BooleanField(default=False)
@@ -166,32 +167,32 @@ class Likes(models.Model):
 
 
 class MessageCenter(models.Model):
-    user                = models.ForeignKey(User, null=True, blank=True)
-    subject             = models.CharField(max_length=150, null=True, blank=True)
-    created_on          = models.DateTimeField(default = timezone.now)
-    message             = models.TextField()
-    no_of_comments      = models.IntegerField(default=0)
-    new                 = models.BooleanField(default = True)
-    replied             = models.BooleanField(default=False)
-    replied_on          = models.DateTimeField(null = True, blank=True)
-    archive             = models.BooleanField(default=False)
-    deleted             = models.BooleanField(default=False)
-
-
-    class Meta:
-	    verbose_name_plural = 'Messages'
-
-    def __unicode__(self):
-	    return unicode(self.user)
-
-    def getComments(self):
+	user                = models.ForeignKey(User, null=True, blank=True)
+	subject             = models.CharField(max_length=150, null=True, blank=True)
+	created_on          = models.DateTimeField(default = timezone.now)
+	message             = models.TextField()
+	no_of_comments      = models.IntegerField(default=0)
+	new                 = models.BooleanField(default = True)
+	replied             = models.BooleanField(default=False)
+	replied_on          = models.DateTimeField(null = True, blank=True)
+	archive             = models.BooleanField(default=False)
+	deleted             = models.BooleanField(default=False)
+	
+	
+	class Meta:
+		verbose_name_plural = 'Messages'
+	
+	def __unicode__(self):
+		return unicode(self.user)
+	
+	def getComments(self):
 		return self.messagecentercomment_set.all()
-
-    def get_comments_count(self):
+	
+	def get_comments_count(self):
 		comments_count = self.getComments().count()
 		return comments_count
-
 	
+
 
 
 
