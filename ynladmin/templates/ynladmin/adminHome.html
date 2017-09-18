@@ -117,20 +117,25 @@
     
     <script>
         $(document).ready(function() {
+             
+             $( ".datepicker" ).datepicker({
+                  changeMonth: true,
+                  changeYear: true
+             });
+             
+             $('.id_time').timepicker({
+                  'timeFormat': 'h:i A',
+                  'scrollDefault': 'now'
+             });
 
-        $('.id_date').datepicker({
-             changeMonth: true,
-             changeYear: true,
-             dateFormat: "yy-mm-dd",
-             minDate: 0
-        });
-       
-        $('.id_time').timepicker({
-             'timeFormat': 'h:i A',
-             'scrollDefault': 'now'
-        });
-        
-    });
+             $('.id_date').datepicker({
+                  changeMonth: true,
+                  changeYear: true,
+                  dateFormat: "yy-mm-dd",
+                  minDate: 0
+             });
+
+             });
    </script>
 </head>
 </head>
