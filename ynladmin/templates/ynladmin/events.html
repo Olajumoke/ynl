@@ -66,13 +66,16 @@
 										</span>&nbsp;&nbsp;
 										<span><a style="cursor: pointer;" href="{% url 'ynladmin:delete_event' event.id %}" onclick="return confirm('Are you sure you want to delete this event?')"><i class="fa fa-trash" title="Delete"></i></a>
 										</span>
+									{% elif not event.decided %}
+										<span><a class="decision" event_track_num="{{event.id}}"><i class="fa fa-gavel" aria-hidden="true"
+										style="cursor: pointer;"></i></a>
 									{% endif %}
 								{% endif %}
 								
                                 
                             </td>
-							<td>{% if event.closed %}<i class="fa fa-lock" aria-hidden="true"></i>{% else %} <span><a style="cursor: pointer;" href="{% url 'ynladmin:close_event' event.id %}"
-							onclick="return confirm('Are you sure you want to Close this Event? and has a DECISION been SET?')"><i class="fa fa-unlock-alt" aria-hidden="true"></i>{% endif %}</a></span></td>
+							<td>{% if event.closed %}<i class="fa fa-lock" aria-hidden="true"></i>{% elif not event.closed and event.decided %} <span><a style="cursor: pointer;" href="{% url 'ynladmin:close_event' event.id %}"
+							onclick="return confirm('Are you sure you want to CLOSE this Event?')"><i class="fa fa-unlock-alt" aria-hidden="true"></i>{% endif %}</a></span></td>
                         </tr>
                     {% empty %}
                         <p>No Event</p>

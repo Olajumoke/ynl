@@ -50,6 +50,13 @@ class EventForm(forms.ModelForm):
         model = Event
         fields = ('title', 'category', 'start_date', 'end_date', 'start_time', 'end_time','publish', 'event_image','event_msg_body','bet_question','event_decision','event_id')
 
+
+class DecisionForm(forms.ModelForm):
+    
+    class Meta:
+        model = Event
+        fields = ('event_decision',)
+
 	
 
 class UserProfileForm(forms.ModelForm):

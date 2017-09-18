@@ -117,25 +117,25 @@
     
     <script>
         $(document).ready(function() {
-             
-             $( ".datepicker" ).datepicker({
-                  changeMonth: true,
-                  changeYear: true
-             });
-             
-             $('.id_time').timepicker({
-                  'timeFormat': 'h:i A',
-                  'scrollDefault': 'now'
-             });
-
-             $('.id_date').datepicker({
-                  changeMonth: true,
-                  changeYear: true,
-                  dateFormat: "yy-mm-dd",
-                  minDate: 0
-             });
-
-             });
+        $('.id_date').datepicker({
+             changeMonth: true,
+             changeYear: true,
+             dateFormat: "yy-mm-dd",
+             minDate:     0
+        });
+        //$("#id_end_date").datepicker({
+        //     changeMonth: true,
+        //     changeYear: true
+        //});
+        $('.id_time').timepicker({
+             'timeFormat': 'h:i A',
+             'scrollDefault': 'now'
+        });
+        //$('#id_end_time').timepicker({
+        //     'timeFormat': 'h:i A',
+        //     'scrollDefault': 'now'
+        //});
+        });
    </script>
 </head>
 </head>
@@ -228,37 +228,25 @@
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
-                          <style>
-                                       
-                               .danger{
-                                       color: red;
-                                }
-                                .success{
-                                       color: green;
-                                }
-                                .warning{
-                                       color: brown;
-                                }
-                                
-                          </style>
-                                            
-                            {% for message in messages %}
-                                {% if message.error %}
-                                   <p class="danger">{{ message }}</p>
-                                {% elif message.warning %}
-                                   <p class="warning">{{ message }}</p>
-                                {% else %}
-                                   <p class="success">{{ message }}</p>
-                                {% endif %}
-                            {% endfor %}
-                            
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
                         
                         <h4 class="page-title">Hi {{request.user.username}},</h4> </div>
+                        <h3>
 
+                            {% for msg in messages %}
+                                <script>
+                                    function show_alert(){
+                                    var alert = '<p class="text-{{ msg.tags }}">{{ msg }}</p>';
+                                    document.write(alert);
+                                    }
+                                    display = window.setTimeout(show_alert(), 1000);
+                                    window.clearTimeout(display);
+                                </script>
+                            {% endfor %}
                             
-                            
+                        </h3>
+
                         {% block add_event %}
 
                         {% endblock add_event %}
@@ -281,6 +269,8 @@
 {% block modals %}
 
     {% include 'general/modals.html' %}
+    <div id="myModal" class="modal fade" role="dialog">
+    </div>
 
 {% endblock modals %}
 

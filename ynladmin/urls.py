@@ -18,6 +18,7 @@ urlpatterns = [
             url(r'^admin/archive/(?P<pk>[\w]+)/$', views.archive_message, name='archive_message'),
             url(r'^admin/event/close/(?P<event_id>[\w]+)/$', views.close_event, name='close_event'),
             url(r'^admin/deleteApprove/comment/(?P<action>.+)/(?P<pk>[\w]+)/$', views.delete_approve_comment, name='delete_approve_comment'),
+            url(r'^admin/event/decision/$', views.event_decision, name='event_decision'),
 
     ]
 

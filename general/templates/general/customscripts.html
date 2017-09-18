@@ -308,6 +308,26 @@
    
 </script>
 
+<script>
+	$('body').on('click', '.decision', function(){
+		var event_id = $(this).attr('event_track_num')
+		$.ajax({
+             data: {'event_id':event_id,},
+             url: "{% url 'ynladmin:event_decision' %}",
+             type: 'GET',
+
+             success:function(data){
+                 $("#myModal").replaceWith(data);
+                 $('#myModal').modal('show');
+                 console.log('working');
+             },
+             error:function(data){
+                 console.log('not working');
+             }
+         })
+		})
+</script>
+
 
 
 

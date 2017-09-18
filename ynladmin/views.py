@@ -280,6 +280,24 @@ def delete_event(request,event_id):
 	return redirect(reverse('ynladmin:admin_pages', args=['events']))
 
 
+def event_decision(request):
+	if request.method == 'GET':
+		event_id = request.GET.get('event_id')
+		event = Event.objects.get(id = event_id)
+		form = DecisionForm(instance=event)
+		#event = Event.objects.get(id = event_id)
+		return render(request, 'general_snippets/decison_modal.html', {'event':event,'form':form})
+	else:
+		#print "i am a post"
+		event_id = request.POST.get('event_id')
+		event = Event.objects.get(id = event_id)
+		form = DecisionForm(request.POST, instance=event)
+		form.save(commit=False)
+		form.save()
+		event.decided = True
+		event.save()
+		return redirect(reverse('ynladmin:admin_pages', args=['events']))
+		
 @login_required
 def delete_user(request,user_id):
 	user_obj = UserAccount.objects.get(id=user_id)
