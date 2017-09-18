@@ -134,7 +134,7 @@ def getCategory(request,value):
 
 def user_login(request):
     if request.method == "POST":
-        print request.POST
+        #print request.POST
         username = request.POST.get('username')
         password = request.POST.get('password')
         try:
@@ -154,8 +154,10 @@ def user_login(request):
     
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
-                login(request, user)                  
+                login(request, user)
+                print "I got here"
                 if user.is_staff:
+                    print "I am a staff"
                     response =  redirect(reverse('ynladmin:admin_pages', args=['events']))
                     return response    
                 else:
