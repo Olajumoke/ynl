@@ -1,787 +1,414 @@
 {% load staticfiles %}
 {% load custom_filters %}
 {% load humanize %}
-{% block header %}
 <!DOCTYPE html>
+	
+	
 <html lang="en">
-<head>
-	{% block title %}<title>YesorNoLIVE.com | Welcome</title>{% endblock %}
-
-	<meta charset="utf-8">
-	<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<meta name="description" content="">
-	<link rel="author" href="https://plus.google.com/u/0/104296509460513856975" />
 	
-	<!-- Google Fonts -->
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700,600,800,400,300%7CMontserrat:400,700%7CRaleway:600,400' rel='stylesheet'>
+  {% block general_header %}
+  
+  <head>
+    <script src="https://use.fontawesome.com/a4681a7ca8.js"></script>
+<!--	<script src="% static 'newstatic/js/fontawesome.js' %"></script>
+-->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<!-- Css -->
-	<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}" />
-	<link rel="stylesheet" href="{% static 'revolution/css/settings.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/rev-slider.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/font-icons.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/sliders.css' %}" /> 
-	<link rel="stylesheet" href="{% static 'css/style.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/responsive.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/spacings.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/animate.min.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/weather-icons.min.css' %}" />
-	<link rel="stylesheet" href="{% static 'css/color.css' %}" />
+    <!-- Bootstrap CSS -->
+	
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'newstatic/css/style.css' %}" >
+	<link rel="stylesheet" href="{% static 'awesomplete/awesomplete.css' %}" >
+	<script src="{% static 'awesomplete/awesomplete.js' %}" async></script>
+	
+	
+  </head>
+  <body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=2352656298293778";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
 
-	<!-- Favicons -->
-	<link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
-	<link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}">
-	<link rel="apple-touch-icon" sizes="72x72" href="{% static 'img/apple-touch-icon-72x72.png' %}">
-	<link rel="apple-touch-icon" sizes="114x114" href="{% static 'img/apple-touch-icon-114x114.png' %}">
+    <!-- top nav bar -->
 
-</head>
 
-<body>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=2352656298293778";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-	<!-- Preloader -->
-	<div class="loader-mask">
-		<div class="loader">
-			"Loading..."
-		</div>
-	</div>
-
-	<header class="nav-type-4">
-
-		<div class="top-bar hidden-xs">
-			<div class="container">
-				<div class="row">
-					<div class="top-bar-links">
-
-						<ul class="col-sm-6">
-							<li class="top-bar-date">
-								<span>{% now "jS F Y" %}</span>
-							</li>
-							<li class="top-bar-link">
-								<a href="#">advertise</a>
-							</li>
-							<li class="top-bar-link">
-								<a href="#">career</a>
-							</li>
-						</ul>
-
-						
-						<ul class="col-sm-6 top-bar-acc text-right">
-							<li class="social-icons dark">
-								<a href="https://www.twitter.com/YesorNolive"><i class="fa fa-twitter"></i></a>
-								<a href="https://www.facebook.com/YesorNolive"><i class="fa fa-facebook"></i></a>			
-								<a href="https://plus.google.com/yesornolive"><i class="fa fa-google-plus"></i></a>
-								<!--<a href="#"><i class="fa fa-vimeo"></i></a><!-- -->
-<!-- 								<a href="#"><i class="fa fa-instagram"></i></a>
- -->							</li>
-							
-
-							{% if request.user.is_authenticated %}
-							{% if useraccount %}
-							<li class="top-bar-link"><a href="{% url 'general:user_account' %}">Hi, {{request.user.first_name}}</a></li>
-							
-							<li class="top-bar-link">
-							<a href="{% url 'general:user_account' %}">
-								₦{{balance|floatformat:2|intcomma}}
-								
-							</a></li>
-							{%endif %}
-
-							<li class="top-bar-link"><a href="{% url 'general:logout' %}">Logout</a></li>
-								
-							{% else %}
-							<li class="top-bar-link"><a href="{% url 'general:register' %}">Join</a></li>
-							<li class="top-bar-link"><a href="{% url 'general:login' %}">Login</a></li>
-							{% endif %}
-
-						</ul>
-
-					</div>
-				</div>
+   <div class="container-fluid top-nav">
+      <div class="row">
+        <div class="col-12 col-md-8">
+		  {% for message in messages %}
+			{% if message.tags == 'error' %}
+			  <p><span class="my-0 py-0 alert alert-danger">{{ message }}</span></p>
+			{% elif message.tags == 'warning' %}
+			  <p><span class="my-0 py-0 alert alert-warning">{{ message }}</span></p>
+			{% else %}
+			  <p><span class="my-0 py-0 alert alert-success">{{ message }}</span></p>
+			{% endif %}	
+		  {% endfor %}
+        </div>
+		
+		<!-- value|default_if_none:"nothing" -->
+		
+		{% if request.user.is_authenticated %}
+		
+			<div class="col-12 col-md-4">
+				<p><a style="color: white !important;" href="{% url 'general:user_account' %}"> Hi {{request.user.first_name}}, Wallet balance: ₦{{balance|floatformat:2|intcomma}}</a></p>
 			</div>
-		</div> <!-- end top bar -->
-	
-		<nav class="navbar navbar-static-top">
-			<div class="navigation">
-				<div class="container-fluid relative">
-
-					<div class="row">
-
-						<div class="navbar-header container">
-							<div class="row">
-								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
-									<span class="sr-only">Toggle navigation</span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-									<span class="icon-bar"></span>
-								</button>
-							</div>
-						</div> <!-- end navbar-header -->
-
-						<div class="header-wrap">
-
-							<div class="container">
-								<div class="row">
-
-							
-									<!-- Logo -->
-									<div class="logo-container">
-										<div class="logo-wrap text-center">
-											<a href="/">
-												<img class="logo" src="{% static 'img/logo_dark.png' %}" alt="logo">
-											</a>
-										</div>
-									</div>
-
-									<!-- Banner Ad -->
-									<div class="header-ad hidden-sm hidden-xs">
-										<a href="http://deothemes.com">
-											<img src="{% static 'img/magazine/728_ad.jpg' %}" alt="">
-										</a>				        		        	
-									</div>
-
-								</div>
-							</div>
-
-						</div> <!-- end header wrap -->
-
-						<div class="nav-wrap">
-							<div class="container">
-								<div class="row">
-									<div class="collapse navbar-collapse" id="navbar-collapse">
-							  
-										<ul class="nav navbar-nav">
-
-											<li id="mobile-search" class="hidden-lg hidden-md">
-												<form method="GET" action=""class="mobile-search relative">
-													<input type="search" name="q" class="form-control" placeholder="Search...">
-													<button type="submit" class="search-button">
-														<i class="icon icon_search"></i>
-													</button>
-												</form>
-											</li>
-
-									
-											<li class="nav-home hidden-sm hidden-xs">
-												<a href="/"><i class="icon_house"></i></a>
-											</li>
-
-											<li class="">
-												<a href="/">Home</a>
-											</li>
-
-											<!-- <li class="dropdown">
-												<a href="#" class="dropdown-toggle" data-toggle="dropdown">Category</a>
-												<ul class="dropdown-menu">
-													<li><a href="/">Services</a></li>
-													<li><a href="/">About Us</a></li>
-													<li><a href="/">Magazine Categories</a></li>
-													<li><a href="/">Magazine Single Article</a></li>
-													<li><a href="/">Contact</a></li>
-													<li><a href="/">F.A.Q</a></li>
-													<li><a href="/">404</a></li>
-												</ul>
-											</li> -->
-
-
-											<li class="">
-												<a href="{% url 'general:getCategory' 'Politics' %}">Politics</a>
-											</li> <!-- end portfolio -->
-
-											<li class="">
-												<a href="{% url 'general:getCategory' 'Sport' %}">Sport</a>
-											</li>
-
-											<li class="">
-												<a href="{% url 'general:getCategory' 'Entertainment' %}">Entertainment</a>
-											</li>
-
-											<li class="">
-												<a href="{% url 'general:getCategory' 'Stem' %}">Stem</a>
-											</li>
-											<li class="">
-												<a href="{% url 'general:getCategory' 'Economics' %}">Economics</a>
-											</li>
-											 <!-- end features -->
-
-											{% if request.user.is_authenticated %}
-											<li class="">
-												<a href="{% url 'general:user_account' %}">My Account</a>
-											</li> 
-											{% endif %}
-											<!-- end portfolio -->
-
-											<!-- Search -->
-											<li class="nav-search type-2 hidden-sm hidden-xs">
-												<form method="GET" action="">
-													<input type="search" name="q"class="form-control" placeholder="Search here">
-													<button type="submit" class="search-button">
-														<i class="icon icon_search"></i>
-													</button>
-												</form>
-											</li>
-
-											
-											<li class="mobile-links hidden-lg hidden-md">
-												<ul>
-													<li>
-														<a href="{% url 'general:login' %}">Login</a>
-													</li>
-													<li>
-														<a href="{% url 'general:register' %}">Join</a>
-													</li>
-													<li>
-														<a href="#">Advertise</a>
-													</li>
-													<li>
-														<a href="#">Buy Now</a>
-													</li>
-												</ul>
-											</li>
-					
-										</ul> <!-- end menu -->
-									</div> <!-- end collapse -->
-									
-								</div>
-							</div>
-
-						</div> <!-- end col -->
-				
-					</div> <!-- end row -->
-				</div> <!-- end container -->
-			</div> <!-- end navigation -->
-		</nav> <!-- end navbar -->
-	</header>
-	{% endblock header %}
-
-	{% block content %}
-	<div class="main-wrapper oh">
-
-	
-
-		<!-- Blog Standard -->
-		<section class="section-wrap blog-standard pb-50">
-			<div class="container relative">
-				<div class="row">
-					
-					<!-- content -->
-					<div class="col-md-8 post-content mb-50">
-
-						{% for event in events %}
-
-						<!-- standard post -->
-						<article class="entry-item">
-							<div class="entry-img hover-scale">
-								<a href="{% url 'general:event_details' event.pk %}">
-									{% if event.event_image %}
-										<img src="{{event.event_image.url}}" alt="">
-									{% else %}
-										<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
-									{% endif %}
-								</a>
-								<div class="entry-inner-bottom" style="background-color: rgba(0, 0, 0, 0.30)!important; padding: 0px 30px 30px 30px!important;">
-									{% if event.total_players == 0 %}
-									<div class="entry hidden"></div>
-									{% else %}
-									<div class="entry">
-										<h2 class="entry-title color-white">	
-											<a>₦{{event.gameplay_total_value|floatformat:2|intcomma}}</a>
-										<span style="font-size: 10px !important;">to be won</span></h2>
-
-
-										<div class="yesorno-bar">
-											
-	      										<div class="progress-bar progress-bar-success" style="width: 
-	      										{% getPercent event.total_yes_choice event.pk %}%">
-	       											 <span class="sr-only">{% getPercent event.total_yes_choice event.pk %}% 
-	       											 Complete (success)</span>Yes <!-- Text  -->
-	      										</div>
-
-	      										<div class="progress-bar progress-bar-danger" style="width: 
-	      										{% getPercent event.total_no_choice event.pk %}%">
-	        										<span class="sr-only">{% getPercent event.total_no_choice event.pk %}% 
-	        										Complete (danger)</span>No
-	      										</div>
-										</div>
-
-
-									</div>
-									{% endif %}
-									
-								</div>
-							</div>
-
-							<div class="entry">					
-								<h2 class="entry-title">
-									<a href="{% url 'general:event_details' event.pk %}">{{event.title}}</a>
-								</h2>
-								<ul class="entry-meta list-inline">
-									<li class="entry-date">
-										<i class="fa fa-clock-o"></i><a href="#">{{event.created_on}}</a>
-									</li>
-									<li class="entry-category">
-										<i class="fa fa-folder-open"></i><a href="#">{{event.category}}</a>
-									</li>
-									<!-- <li class="entry-author">
-										<i class="fa fa-user"></i><a href="#">Admin</a>
-									</li>										 -->
-									<li class="entry-comments">
-										<i class="fa fa-comments"></i><a href="{% url 'general:event_details' event.pk %}">{{event.get_comments_count}}</a>
-									</li>							
-								</ul>
-								<div class="entry-content">
-									<p>{{event.event_msg_body|striptags}}</p>
-									<a href="{% url 'general:event_details' event.pk %}" class="read-more dark-link">
-										Read More <i class="fa fa-angle-right"></i>
-									</a>
-								</div>
-							</div>
-						</article> 
-						<!-- end standard post -->
-						{% empty %}
-							<h2>No event posted</h2>
-						{% endfor %}
-
+		  
+		{% endif %}
 		
- 							<nav class="clear">
-
-			                    {% if events.has_previous %}
-			                        <a href="?page={{ events.previous_page_number }}&q={{request.GET.q}}">&laquo;</a>
-			                    {% else %}
-			                        <a class="hidden" >&laquo;</a>
-
-			                    {% endif %}
-
-			                    <span class="current">
-			                        Page {{ events.number }} of {{ events.paginator.num_pages }}.
-			                    </span>
-
-			                    {% if events.has_next %}
-			                        <a href="?page={{ events.next_page_number }}&q={{request.GET.q}}">&raquo;</a>
-			                    {% else %}
-			                        <a class="hidden">&raquo;</a>
-			                    {% endif %}
-			                </nav>
-
-					</div> <!-- end col -->
+      </div>
+    </div>
 
 
-				{% block aside %}
+    <!-- main nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+      <a class="navbar-brand" href="/">
+		<img src="{% static 'img/logo_dark.png' %}" width="30%" height="" alt="">
+	  </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse " id="navbarText">
+        <ul class="navbar-nav ml-auto">
+		  
+          <li class="nav-item
+			{% if not 'Entertainment-LifeStyle' and 'Sports' and 'Business-Economy' and 'General' and 'Politics' in request.path %}active{% endif %}">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
 
-				<aside class="col-md-4 sidebar pb-50">
-
-					<!-- Follow Us -->
-					<div class="widget follow-us">
-						<h3 class="widget-title heading relative heading-small uppercase bottom-line style-2 left-align">Follow Us</h3>
-						<div class="social-icons colored large">
-							<a href="https://www.facebook.com/YesorNolive" class="social-facebook" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook"></i></a>
-							<a href="https://www.twitter.com/YesorNolive" class="social-twitter" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter"></i></a>
-							<a href="https://plus.google.com/yesornolive" class="social-google-plus" data-toggle="tooltip" data-placement="top" title="Google +"><i class="fa fa-google-plus"></i></a>
-							<!-- <a href="#" class="social-instagram" data-toggle="tooltip" data-placement="top" title="Instagram"><i class="fa fa-instagram"></i></a>
-							<a href="#" class="social-youtube" data-toggle="tooltip" data-placement="top" title="Youtube"><i class="fa fa-youtube"></i></a>
-							<a href="#" class="social-rss" data-toggle="tooltip" data-placement="top" title="Rss"><i class="fa fa-rss"></i></a> -->
-						</div>
-					</div>
-
-
-					<!-- popular / recommended post -->
-					<div class="widget popular-latest">
-						<div class="tabs">
-
-							<ul class="nav nav-tabs">	                                
-								<li class="active">
-									<a href="#popular-news" data-toggle="tab">Popular</a>
-								</li>
-								<li>
-									<a href="#recent-news" data-toggle="tab">Recommended</a>
-								</li>
-							                                
-							</ul> <!-- end tabs -->
-							
-							<!-- tab content -->
-							<div class="tab-content">
-								
-								<div class="tab-pane fade in active" id="popular-news">
-									<ul class="posts-list no-top-pad">
-										{% for event in events %}
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' event.pk %}">
-														{% if event.event_image %}
-															<img src="{{event.event_image.url}}" style="width:100px;height:72px;" alt="">
-														{% else %}
-															<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
-														{% endif %}
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' event.pk %}">{{event.title}}</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="{% url 'general:event_details' event.pk %}">{{event.created_on}}</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' event.pk %}">{{event.get_comments_count}}</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-									{% endfor %}
-									</ul>
-								</div> <!-- end popular news tab -->
-
-								<div class="tab-pane fade" id="recent-news">
-									<ul class="posts-list no-top-pad">
-										{% for event in events %}
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' event.pk %}">
-														{% if event.event_image %}
-															<img src="{{event.event_image.url}}" style="width:100px;height:72px;" alt="">
-														{% else %}
-															<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
-														{% endif %}
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' event.pk %}">{{event.title}}</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="{% url 'general:event_details' event.pk %}">{{event.created_on}}</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' event.pk %}">{{event.get_comments_count}}</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-									{% endfor %}
-										
-									</ul>
-								</div> <!-- end recent news tab -->
- 
-							</div> <!-- end tab content -->
-						</div> <!-- end tabs -->
-					</div> <!-- end popular / recent -->
-
-
-
-					<!-- Ad 336x280 -->
-					<div class="widget ad-336x280 text-center">
-						<a href="#">
-							<img src="{% static 'img/magazine/336_ad.jpg' %}" alt="">
-						</a>
-					</div> <!-- end ad 336x280 -->
-
-					<!-- Editor's pick' -->
-					<!-- <div class="widget top-rated">
-						<h3 class="widget-title heading relative heading-small uppercase bottom-line style-2 left-align">Editor's pick</h3>
-
-						<ul class="posts-list no-top-pad">
-							<li>
-								<article class="post-small clearfix">
-									<div class="entry-img hover-scale">
-										<a href="#">
-											<img src="{% static 'img/magazine/thumb_8.jpg' %}" alt="">
-										</a>
-									</div>
-									<div class="entry">
-										<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-										<ul class="entry-meta list-inline">
-											<li class="rating"></li>
-											<li class="entry-date">
-												<a href="#">19 Dec, 2015</a>
-											</li>
-										</ul>
-									</div>
-								</article>
-							</li>
-							<li>
-								<article class="post-small clearfix">
-									<div class="entry-img hover-scale">
-										<a href="#">
-											<img src="{% static 'img/magazine/thumb_9.jpg' %}" alt="">
-										</a>
-									</div>
-									<div class="entry">
-										<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-										<ul class="entry-meta list-inline">
-											<li class="rating"></li>
-											<li class="entry-date">
-												<a href="#">19 Dec, 2015</a>
-											</li>
-										</ul>
-									</div>
-								</article>
-							</li>
-							<li>
-								<article class="post-small clearfix">
-									<div class="entry-img hover-scale">
-										<a href="#">
-											<img src="{% static 'img/magazine/thumb_10.jpg' %}" alt="">
-										</a>
-									</div>
-									<div class="entry">
-										<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-										<ul class="entry-meta list-inline">
-											<li class="rating"></li>
-											<li class="entry-date">
-												<a href="#">19 Dec, 2015</a>
-											</li>
-										</ul>
-									</div>
-								</article>
-							</li>
-							<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">6 Ways to Be More Productive by Working Less</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										<li>
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_6.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">3 Key Lessons for My Kids About Becoming Entrepreneurs</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-						</ul>
-					</div> -->
-
-					<!-- Categories -->
-					<div class="widget categories">
-						<h3 class="widget-title heading relative heading-small uppercase bottom-line style-2 left-align">Categories</h3>
-						<ul class="list-dividers">
-							{% for category in categories %}
-							<li>
-								<a href="{% url 'general:getCategory' category %}">{{category}}<span>{% getCategoryCount category %}</span></a>
-							</li>
-							{% endfor %}
-						</ul>
-					</div>
-				</aside>
-				<!-- end sidebar -->
-				{% endblock aside %}
+          <li class="nav-item {% if 'Entertainment-LifeStyle' in request.path %}active{% endif %}"><a class="nav-link" href="{% url 'general:getCategory' 'Entertainment-LifeStyle' %}">Entertainment & LifeStyle</a></li>
+          <li class="nav-item {% if 'Sports' in request.path %}active{% endif %}"><a class="nav-link" href="{% url 'general:getCategory' 'Sports' %}">Sports</a></li>
+          <li class="nav-item {% if 'Politics' in request.path %}active{% endif %}"><a class="nav-link" href="{% url 'general:getCategory' 'Politics' %}">Politics</a></li>
+          <li class="nav-item {% if 'Business-Economy' in request.path %}active{% endif %}"><a class="nav-link" href="{% url 'general:getCategory' 'Business-Economy' %}">Business & Economy</a></li>
+          <li class="nav-item {% if 'General' in request.path %}active{% endif %}"><a class="nav-link" href="{% url 'general:getCategory' 'General' %}">General</a></li>
+		  
+		  
+		  {% if request.user.is_authenticated %}
+			<li onclick="return confirm('Please confirm this action')" class="nav-item"><a class="nav-link" href="{% url 'general:logout' %}"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Logout</a></li>
+			<li class="nav-item"><a class="nav-link" href="{% url 'general:user_account' %}"><i class="fa fa-user" aria-hidden="true">&nbsp;</i>My Account</a></li>
+		  {% else %}
+		  	<li class="nav-item"><a class="nav-link" href="{% url 'general:login' %}"><i class="fa fa-sign-in" aria-hidden="true">&nbsp;</i>Login</a></li>
+			<li class="nav-item"><a class="nav-link" href="{% url 'general:register' %}"><i class="fa fa-user" aria-hidden="true">&nbsp;</i> Register</a></li>
+		  {% endif %}	
+          
+		
+        </ul>
+      </div>
+    </nav>
 	
-				</div> <!-- end row -->
-			</div> <!-- end container -->
-		</section> <!-- end blog standard -->
-		{% endblock content %}
+	{% endblock general_header %}
+	
+	{% block welcome_message %}
 
-		{% block footer %}
-		<!-- Footer Type-4 -->
-		<footer class="footer footer-type-4">
-			<div class="container">
-				<div class="footer-widgets">
-					<div class="row">
-
-						<div class="col-md-4 col-sm-6 col-xs-12">
-							<div class="widget footer-about-us">
-								<h5 class="uppercase">About Us</h5>
-								<p class="mb-20">Go to our social links for more details</p>
-
-								<p>Subscribe to our newsletter:</p>
-								<form class="relative newsletter-form style-2">
-									<input type="email" class="newsletter-input" placeholder="Enter your email">
-									<i class="icon_mail"></i>
-									<input type="submit" class="btn btn-md btn-dark newsletter-submit" value="Subscribe">
-								</form>
-
-							</div>
-						</div> <!-- end about us -->
-
-						<div class="col-md-4 col-sm-6 col-xs-12">
-							<div class="widget footer-posts with-thumbs">
-								<h5 class="uppercase">Recent Posts</h5>
-								<div class="footer-entry-list">
-
-									<ul class="posts-list no-top-pad">
-										{% if most_recent %}
-										<li class="footer-entry">
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="{% url 'general:event_details' most_recent.pk %}">
-														{% if most_recent.event_image %}
-															<img src="{{most_recent.event_image.url}}" style="width:100px; height:72px;" alt="">
-														{% else %}
-															<img src="{% static 'img/magazine/thumb_5.jpg' %}" alt="">
-														{% endif %}
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="{% url 'general:event_details' most_recent.pk %}">{{most_recent.title}}</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="{% url 'general:event_details' most_recent.pk %}">{{most_recent.created_on}}</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="{% url 'general:event_details' most_recent.pk %}">{{most_recent.get_comments_count}}</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li>
-										{% else %}
-										<li></li>
-										{% endif %}
-										<!-- <li class="footer-entry">
-											<article class="post-small clearfix">
-												<div class="entry-img hover-scale">
-													<a href="#">
-														<img src="{% static 'img/magazine/thumb_12.jpg' %}" alt="">
-													</a>
-												</div>
-												<div class="entry">
-													<h3 class="entry-title"><a href="#">3 Tips to Align Your Startup's 'Core Value' With Customers'</a></h3>
-													<ul class="entry-meta list-inline">
-														<li class="entry-date">
-															<a href="#">19 Dec, 2015</a>
-														</li>
-														<li class="entry-comments">
-															<i class="fa fa-comments"></i><a href="#">15</a>
-														</li>
-													</ul>
-												</div>
-											</article>
-										</li> -->
-									</ul>
-
-								</div>
-							</div>
-						</div> <!-- end recent posts -->
-
-						<div class="col-md-4 col-sm-6 col-xs-12">
-							<div class="widget footer-links small-space">
-								<h5 class="uppercase">Quick Links</h5>
-								<ul>
-								{% for category in categories %}
-									<li><a href="{% url 'general:getCategory' category %}">{{category}}</a></li>
-								{% endfor %}
-								</ul>
-							</div>
-						</div> <!-- end useful links -->
-
-					</div>
-				</div>		
-			</div> <!-- end container -->
-
-			<div class="bottom-footer">
-				<div class="container">
-					<div class="row">
-
-						<div class="col-md-4 col-xs-12 copyright">
-							<span>
-								© 2017 Yes or No Live
-							</span>
-						</div>
+<!-- jumbotron saying what yes or no is in simple terms -->
+    <div class="jumbotron text-center">
+	  
+	  
+		
+      <img src="{% static 'img/logo_dark.png' %}" class="img-fluid ">
+      <h1 class="display-3">Simple YES or NO!</h1>
+      <!-- <hr class="my-4"> -->
+      <h4 class="">DON'T JUST READ THE NEWS, EARN MONEY BY PREDICTING OUTCOMES OF THE NEWS.</h4>
+	  
+	  {% if not request.user.is_authenticated %}
+      <p class="lead">
+        <a class="btn btn-success rounded-0" href="{% url 'general:register' %}" role="button">Register</a> <a class="btn btn-danger rounded-0" href="{% url 'general:login' %}" role="button">Login</a>
+      </p>
+	  {% endif %}
+	  
+    </div>
+	
+	{% endblock welcome_message %}
 
 
-						<div class="col-md-5 col-xs-12">
-							<ul class="bottom-footer-links style-2">
-								<li><a href="#">Privacy Policy</a></li>
-								<li><a href="#">Terms of Use</a></li>
-								<li><a href="#">Contact Us</a></li>
-								<li><a href="#">Advertisement</a></li>
-							</ul>
-						</div>
-							
-						<div class="col-md-3 col-xs-12 footer-socials mt-mdm-10 text-right">
-							<div class="social-icons dark">
-								<a href="https://www.twitter.com/YesorNolive"><i class="fa fa-twitter"></i></a>
-								<a href="https://www.facebook.com/YesorNolive"><i class="fa fa-facebook"></i></a>
-<!-- 								<a href="#"><i class="fa fa-instagram"></i></a>
- -->							</div>
-						</div>
+	{% block trending %}
+    <div class="container">
 
-					</div>
-				</div>
-			</div> <!-- end bottom footer -->
-		</footer> 
-		<!-- end footer -->
-		{% endblock footer %}
 
-		<div id="back-to-top">
-			<a href="#top"><i class="fa fa-angle-up"></i></a>
+      <!-- section for some top contents for direct engagement for readers -->
+      <!-- some engagements floating scrolling horizontally, 4 max -->
+
+      <h3 class="">TRENDING EVENTS</h3>
+      <div class="row">
+		
+        <!-- <div class="card-deck">  used to make all cards have same height -->
+		{% for event in trending_events %}
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 card-col">
+          <a href="{% url 'general:event_details' event.pk %}">
+            <div class="card rounded-0">
+              <img class="card-img-top img-fluid rounded-0" style="width:360px;height:220px;" {% if event.event_image %} src="{{event.event_image.url}}"{% else %}src="http://via.placeholder.com/280x150"{% endif %} alt="Card image cap">
+              <div class="card-body">
+                <h6 class="card-title card-hgt">{{event.title}}</h6>
+				<div class="row" style="top:15px;">
+                  <div class="col">
+                    <p class="text-left mb-0">Yes</p>
+                  </div>
+                  <div class="col">
+                    <p class="text-right mb-0">No</p>
+                  </div>
+                </div>
+                <div class="progress">
+				  {% if event.gameplay_total_value == None %}
+					<div class="progress-bar bg-info" role="progressbar" style="width: 50%; height: 5px;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+					<div class="progress-bar bg-info" role="progressbar" style="width: 50%; height: 5px;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+				  {% else %}	
+					<div class="progress-bar bg-success" role="progressbar" style="width: {% getPercent event.total_yes_choice event.pk %}%; height: 5px;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: {% getPercent event.total_no_choice event.pk %}%; height: 5px;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+				  {% endif %}	
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <p class="text-left mb-0">{% getPercent event.total_yes_choice event.pk %}%</p>
+                  </div>
+                  <div class="col">
+                    <p class="text-right mb-0">{% getPercent event.total_no_choice event.pk %}%</p>
+                  </div>
+                </div>
+                <span class="card-text"><small class="text-muted">Predictions end {{event.end_date}}</small></span><br>
+                <span class="card-text font-weight-bold">
+				  {% if event.gameplay_total_value == None %}
+					  ₦0.00
+				  {% else %}
+					  ₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+				  {% endif %}
+				<small class="text-muted">to be shared</small></span>
+              </div>
+            </div>
+          </a>
+        </div>
+		{% empty %}
+		<h3>No Event</h3>
+		{% endfor %}
+        <!-- </div> card deck closing div-->
+      </div>
+
+
+
+    </div> <!-- end of .container -->
+
+	{% endblock trending %}
+	
+	{% block imageVideo %}
+	  <div class="container text-center">
+		<br><br>
+		<!-- how it works section -->
+		<div class="row">
+		  <div class="col-12 col-sm-6">
+			<img src="{% static 'img/how_it_works.png' %}" class="img-fluid" alt="">
+		  </div>
+		  <div class="col-12 col-sm-6">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/783EsrHchXA" frameborder="0" allowfullscreen></iframe>
+		  </div>
 		</div>
+	
+	
+	
+	  </div>
+  {% endblock imageVideo %}
 
-	</div> <!-- end main-wrapper -->
 
-	<!-- jQuery Scripts -->		
-	<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/plugins.js' %}"></script>
-	<script type="text/javascript" src="{% static 'revolution/js/jquery.themepunch.tools.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'revolution/js/jquery.themepunch.revolution.min.js' %}">
-		
-	</script>
-	<script type="text/javascript" src="{% static 'js/rev-slider.js' %}"></script>
-	<script type="text/javascript" src="{% static 'js/scripts.js' %}"></script>
+<!-- more engaging contents start here -->
+<br><br>
 
-	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.video.min.js' %}"></script>
 
-	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.carousel.min.js' %}"></script>
+<!-- container for horizontal event lists -->
+  {% block moreEvntslist %}	
+  <div class="container">
+	
+    <div class="row justify-content-center">
 
-	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.slideanims.min.js' %}"></script>
+      <!-- list item begins here -->
+	  
+      <div class="col-12 col-md-10 card-col">
+        <div class="media flex-wrap">
+          <a href="{% url 'general:event_details' some_more_events.pk %}">
+			<img class="d-flex align-self-start mr-3 img-fluid" style="width:300px;height:300px;" {% if some_more_events.event_image %}src="{{some_more_events.event_image.url}}"{% else %}src="http://via.placeholder.com/300x300"{% endif %} alt="Generic placeholder image"></a>
 
-	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.actions.min.js' %}"></script>
+          <div class="media-body">
+            <a href="#"><h5 class="mt-2">{{some_more_events.title}}</h5>
+            <p class="mb-0"><small class="text-muted ">Predictions starts on {{some_more_events.start_date}} <span class="font-weight-bold yes">{{some_more_events.start_time}}</span></small> <small class="text-muted">and Ends on {{some_more_events.end_date}} <span class="font-weight-bold no">{{event.end_time}}</span></small></p>
+            <p class="font-weight-bold">
+			  {% if some_more_events.gameplay_total_value == None %}
+				  ₦0.00
+			  {% else %}
+				  ₦{{some_more_events.gameplay_total_value|floatformat:2|intcomma}}
+			  {% endif %}
+			  <small class="text-muted">to be shared</small></p>
+            <div class="row">
+			  <div class="col-11" style="top: 15px;">
+				  <div class="row">
+					<div class="col">
+					  <p class="text-left">Yes</p>
+					</div>
+					<div class="col">
+					  <p class="text-right">No</p>
+					</div>
+				  </div>
+				</div>
+              <div class="col-11">
+                <div class="progress">
+				  {% if some_more_events.gameplay_total_value == None %}
+					<div class="progress-bar bg-info" role="progressbar" style="width: 50%; height: 5px;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+					<div class="progress-bar bg-info" role="progressbar" style="width: 50%; height: 5px;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+				  {% else %}	
+					<div class="progress-bar bg-success" role="progressbar" style="width: {% getPercent some_more_events.total_yes_choice some_more_events.pk %}%; height: 5px;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: {% getPercent some_more_events.total_no_choice some_more_events.pk %}%; height: 5px;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+				  {% endif %}	
+                </div>
+              </div>
+              <div class="col-11">
+                <div class="row">
+                  <div class="col">
+					<p class="text-left">{% getPercent some_more_events.total_yes_choice some_more_events.pk %}%</p>
+				  </div>
+				  <div class="col">
+					<p class="text-right">{% getPercent some_more_events.total_no_choice some_more_events.pk %}%</p>
+				  </div>
+                </div>
+              </div>
+			  
+            </div></a>
 
-	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.layeranimation.min.js' %}"></script>
+            <!-- this row handles the illustrations and form submition to place predictions -->
+            <div class="row">
+              <div class="col-11">
+                <div class="row">
+                  <div class="col-12">
+                    <p>
+                      <button class="btn btn-sq btn-light rounded-0">
+                          <i class="text-success fa fa-money fa-3x"></i><br/><br/>
+                          {% if some_more_events.gameplay_total_value == None %}
+							  ₦0.00
+						  {% else %}
+							  ₦{{some_more_events.gameplay_total_value|floatformat:2|intcomma}}
+						  {% endif %}
+					  <br/> To be shared
+                      </button>
+                      <button  class="btn btn-sq btn-light rounded-0">
+                        <i class="text-warning fa fa-users fa-3x" ></i><br/><br/>
+                        {{some_more_events.total_players}}<br/>Players
+                      </button>
+                      <button  class="btn btn-sq btn-light rounded-0">
+                        <i class="text-success fa fa-calendar fa-3x"></i><br/><br/>
+                        START DATE: <br>{{some_more_events.start_date}}
+                      </button>
+                      <button  class="btn btn-sq btn-light rounded-0">
+                        <i class="text-danger fa fa-calendar-times-o fa-3x"></i><br/><br/>
+                        END DATE: <br>{{some_more_events.end_date}}
+                      </button>
+                    </p>
+                  </div>
+                </div>
+              </div>
+			  
+			  {% if not request.user.is_staff %}
+			   {% if not some_more_events.closed %}
+				{% if not some_more_events.end_date <= current_time %}
+			  
+				  <div class="col-11">
+					<form method="POST" action="{% url 'gameplay:betting' %}" class="form-inline" id="user_play_choice">
+					  {% csrf_token %}
+					  <div class="form-group">
+						<input type="hidden" value="{{some_more_events.id}}" name="event">
+						<input type="hidden" id="choice" name="user-choice" value = "">
+						<input type="number" class="form-control rounded-0 bet_amount" min="200" required id="bet_amount" name="amount" placeholder="Min Amount ₦200" value="">
+						<a class="btn btn-outline-success rounded-0 bet bet_yes"  play_type="YES" role="button" aria-pressed="true">YES</a>
+						<a class="btn btn-outline-danger rounded-0 bet bet_no"  play_type="NO" role="button" aria-pressed="true">NO</a>
+						<button class="btn btn-outline-info rounded-0 bet_info" onclick="return checkUserValues()" type="submit" role="button" aria-pressed="true">PLAY</a>
+					  </div>
+<!--					  <button class="btn btn-info" onclick="return checkUserValues()" type="submit">Submit</button>
+-->					</form>
+				  </div>
+			
+				  {% endif %}
+				 {% endif %}
+				{% endif %}
+				
+            </div>
+          </div>
+        </div>
+      </div>
+	    
+  
+      <!-- more news button  -->
+      <div class="col-12 col-md-10 text-center">
+        <br><br>
+        <a href="{% url 'general:events' %}" class="btn btn-outline-secondary rounded-0" role="button" aria-pressed="true">More News!</a>
+        <br><br><br>
+      </div>
 
-	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.kenburn.min.js' %}"></script>
 
-	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.navigation.min.js' %}"></script>
+    </div>
 
-	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.migration.min.js' %}"></script>
+  </div>
 
-	<script type="text/javascript" src="{% static 'revolution/js/extensions/revolution.extension.parallax.min.js' %}"></script>
 
-	<!-- {% if request.user.is_authenticated %}
-    <script src="{% static 'ynl/client_livechat.js' %}"></script>
-    {% endif %} -->
 
-{% block customscripts %}
+  {% endblock moreEvntslist %}
+  
+  
+  {% block footer %}
+  
+  <footer >
+    <div class="container-fluid bottom-nav">
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">© 2017 Yes or No Live</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-6">
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Privacy Policy</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Terms of Use</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Advertisement</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-3">
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-facebook-official fa-2x" aria-hidden="true"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-{% endblock %}
 
-	  </body>
+  </footer>
+  {% endblock footer %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	
+	{% block scripts %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+	{% endblock scripts %}
+	
+	{% block customscripts %}
+	  {% include 'general/customscripts.html' %}
+	{% endblock customscripts %}
+	
+  </body>
 </html>

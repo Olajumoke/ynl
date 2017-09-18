@@ -17,10 +17,10 @@ from django.core.urlresolvers import reverse
 def betting(request):
     balance = account_standing(request, request.user)
     if request.method == "POST":
-        #print request.POST
+        print request.POST
         amount = float(request.POST.get('amount'))
         if amount > balance :
-            messages.warning(request, "You do not have sufficient money in your wallet to place that bet")
+            messages.error(request, "You do not have sufficient money in your wallet to place that bet")
             return redirect(request.META['HTTP_REFERER'])
         else:
             choice = str(request.POST.get('user-choice'))
@@ -36,6 +36,9 @@ def betting(request):
                 print "e",e
             gameplay = Gameplay.objects.create(user=user,event=event,amount=amount,choice=choice,date=timezone.now(),status="OPEN")
             gameplay.save()
+            event.total_amt += amount
+            event.counter += 1
+            event.save()
             random_ref = purchase_ref()
             bank_record = Bank.objects.create(user=request.user,txn_type="Remove",amount=amount, ref_no=random_ref,
                         created_at=timezone.now(), status="Successful", bank="Gameplay", message="Gameplay")

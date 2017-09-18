@@ -26,15 +26,18 @@ class UserForm(forms.ModelForm):
 	    model = User
 	    fields = ('username', 'email', 'password')
 
-
+forms.DateField(widget=forms.TextInput(attrs=
+                                {
+                                    'class':'datepicker'
+                                }))
 
 class EventForm(forms.ModelForm):
 
 
     title               = forms.CharField(help_text="Title", required = True, widget=forms.TextInput(attrs={'class':'form-control','required':'required'}))
     category            = forms.ChoiceField(choices = CATEGORY, error_messages = {'required': 'Please select a category.'},widget=forms.Select(attrs={'class':'form-control','required':'required'}))
-    start_date          = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control id_date','required':'required'}))
-    end_date            = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control id_date','required':'required'}))
+    start_date          = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control datepicker','required':'required'}))
+    end_date            = forms.DateField(required=True, widget=forms.DateInput(attrs={'class':'form-control datepicker','required':'required'}))
     start_time          = forms.TimeField(required=True, widget=forms.TimeInput(attrs={'class':'form-control id_time','required':'required'}))
     end_time            = forms.TimeField(required=True, widget=forms.TimeInput(attrs={'class':'form-control id_time','required':'required'}))
     publish             = forms.BooleanField(required = False)

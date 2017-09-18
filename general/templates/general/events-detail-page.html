@@ -1,0 +1,320 @@
+
+
+
+{% extends 'general/homepage.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
+
+{% block welcome_message %}
+{% endblock welcome_message %}
+
+{% block trending %}
+	<!-- form with html validation from bootstrap  -->
+	 <div class="container">
+    <br><br><br>
+    <div class="row">
+      <!-- column that will hold row containing grid of events -->
+
+      <div class=" col-12 col-md-9">
+        <!-- this is the row block actually holding the detail item -->
+        <div class="row">
+
+          <div class="col-12 col-md-12 card-col">
+			{% for message in messages %}
+			  {% if message.tags == 'error' %}
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  {{message}}
+				</div>
+			  {% elif message.tags == 'success' %}
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  {{message}}
+				</div>
+			  {% else %}
+				<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+				  {{message}}
+				</div>
+			  {% endif %}	
+			{% endfor %}
+            <div class="media flex-wrap">
+              <img class="d-flex align-self-start mr-3 img-fluid" style="width:360px;height:325px;" {% if event.event_image %}src="{{event.event_image.url}}"{% else %}src="http://via.placeholder.com/300x300"{% endif %} alt="Generic placeholder image">
+              <div class="media-body">
+            </button><h5 class="mt-2">{{event.bet_question}}</h5>
+            <p class="mb-0"><small class="text-muted ">Predictions starts on {{event.start_date}} <span class="font-weight-bold yes">{{event.start_time}}</span></small> <small class="text-muted">and Ends on {{event.end_date}} <span class="font-weight-bold no">{{event.end_time}}</span></small></p>
+            <p class="font-weight-bold">
+			  {% if event.gameplay_total_value == None %}
+				  ₦0.00
+			  {% else %}
+				  ₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+			  {% endif %}
+			  <small class="text-muted">to be shared</small></p>
+            <div class="row">
+			  	<div class="col-11" style="top: 15px;">
+				  <div class="row">
+					<div class="col">
+					  <p class="text-left">Yes</p>
+					</div>
+					<div class="col">
+					  <p class="text-right">No</p>
+					</div>
+				  </div>
+				</div>
+              <div class="col-11">
+                <div class="progress">
+				  {% if event.gameplay_total_value == None %}
+					<div class="progress-bar bg-info" role="progressbar" style="width: 50%; height: 5px;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+					<div class="progress-bar bg-info" role="progressbar" style="width: 50%; height: 5px;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+				  {% else %}	
+					<div class="progress-bar bg-success" role="progressbar" style="width: {% getPercent event.total_yes_choice event.pk %}%; height: 5px;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: {% getPercent event.total_no_choice event.pk %}%; height: 5px;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+				  {% endif %}	
+                </div>
+              </div>
+				<div class="col-11">
+				  <div class="row">
+					<div class="col">
+					  <p class="text-left">{% getPercent event.total_yes_choice event.pk %}%</p>
+					</div>
+					<div class="col">
+					  <p class="text-right">{% getPercent event.total_no_choice event.pk %}%</p>
+					</div>
+				  </div>
+				</div>
+                </div>
+
+                <!-- this row handles the illustrations and form submition to place predictions -->
+                <div class="row">
+                  <div class="col-11">
+                    <div class="row">
+                      <div class="col-12">
+                        <p>
+                          <button class="btn btn-sq btn-light rounded-0">
+                              <i class="text-success fa fa-money fa-3x"></i><br/><br/>
+                              {% if event.gameplay_total_value == None %}
+                                ₦0.00
+                            {% else %}
+                                ₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+                            {% endif %}<br/> To be shared
+                          </button>
+                          <button class="btn btn-sq btn-light rounded-0">
+                            <i class="text-warning fa fa-users fa-3x" ></i><br/><br/>
+                            {{event.total_players}}<br/>Players
+                          </button>
+                          <button class="btn btn-sq btn-light rounded-0">
+                            <i class="text-success fa fa-calendar fa-3x"></i><br/><br/>
+                            START DATE: <br>{{event.start_date}}
+                          </button>
+                          <button class="btn btn-sq btn-light rounded-0">
+                            <i class="text-danger fa fa-calendar-times-o fa-3x"></i><br/><br/>
+                            END DATE: <br>{{event.end_date}}
+                          </button>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {% if not request.user.is_staff %}
+					{% if not event.closed %}
+					 {% if not event.end_date <= today %}
+					 
+                        <div class="col-11">
+                          <form method="POST" action="{% url 'gameplay:betting' %}" class="form-inline" id="user_play_choice">
+                            {% csrf_token %}
+                            <div class="form-group">
+                              <input type="hidden" value="{{event.id}}" name="event">
+                              <input type="hidden" id="choice" name="user-choice" value = "">
+                              <input type="number" class="form-control rounded-0 bet_amount" min="200" required id="bet_amount" name="amount" placeholder="Min Amount ₦200" value="">
+                              <a class="btn btn-outline-success rounded-0 bet bet_yes"  play_type="YES" role="button" aria-pressed="true">YES</a>
+                              <a class="btn btn-outline-danger rounded-0 bet bet_no"  play_type="NO" role="button" aria-pressed="true">NO</a>
+                              <button class="btn btn-outline-info rounded-0 bet_info" onclick="return checkUserValues()" type="submit" role="button" aria-pressed="true">PLAY</a>
+                            </div>
+      
+                          </form>
+                        </div>
+					  {% endif %}                    
+                    {% endif %}
+                  {% endif %}
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <!-- this row holds the news content for the above question -->
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <br>
+            <h3>{{event.title}}</h3>
+            <p>
+              {{event.event_msg_body}}
+            </p>
+            
+          </div>
+
+          <!-- prediction components at the bottom of the contents -->
+          <div class="col-12"><br>
+            <div class="row">
+              <div class="col-11">
+                <div class="row">
+                  <div class="col-12">
+                    <h5 class="mt-2">{{event.bet_question}}</h5>
+                    <p>
+                      <button class="btn btn-sq-lg btn-light rounded-0">
+                          <i class="text-success fa fa-money fa-3x"></i><br/><br/>
+                          {% if event.gameplay_total_value == 0 %}
+							  ₦0.00
+						  {% else %}
+							  ₦{{event.gameplay_total_value|floatformat:2|intcomma}}
+						  {% endif %}
+					  <br/> To be shared
+                      </button>
+                      <button class="btn btn-sq-lg btn-light rounded-0">
+                        <i class="text-warning fa fa-users fa-3x"></i><br/><br/>
+                        {{event.total_players}}<br/>Players
+                      </button>
+                      <button class="btn btn-sq-lg btn-light rounded-0">
+                        <i class="text-success fa fa-calendar fa-3x"></i><br/><br/>
+                        START DATE: <br>{{event.start_date}}
+                      </button>
+                      <button class="btn btn-sq-lg btn-light rounded-0">
+                        <i class="text-danger fa fa-calendar-times-o fa-3x"></i><br/><br/>
+                        END DATE: <br>{{event.end_date}}
+                      </button>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              
+             {% if not request.user.is_staff %}
+			   {% if not event.closed %}
+				{% if not event.end_date <= today %}
+			  
+				  <div class="col-11">
+					<form method="POST" action="{% url 'gameplay:betting' %}" class="form-inline" id="user_play_choice2">
+					  {% csrf_token %}
+					  <div class="form-group">
+						<input type="hidden" value="{{event.id}}" name="event">
+						<input type="hidden" id="choice2" name="user-choice" value = "">
+						<input type="number" class="form-control rounded-0 bet_amount2" min="200" required id="bet_amount2" name="amount" placeholder="Min Amount ₦200" value="">
+						<a class="btn btn-outline-success rounded-0 bet bet_yes2"  play_type="YES" role="button" aria-pressed="true">YES</a>
+						<a class="btn btn-outline-danger rounded-0 bet bet_no2"  play_type="NO" role="button" aria-pressed="true">NO</a>
+						<button class="btn btn-outline-info rounded-0 bet_info2" onclick="return checkUserSelect()" type="submit" role="button" aria-pressed="true">PLAY</a>
+					  </div>
+<!--					  <button class="btn btn-info" onclick="return checkUserValues()" type="submit">Submit</button>
+-->					</form>
+              </div>
+					{% endif %}
+                   {% endif %}
+                  {% endif %}
+            </div><br><br>
+
+          </div>
+
+          <!-- comment section -->
+          <div class="col-12">
+            <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5"></div>
+              <div class="entry-comments mt-20 hidden" style="overflow-y: scroll;" id="comments_view">
+                					
+			  </div>
+            
+
+
+
+          </div>
+        </div>
+
+
+
+
+      </div>
+
+      <!-- column for the sidebar holding filter options and ads -->
+      <div class="col-12 col-md-3">
+        <!-- row for filter components. will be developed later since it wasnt in the mvp -->
+        <!-- <div class="row">
+
+        </div> -->
+
+        <!-- row holding categories and their counts -->
+        <div class="row">
+          <div class="col-12">
+            <div class="list-group">
+              <a href="#" class=" disabled"><b>CATEGORIES</b></a>
+			  {% for category in categories %}
+              <a href="{% url 'general:getCategory' category %}" class="list-group-item list-group-item-action border-left-0 border-right-0 text-left">{{category}}&nbsp;<span class="badge badge-secondary">{% getCategoryCount category %}</span></a>
+			  {% empty %}
+				<h3>No Category</h3>
+			  {% endfor %}
+              </div>
+          </div>
+        </div>
+
+        <br><br><br>
+        <!-- row holding ad barner -->
+        <div class="row">
+          <div class="col-12">
+            <a href="#"><img class="img-fluid rounded-0" src="http://via.placeholder.com/336x280" alt=""></a>
+          </div>
+        </div>
+
+        <br><br><br>
+        <!--<div class="row">
+          <div class="col-12">
+            <ul class="nav nav-tabs mb-3" id="pills-tab" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active rounded-0" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-expanded="true">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-expanded="true">Profile</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" id="pills-dropdown1-tab" href="#pills-dropdown1" role="tab" data-toggle="pill" aria-controls="pills-dropdown1">@fat</a>
+                  <a class="dropdown-item" id="pills-dropdown2-tab" href="#pills-dropdown2" role="tab" data-toggle="pill" aria-controls="pills-dropdown2">@mdo</a>
+                </div>
+              </li>
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
+              <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
+              <div class="tab-pane fade" id="pills-dropdown1" role="tabpanel" aria-labelledby="pills-dropdown1-tab">...</div>
+              <div class="tab-pane fade" id="pills-dropdown2" role="tabpanel" aria-labelledby="pills-dropdown2-tab">...</div>
+            </div>
+          </div>-->
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+{% endblock trending %}
+
+{% block imageVideo %}
+{% endblock imageVideo %}
+
+{% block moreEvntslist %}
+{% endblock moreEvntslist %}
+
+{% block customscripts %}
+	  {% include 'general/customscripts.html' %}
+{% endblock customscripts %}
+
+
+

@@ -196,13 +196,14 @@ def create_new_event(request):
 	template_name = 'ynladmin/events.html'
 	if request.method == 'POST':
 		rp = request.POST
-		print 'rp:', rp
+		# print 'rp:', rp
 		if rp.has_key('edit_event'):
 			print "i wanna edit"
 			event_obj = Event.objects.get(event_id=rp.get('event_track_num'))
 			form = EventForm(request.POST, request.FILES, instance=event_obj)
 			if form.is_valid():
 				print 'The form is valid'
+
 				start_date = rp.get('start_date')
 				end_date = rp.get('end_date')
 				if start_date > end_date:
@@ -233,6 +234,7 @@ def create_new_event(request):
 			form = EventForm(request.POST, request.FILES)
 			if form.is_valid():
 				print 'The form is valid'
+
 				start_date = rp.get('start_date')
 				end_date = rp.get('end_date')
 				if start_date > end_date:

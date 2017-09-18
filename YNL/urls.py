@@ -28,6 +28,7 @@ from general.views import homepage
 from django.contrib.auth.views import password_reset, password_reset_done, password_reset_confirm, password_reset_complete
 
 
+
 def server_error(request):
     response = render(request, "500.html")
     response.status_code = 500

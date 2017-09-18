@@ -1,138 +1,114 @@
-{% extends 'general/sign_in.html' %}
+{% extends 'general/homepage.html' %}
+{% load staticfiles %}
+{% load custom_filters %}
+{% load humanize %}
 
-{% block title %}<title>YesorNoLIVE.com | Register</title>{% endblock %}
+{% block welcome_message %}
+{% endblock welcome_message %}
 
-{% block content %}
-<div class="main-wrapper oh">
-
-		<!-- Social Sign up -->
-		<section class="page-title style-2 text-center">
-			
-			<div class="col-md-12">
-				<a href="{% url 'social:begin' 'facebook' %}" class="btn btn-lg btn-blue rounded">Signup with facebook</a>
-			</div>
-
-			<div class="col-md-12" style="padding-top: 10px">
-				<a href="{% url 'social:begin' 'google-plus' %}" class="btn btn-lg btn-red rounded">Signup with Google+</a>
-			</div>
-			
-			<div class="col-md-12" style="padding-top: 10px">
-				<a href="{% url 'social:begin' 'twitter' %}" class="btn btn-lg btn-lavender rounded">Signup with Twitter</a>
-			</div>
-					
-		</section> <!- end page title -->
-
-
-		<section class="section-wrap_2">
-			<div class="container" style="width: 100% !important; max-width: 640px !important;">
-
-				<div class="row">
-					<div class="col-md-12">
-							<p><center>Kindly fill the form below. Already have an account? 
-							<a href="{% url 'general:login' %}">Sign in</a></center></p>
-					</div>
-				</div>
-			</div>
-		</section>
-
-
-		<!-- Animations -->
-		<section class="section-wrap_3">
-			<div class="container" style="width: 100% !important; max-width: 640px !important;">
-
-				<div class="row">
-					<form action="{% url 'general:register' %}" method="POST">
-					<div class="col-sm-12">
-						
-						{% csrf_token %}
-						<div class="row">
-
-							<div class="col-md-12">
-								{% if not email_taken %}
-									{{form.email}}
-								{% else %}
-									{{form.email}}
-									<span style="color:red; position:relative; left:6px; bottom: 10px;">This email address is already attached to an account </span>
-								{% endif %}
-
-								{% if not username_is_taken %}
-									{{form.username}}
-								{% else %}
-									{{form.username}}	
-									<span style="color:red; position:relative; left:6px; bottom:10px">This username is taken</span>
-								{% endif %}
-
-								<input name="password" required id="password" type="password" placeholder="Password">
-								{% if password_mismatch %}
-								<span style="color:red; position:relative; left:6px;">The passwords do not match...Please try again</span>
-								{% elif password_too_short %}
-								<span style="color:red; position:relative; left:6px;">The password is too short...Password must be at least 8 characters in length</span>
-								{% elif password_should_be_alphanumeric %}
-								<span style="color:red; position:relative; left:6px;">The password needs to be Alphanumeric</span>
-								{% endif %}
-
-								<input name="password1" id="password1" required type="password" placeholder="Confirm Password">
-								{% if password_mismatch %}
-								<span style="color:red; position:relative; left:6px;">The passwords do not match...Please try again</span>
-								{% elif password_too_short %}
-								<span style="color:red; position:relative; left:6px;">The password is too short...Password must be at least 8 characters in length</span>
-								{% elif password_should_be_alphanumeric %}
-								<span style="color:red; position:relative; left:6px;">The password needs to be Alphanumeric</span>
-								{% endif %}
-							</div> <!-- end col -->
-
-							<div class="col-md-12">
-								<div class="col-md-12">
-									<div class="col-md-12">
-										
-											<input required type="checkbox" class="input-checkbox" name="checkbox" id="checkbox1" value="1">
-											<label for="checkbox1">By clicking on Sign up, you agree to YesorNoLIVE's terms and conditions.</label>
-										
-										<div class="form-group"> 
-											<div class="col-md-12">
-												<button type="submit" id="submit-button" class="btn btn-lg btn-color">Sign Up</button>
-											</div>
-										</div>
-									</div>					
-								</div>
-							</div>
-						</div>
-				   
-					</div> <!-- end col -->
-
-				</form>
-					
-
+{% block trending %}
 	
-				</div> <!-- end row -->
-			</div> <!-- end container -->
-		</section> <!-- end alert boxes -->
+<div class="container-fluid text-center">
+  <a href="/"><img src="{% static 'newstatic/img/logo_dark.png' %}" class="img-fluid "></a>
+  <br><br>
+  <p>Register with social media accounts</p>
+  <div class="row">
 
-
+    <div class="col-12">
+        <a href="{% url 'social:begin' 'facebook' %}"><button type="button" class="btn btn-primary rounded-0"><i class="fa fa-facebook-official" aria-hidden="true"></i>
+          Facebook</button></a>
+        <a href="{% url 'social:begin' 'twitter' %}"><button type="button" class="btn btn-info rounded-0"><i class="fa fa-twitter" aria-hidden="true"></i>
+          Twitter</button></a>
+        <a href="{% url 'social:begin' 'google-plus' %}"><button type="button" class="btn btn-danger rounded-0"><i class="fa fa-google" aria-hidden="true"></i>
+          Google</button></a>
+    </div>
+    <br><br>
+  </div>
+  <div class="form-row justify-content-center">
+    <div class="col-12 col-md-5">
+      <form action="{% url 'general:register' %}" method="POST">
+      {% csrf_token %}
+      
 		
-
-
+		<div class="form-group">
+		  {% if not email_taken %}
+			 <input type="text"  name="email" required class="form-control" id="email" placeholder="E-mail">
+		  {% else %}
+			<input type="email" name="email" required class="form-control" id="email" placeholder="E-mail">
+			<span style="color:red; position:relative; left:6px; bottom: 10px;">This email address is already attached to an account </span>
+		  {% endif %}	
+        </div>
 		
-
-		<div id="back-to-top">
-			<a href="#top"><i class="fa fa-angle-up"></i></a>
+		<div class="form-group">
+			{% if not username_is_taken %}
+				<input type="text" name="username" required class="form-control" id="username" placeholder="Username">
+			{% else %}
+				<input type="text" name="username" required class="form-control" id="username" placeholder="Username">
+				<span style="color:red; position:relative; left:6px; bottom: 0px;">This username is already attached to an account </span>
+		    {% endif %}
 		</div>
+		
+        
+        <div class="form-group">
+          <input type="password" class="form-control" name="password" required id="password" type="password" placeholder="Pasword">
+          {% if password_mismatch %}
+            <span style="color:red; position:relative; left:6px;">The passwords do not match...Please try again</span>
+          {% elif password_too_short %}
+            <span style="color:red; position:relative; left:6px;">The password is too short...Password must be at least 8 characters in length</span>
+          {% elif password_should_be_alphanumeric %}
+            <span style="color:red; position:relative; left:6px;">The password needs to be Alphanumeric</span>
+          {% endif %}
+        </div>
+        
+        <div class="form-group">
+          <input name="password1" class="form-control" id="password1" required type="password" placeholder="Confirm Password">
+          {% if password_mismatch %}
+                <span style="color:red; position:relative; left:6px;">The passwords do not match...Please try again</span>
+                    {% elif password_too_short %}
+                <span style="color:red; position:relative; left:6px;">The password is too short...Password must be at least 8 characters in length</span>
+                    {% elif password_should_be_alphanumeric %}
+                <span style="color:red; position:relative; left:6px;">The password needs to be Alphanumeric</span>
+		  {% endif %}
+        </div>
+		
+		<div class="form-group">
+          <button type="submit" id="submit-button" onclick="return checkTandC()" class="btn btn-success rounded-0">Register</button>
+          <a href="{% url 'general:login' %}" class="btn btn-outline-secondary rounded-0" role="button" aria-pressed="true">Login Instead</a>
+        </div>
+        
+        <div class="form-group">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" id="#checkbox1" type="checkbox"> By clicking on Sign up, you agree to YesorNoLIVE's terms and conditions.
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+  
+{% endblock trending %}
 
-	</div> <!-- end main-wrapper -->
-{% endblock %}
+{% block imageVideo %}
+{% endblock imageVideo %}
 
-{% block custom-script %}
-<script>
-	$(document).ready(function () {
-    var ckbox = $('#checkbox1');
+{% block moreEvntslist %}
+{% endblock moreEvntslist %}
 
-    $('#submit-button').on('click',function () {
-        if (ckbox.is(':checked')) {
-            console.log('You have Checked it');
-        } else {
-            alert('Please agree to our Terms and Conditions before proceeding');
-        }
-    });
-});
-</script>
-{% endblock %}
+{% block customscripts %}
+	<script>
+		  
+		function checkTandC(){
+		  var ckbox = $('.form-check-input');  
+			  if (ckbox.is(':checked')) {
+				  return true;
+			  } else {
+				  alert('Please agree to our Terms and Conditions before proceeding');
+				  return false;
+				  
+			  }
+		}  
+		
+	</script>
+{% endblock customscripts %}

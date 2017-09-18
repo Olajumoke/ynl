@@ -57,7 +57,7 @@ def getPercent(value,pk):
 		return percent_value
 	else:
 		event_total_players = Event.objects.get(pk=pk)
-		percent_value = (float(value) / float(event_total_players.total_players())) * 100
+		percent_value = round(((float(value) / float(event_total_players.total_players())) * 100), 2)
 		return percent_value
 
 
@@ -72,6 +72,12 @@ def check_user_like(request,pk):
 		else:
 			return False
 			
+			
+# @register.simple_tag
+# def getdatalist(value_obj):
+# 	datalist = value_obj.values_list('title', flat=True).distinct()
+# 	new_datalist = ",".join([str(item) for item in datalist])
+# 	return new_datalist	
 
 
 
