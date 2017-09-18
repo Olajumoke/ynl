@@ -196,15 +196,16 @@ def create_new_event(request):
 	template_name = 'ynladmin/events.html'
 	if request.method == 'POST':
 		rp = request.POST
-		print 'rp:', rp
+		# print 'rp:', rp
 		if rp.has_key('edit_event'):
 			print "i wanna edit"
 			event_obj = Event.objects.get(event_id=rp.get('event_track_num'))
 			form = EventForm(request.POST, request.FILES, instance=event_obj)
-			if form.is_valid:
+			if form.is_valid():
 				print 'The form is valid'
-				start_date = rp.get('start_time')
-				end_date = rp.get('end_time')
+
+				start_date = rp.get('start_date')
+				end_date = rp.get('end_date')
 				if start_date > end_date:
 					messages.error(request,'Unsuccessful...Start date cannot be less than or equal to end date')
 					return redirect(request.META['HTTP_REFERER'])
@@ -223,7 +224,7 @@ def create_new_event(request):
 			print "i wanna edit this user"
 			user_obj = UserAccount.objects.get(id=rp.get('user_id'))
 			form = UserAccountForm(request.POST, request.FILES, instance=user_obj)
-			if form.is_valid:
+			if form.is_valid():
 				print 'The form is valid'
 				form.save()
 				return redirect(reverse('ynladmin:admin_pages', args=['users']))
@@ -233,15 +234,16 @@ def create_new_event(request):
 			form = EventForm(request.POST, request.FILES)
 			if form.is_valid():
 				print 'The form is valid'
-				print form
-				start_date = rp.get('start_time')
-				end_date = rp.get('end_time')
-				if start_date >= end_date:
+
+				start_date = rp.get('start_date')
+				end_date = rp.get('end_date')
+				if start_date > end_date:
 					messages.error(request,'Unsuccessful...Start date cannot be less than or equal to end date')
 					return redirect(request.META['HTTP_REFERER'])
 				else:
-					pass
+					#pass
 					create_event_form = form.save(commit=False)
+					create_event_form.event_msg_body = str(re.sub('<[^<]+?>', '', rp.get('event_msg_body'))).replace('&nbsp;','')
 					create_event_form.author = request.user
 					create_event_form.event_id = randomNumber(str(rp.get('category'))[:2])
 					create_event_form.save()

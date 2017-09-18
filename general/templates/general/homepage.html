@@ -67,7 +67,7 @@
 
 
     <!-- main nav bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
       <a class="navbar-brand" href="/">
 		<img src="{% static 'img/logo_dark.png' %}" width="30%" height="" alt="">
 	  </a>
@@ -354,14 +354,46 @@
   
   
   {% block footer %}
-  <footer>
+  
+  <footer >
     <div class="container-fluid bottom-nav">
       <div class="row">
-        <div class="col">
-          <p>Footer section</p>
+        <div class="col-12 col-md-3">
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">© 2017 Yes or No Live</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-6">
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Privacy Policy</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Terms of Use</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Advertisement</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 col-md-3">
+          <ul class="nav justify-content-center">
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-facebook-official fa-2x" aria-hidden="true"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
+
 
   </footer>
   {% endblock footer %}

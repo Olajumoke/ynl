@@ -1,4 +1,7 @@
-<div class="modal-content" id="event_edit">
+<div class="modal fade" id="eventForm" tabindex="-1" role="dialog" 
+     aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="modal-dialog modal-lg">
+		        <div class="modal-content">
 
     <!-- Modal Header -->
     <div class="modal-header" style="background-color: azure;">
@@ -19,7 +22,7 @@
         	action="{% url 'ynladmin:create_new_event' %}" enctype="multipart/form-data">
 		  {% csrf_token %}
 
-		  		<p>NB: Fields with <b style="color:red">'*'</b> are required</p>
+		  		<p>NB: Fields with <b style="color:red">*</b> are required</p>
 
 				<div class="form-group">
 				<label class="label-controller">Title</label>
@@ -66,11 +69,12 @@
 					<label>Publish</label>
 				</div>
 				{% endif %}
-
+				{% autoescape off %}
 				<div class="form-group">
 				<label class="label-controller">Description</label>
-					{{event_form.event_msg_body|safe}}
+					{{event_form.event_msg_body}}
 				</div>
+				{% endautoescape %}
 
 				<div class="form-group">
 				<label>Upload Event Image(770x400)</label>
@@ -81,7 +85,7 @@
 					{{event_form.event_decision}}
 				</div>
 
-			    <button type="submit" id="submit-edit-events" class="btn btn-success pull-right">Submit</button><br />
+			    <button type="submit" id="submit-edit-events" onclick='return checkTinymce();' class="btn btn-success pull-right">Submit</button><br />
 
 			</form>         
 	</div>

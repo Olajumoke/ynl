@@ -10,7 +10,11 @@
 		if (text == "") {
 			alert("The Description Field is Required");
 			return false;
-			};
+			} else {
+			var str = text.replace(/&lt;/g, '<');
+			alert(str);
+			document.getElementById("id_event_msg_body").innerHTML = str;
+			}
 	};
 	
 	//$('body').on('click', '#submit-form-events', function(e){
@@ -25,10 +29,8 @@
 	//});
 
    $('body').on('click', '.edit_event', function(e){
-   		   var event_track_num = $(this).attr('event_track_num');
+   		var event_track_num = $(this).attr('event_track_num');
 		   var identifier = $(this).attr('identifier');
-
-
    		$.ajax({
    			data: {'event_track_num':event_track_num,'edit':identifier},
    			type: 'GET',
@@ -38,11 +40,32 @@
 					tinymce.remove();
 				},
    			success:function(data){
-   				$('#event_edit').replaceWith(data);
-   				$('#eventFormEdit').modal('show');
+   				$('#eventForm').replaceWith(data);
+   				$('#eventForm').modal('show');
    				console.log('working');
+					tinymce.init({selector:'textarea',
+									 height: 300,
+									 plugins: [
+                          'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                          'searchreplace wordcount visualblocks visualchars code fullscreen',
+                          'insertdatetime media nonbreaking save table contextmenu directionality',
+                          'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                        ],
+									toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+									toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+									image_advtab: true,
+									templates: [
+												{ title: 'Test template 1', content: 'Test 1' },
+												{ title: 'Test template 2', content: 'Test 2' }
+											  ],
+									content_css: [
+												  '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+												  '//www.tinymce.com/css/codepen.min.css'
+												]
+									
+                });
 				
-				$( ".datepicker" ).datepicker({
+			   $( ".datepicker" ).datepicker({
 				  changeMonth: true,
 				  changeYear: true
 			   });
@@ -53,8 +76,20 @@
 				  });
 			   
 			    tinymce.init({selector:'textarea',height: 300});
-						
-   			},
+										
+						$('.id_date').datepicker({
+								changeMonth: true,
+								changeYear: true,
+								dateFormat: "yy-mm-dd",
+								minDate:     0
+						});
+						  
+						$('.id_time').timepicker({
+							'timeFormat': 'h:i A',
+							'scrollDefault': 'now'
+						});
+
+				  },
 
    			error:function(data){
    				console.log('not working');

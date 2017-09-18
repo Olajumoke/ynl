@@ -20,6 +20,10 @@
 
 }
 
+.bottom-nav a {
+  color: white;
+}
+
 .top-nav p {
   padding-top: 10px;
 }

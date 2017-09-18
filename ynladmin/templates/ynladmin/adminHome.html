@@ -61,6 +61,7 @@
                             '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                             '//www.tinymce.com/css/codepen.min.css'
                           ]
+
                 });
     </script>
     {% endblock tinymce %}
@@ -116,16 +117,20 @@
     
     <script>
         $(document).ready(function() {
-             $( ".datepicker" ).datepicker({
-                  changeMonth: true,
-                  changeYear: true
-             });
-             
-             $('.id_time').timepicker({
-                  'timeFormat': 'h:i A',
-                  'scrollDefault': 'now'
-             });
+
+        $('.id_date').datepicker({
+             changeMonth: true,
+             changeYear: true,
+             dateFormat: "yy-mm-dd",
+             minDate: 0
         });
+       
+        $('.id_time').timepicker({
+             'timeFormat': 'h:i A',
+             'scrollDefault': 'now'
+        });
+        
+    });
    </script>
 </head>
 </head>

@@ -21,6 +21,7 @@
 		                <form name="create_new_event" id="create_new_event" method="POST" 
 		                    action="{% url 'ynladmin:create_new_event' %}" enctype="multipart/form-data">
 							{% csrf_token %}
+
 						  		<p>NB: Fields with <b style="color:red">'*'</b> are required</p>
 
 								<div class="form-group">
