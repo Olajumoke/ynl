@@ -168,7 +168,7 @@ def admin_pages(request,pages_to):
 				form = CostSettingForm(request.POST)
 			if form.is_valid():
 				form.save()
-				messages.success(request,"Amount Updated Successfully")
+				#messages.success(request,"Amount Updated Successfully")
 			else:
 				print form.errors
 				messages.error(request,"Please try again")
@@ -196,7 +196,7 @@ def create_new_event(request):
 	template_name = 'ynladmin/events.html'
 	if request.method == 'POST':
 		rp = request.POST
-		# print 'rp:', rp
+		print 'rp:', rp
 		if rp.has_key('edit_event'):
 			print "i wanna edit"
 			event_obj = Event.objects.get(event_id=rp.get('event_track_num'))
@@ -206,9 +206,16 @@ def create_new_event(request):
 
 				start_date = rp.get('start_date')
 				end_date = rp.get('end_date')
+				start_time = rp.get('start_time')
+				end_time = rp.get('end_time')
+				
 				if start_date > end_date:
-					messages.error(request,'Unsuccessful...Start date cannot be less than or equal to end date')
+					messages.warning(request,'Unsuccessful...Start date cannot be less than or equal to end date')
 					return redirect(request.META['HTTP_REFERER'])
+				if start_date == end_date:
+					if start_time == end_time:
+						messages.warning(request,'Unsuccessful...Start time cannot be equal to or less than end time')
+						return redirect(request.META['HTTP_REFERER'])
 				else:
 					print "you may proceed"
 					create_event_form = form.save(commit=False)
@@ -217,6 +224,7 @@ def create_new_event(request):
 					create_event_form.author = request.user
 					create_event_form.event_id = rp.get('event_track_num')
 					create_event_form.save()
+					messages.success(request,'Event has been successfully updated')
 					return redirect(reverse('ynladmin:admin_pages', args=['events']))
 			else:
 				print form.errors
@@ -237,9 +245,16 @@ def create_new_event(request):
 
 				start_date = rp.get('start_date')
 				end_date = rp.get('end_date')
+				start_time = rp.get('start_time')
+				end_time = rp.get('end_time')
+				
 				if start_date > end_date:
 					messages.error(request,'Unsuccessful...Start date cannot be less than or equal to end date')
 					return redirect(request.META['HTTP_REFERER'])
+				if start_date == end_date:
+					if start_time == end_time:
+						messages.error(request,'Unsuccessful...Start time cannot be equal to or less than end time')
+						return redirect(request.META['HTTP_REFERER'])	
 				else:
 					#pass
 					create_event_form = form.save(commit=False)
@@ -247,6 +262,7 @@ def create_new_event(request):
 					create_event_form.author = request.user
 					create_event_form.event_id = randomNumber(str(rp.get('category'))[:2])
 					create_event_form.save()
+					messages.success(request,'Event has been successfully created')
 					return redirect(reverse('ynladmin:admin_pages', args=['events']))
 			else:
 				print form.errors

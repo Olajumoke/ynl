@@ -69,10 +69,11 @@
 					<label>Publish</label>
 				</div>
 				{% endif %}
+				
 				{% autoescape off %}
 				<div class="form-group">
 				<label class="label-controller">Description</label>
-					{{event_form.event_msg_body}}
+					{{event_form.event_msg_body|safe}}
 				</div>
 				{% endautoescape %}
 
