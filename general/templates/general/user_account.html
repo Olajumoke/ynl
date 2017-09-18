@@ -142,7 +142,18 @@
                             </ul>
                         </div>
                     </div>
+                    <a href='#' data-toggle="modal" data-target="#myModal">
+                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                        <div class="white-box">
+                            <h3 class="box-title">Refferals</h3>
+                            <ul class="list-inline two-part">
+                                <li><i class="fa fa-users text-success"></i></li>
+                                <li class="text-right"><span style="font-size: 28px!important;"class="counter">{{referral.referrer_count}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+                </a>
                 <!-- /.row -->
 
                 <!-- .row -->
@@ -194,7 +205,7 @@
 
         {% block modals %}
 
-            {% include 'general_snippets/general_modals.html' %}
+            {% include 'general_snippets/referral_modal.html' %}
 
         {% endblock modals %} 
         <!-- /#page-wrapper -->

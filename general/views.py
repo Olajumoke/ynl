@@ -4,7 +4,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.http import Http404, HttpResponse , HttpResponseRedirect, JsonResponse
 from django.forms.models import model_to_dict
 from general.forms import UserForm, UserAccountForm, UserProfileForm, MessageCenterCommentForm, RepliesForm
-from general.models import UserAccount, Event, MessageCenter, MessageCenterComment, Comments, Likes, Replies
+from general.models import UserAccount, Event, MessageCenter, MessageCenterComment, Comments, Likes, Replies, Referral
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
@@ -267,6 +267,7 @@ def user_profile(request):
         print "I exist"
         user = UserAccount.objects.get(user=request.user)
         if request.method == "POST":
+            print request.POST
             user_form = UserProfileForm(request.POST, instance=request.user)
             user_account_form = UserAccountForm(request.POST, request.FILES, instance=user)
             if user_account_form.is_valid() and user_form.is_valid():
@@ -293,7 +294,16 @@ def user_profile(request):
     else:
         print "I do not exist"
         if request.method == "POST":
-            #print "I got here", request.POST
+            referrer = None
+            if request.POST.get('ref') != "":
+                print "I got here"
+                ref_num = request.POST.get('ref')
+                try:
+                    referrer = UserAccount.objects.get(phone_number=ref_num)
+                except Exception as e:
+                    messages.warning(request, 'Incorrect referral phone number')
+                    return redirect(request.META.get('HTTP_REFERER', '/')) 
+            print "I got here too", request.POST
             user_form = UserProfileForm(request.POST, instance=request.user)
             user_account_form = UserAccountForm(request.POST, request.FILES)
             if user_account_form.is_valid() and user_form.is_valid():
@@ -304,7 +314,13 @@ def user_profile(request):
                 form2 = user_account_form.save(commit=False)
                 form2.user = form1
                 form2.created_on = timezone.now()
+                form2.profile_updated = True
+                if referrer != None:
+                    ref = referrer.user
+                    ref,created = Referral.objects.get_or_create(referal=ref)
+                    form2.referred_by = ref
                 form2.save()
+                messages.success(request, "User Details Updated Succesfully!!!")
                 #user =  UserAccount.objects.get(user=request.user)
                 return redirect(request.META.get('HTTP_REFERER', '/'))
             else:
@@ -325,13 +341,21 @@ def user_profile(request):
 def user_account(request):
     try:
         user = UserAccount.objects.get(user=request.user)
+        #print user.referrer_count()
     except Exception as e :
         print "e", e
         user = None
+    #referral = Referral.objects.get(referrer=request.user.last_name)
     balance = account_standing(request,request.user)
     game = Gameplay.objects.filter(user=user)
     game_count = game.count()
     game_won = game.filter(decision="WIN")
+    try:
+        referral = Referral.objects.get(referal=request.user)
+        #print referral.referrer_count()
+    except Exception as e:
+        print "e", e
+        referral = None
     query = request.GET.get('q')
     if query:
         game = game.filter(
@@ -341,7 +365,8 @@ def user_account(request):
            Q(decision__icontains=query)
            )
     print "game-won", game_won
-    return render(request, 'general/user_account.html', {'user':user, 'balance':balance, 'game':game, 'game_won':game_won, 'game_count':game_count})
+    #print referral.all_users()
+    return render(request, 'general/user_account.html', {'user':user, 'balance':balance, 'game':game, 'game_won':game_won, 'game_count':game_count, 'referral':referral})
 
 
 def about_us(request):
@@ -491,6 +516,17 @@ def like_comments(request,action,pk):
 #     return render(request, 'general_snippets/reply.html', {'comment':comment})
     
     
-    
-	
+
+def check_referrer(request):
+    ref_num = request.GET.get('ref_num')
+    try:
+        user_account = UserAccount.objects.get(phone_number=ref_num)
+        user_account = user_account.user.first_name + '' + user_account.user.last_name
+        print user_account
+        return True
+    except Exception as e:
+        user_account = None
+        status = "fail"
+        return False
+    #return JsonResponse({'status':status, 'user':user_account})
 

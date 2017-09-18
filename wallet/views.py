@@ -64,6 +64,7 @@ def main(request):
         user_account = UserAccount.objects.get(user=request.user)
     except Exception as e :
         print "e", e
+        messages.info(request, 'Please Update your profile to top up your wallet')
         return redirect('general:profile')
     if request.method == "POST":
         value = int(request.POST.get('amount'))

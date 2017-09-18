@@ -18,6 +18,7 @@ urlpatterns = [
             url(r'^userComment/$',views.user_comment, name = "user_comment"),
             url(r'^user/comments/$',views.view_comment_message, name = "view_comment_message"),
             url(r'^like/comments/(?P<action>[-\w]+)/(?P<pk>.+)/$',views.like_comments, name = "like_comments"),
+            url(r'^check/referral/$', views.check_referrer, name="check_referrer"),
             #url(r'^reply/comment/$', views.reply_comment,name="reply_comment"),
 
 

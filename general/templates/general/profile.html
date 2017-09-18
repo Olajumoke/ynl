@@ -202,19 +202,20 @@
                                             </select> -->
                                               
                                         </div>
+                                        {% if not user %}
                                         
                                         <div class="form-group">
                                             <label for="exampleInputpwd2">Referred By:</label>
                                             <div class="input-group">
-                                                {{ form2.referred_by }}
-                                                <!--<input type="date" name="dob" class="form-control" id="exampleInputpwd2" placeholder="dd/mm/yyyy" required>-->
+                                                <input type="text" name="ref" class="form-control" id="id_referred_by" placeholder="referral's phone number" >
                                                 <div class="input-group-addon"><span id="ref_errmsg"></span></div>
                                             </div>
                                         </div>
+                                        {% endif %}
                                         <div class="form-group">
                                             <div class="checkbox checkbox-success">
                                                 <input id="checkbox2" type="checkbox" required>
-                                                <label for="checkbox2"> This is to certify that the information supplied above is accurate. </label>
+                                                <label for="checkbox2"> This is to certify that you are not below 18 years of age and the information supplied above is accurate. </label>
                                             </div>
                                         </div>
                                         <!--<div class="text-right">
@@ -471,6 +472,43 @@
         }
        });
     });
+    </script>
+    <script>
+//        function checkReferral(e){
+//            var ref_num = $('#id_referred_by').val();
+//            if (ref_num != ""){
+//                $.ajax({
+//				data: {'ref_num':ref_num},
+//				url: "{% url 'general:check_referrer' %}",
+//				type: "GET",
+//                success:function(data){
+//                    if (data.status == "ok"){
+//                       var value = confirm("Your referral is "+ data.user);
+//                        if(value){
+//                        return true;
+//                        }else{
+//                            return false;
+//                        }
+//                    }else{
+//                       alert("Incorrect referral phone number");
+//                        //if(value){
+//                        //return true;
+//                        //}else{
+//                        //    return false;
+//                        //}
+//                        e.preventDefault();
+//                    }
+//					console.log(data);
+//                
+//					
+//				},
+//				error:function(data){
+//					console.log("not working");
+//				},
+//
+//                });
+//            }
+//        };
     </script>
 
 {% endblock %}

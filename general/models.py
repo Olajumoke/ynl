@@ -19,7 +19,7 @@ from general.modelchoices import *
 
 class UserAccount(models.Model):
 	""" user details """
-	user            		 = models.ForeignKey(User, null=True, blank=True)
+	user            		 = models.OneToOneField(User, unique =True, null=True, blank=True)
 	created_on               = models.DateTimeField(auto_now_add = True)
 	bank                     = models.CharField(max_length=100, null=True, blank=True, choices=BANK)
 	account_number           = models.CharField(max_length=50, null=True, blank=True)
@@ -28,7 +28,8 @@ class UserAccount(models.Model):
 	user_image               = models.ImageField(upload_to="media/user_image/%Y/%M/%d/", null=True, blank=True)
 	gender					 = models.CharField(max_length=10, null=True, blank=True, choices=GENDER)
 	deleted                  = models.BooleanField(default=False)
-	referred_by				 = models.CharField(max_length=50, null=True, blank=True)
+	referred_by				 = models.ForeignKey('Referral', null=True, blank=True)
+	profile_updated			 = models.BooleanField(default=False)
 	
 	
 	def __unicode__(self):
@@ -38,7 +39,7 @@ class UserAccount(models.Model):
 		verbose_name_plural = 'UserAccount'
 		ordering = ['-created_on']
 
-
+	
 
 class Event(models.Model):
 	""" events to be created """
@@ -211,7 +212,24 @@ class MessageCenterComment(models.Model):
     def __unicode__(self):
         return unicode(self.user)
 
+class Referral(models.Model):
+	referrer		= models.CharField(max_length=50, null=True, blank=True)
+	referal			= models.ForeignKey(User,null=True, blank=True)
 
-
-
+	class Meta:
+		verbose_name_plural = 'Refferer'
+		
+	def __unicode__(self):
+		return self.referal.username
+	
+	def referrer_count(self):
+		value = self.useraccount_set.all().count()
+		if value == None:
+			return 0
+		else:
+			return value
+		
+	def all_users(self):
+		print self.useraccount_set.all()
+		return self.useraccount_set.all()
 
