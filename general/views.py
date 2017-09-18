@@ -25,8 +25,9 @@ import urllib
 import time
 from django.core.urlresolvers import reverse
 import json
-from django.db.models import Sum
+from django.db.models import Sum, Max
 from django.template.loader import get_template
+from general.userSearch import searchQuery
 from django.template import Context
 from django.core.mail import EmailMessage
 from django.utils import timezone
@@ -35,6 +36,7 @@ from wallet.models import Bank
 from gameplay.models import Gameplay
 from general.staff_access import *
 from django.views.decorators.csrf import csrf_exempt
+
 # Create your views here.
 
 
@@ -53,12 +55,17 @@ def paginate_list(request, objects_list, num_per_page):
     return paginated_list
 
 
+def getAllOpenEvent(request):
+    return Event.objects.filter(deleted=False)
+
+
 def homepage(request):
     context = {}
     template_name = 'general/homepage.html'
-    # context['most_recent'] = most_recent
-    events_all = Event.objects.filter(deleted=False)
+    current_time = timezone.now()
+    events_all = getAllOpenEvent(request)
     query = request.GET.get('q')
+    
     if query:
         events_all = events_all.filter(
                 Q(title__icontains=query) |
@@ -74,84 +81,94 @@ def homepage(request):
         useraccount = user
     except:
         useraccount = None
-    print useraccount
-    categories = []
-    try:
-        most_recent = events_all[0]
-        context['most_recent'] = most_recent
-    except:
-        pass
-    for event in events_all:
-        if event.category in categories:
-            pass
-        else:
-            categories.append(event.category)
-    context['categories'] = categories
+        
+        
+    # print useraccount
+    # categories = []
+    # try:
+    #     most_recent = events_all[0]
+    #     context['most_recent'] = most_recent
+    # except:
+    #     pass
+    # for event in events_all:
+    #     if event.category in categories:
+    #         pass
+    #     else:
+    #         categories.append(event.category)
+    #
+    
+    context['trending_events'] = events_all[0:3]
+    context['some_more_events'] = events_all[5]
+    context['current_time'] = current_time
     context['events'] = all_events
     context['balance'] = balance
     context['useraccount']= useraccount
     return render(request, template_name, context)
 
 
+
 def getCategory(request,value):
-	context = {}
-	template_name = 'general/homepage.html'
-	# context['most_recent'] = most_recent
-	value_to_upperCase = value.upper()
-	events_all = Event.objects.filter(deleted=False,category=value_to_upperCase)
-	all_events = paginate_list(request,events_all,4)
-	categories = []
-	try:
-		most_recent = events_all[0]
-		context['most_recent'] = most_recent
-	except:
-		pass
-	for event in events_all:
-		if event.category in categories:
-			pass
-		else:
-			categories.append(event.category)
-	context['categories'] = categories
-	context['events'] = all_events
-	return render(request, template_name, context)
+    context = {}
+    balance = account_standing(request,request.user)
+    context['balance'] = balance
+    template_name = 'general/events-page.html'
+    value_to_upperCase = value.upper()
+    events_all = Event.objects.filter(deleted=False,category=value_to_upperCase)
+    datalist = getAllOpenEvent(request).values_list('title', flat=True).distinct()
+    new_datalist = ",".join([str(item) for item in datalist])
+    all_events = paginate_list(request,events_all,12)
+    categories = []
+    print new_datalist
+   
+    for event in events_all:
+        if event.category in categories:
+            pass
+        else:
+            categories.append(event.category)
+    context['categories'] = categories
+    context['all_events'] = all_events
+    context['datalist'] = new_datalist
+    return render(request, template_name, context)
 
 
 
 def user_login(request):
     if request.method == "POST":
-        
-		username = request.POST.get('username')
-		password = request.POST.get('password')
-		try :
-			username = User.objects.get(email=username).username
-		except Exception as e:
-			print "e", e
-			try:
-				username = User.objects.get(username=username).username
-				username = username
-			except Exception as e:
-				return render(request, 'general/sign_in.html', {'error_msg':"Invalid login details supplied."})
-		user = authenticate(username=username, password=password)
-		if user:
-			# Is the account active? It could have been disabled.
-			if user.is_active:
-
-				# If the account is valid and active, we can log the user in.
-				# We'll send the user back to the homepage.
-				login(request, user)                  
-				if user.is_staff:
-					response =  redirect(reverse('ynladmin:admin_pages', args=['events']))
-					return response    
-				else:
-					response = redirect(reverse('general:homepage'))
-					return response
-			else:
-				# An inactive account was used - no logging in!
-				return HttpResponse("Your account is disabled.")
-		else:
-			# Bad login details were provided. So we can't log the user in.
-			print "Invalid login details: {0}, {1}".format(username, password)
-			return render(request, 'general/sign_in.html', {'error_msg':"Invalid login details supplied."})
+        print request.POST
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        try:
+            username = User.objects.get(email=username).username
+        except Exception as e:
+            print "e", e
+            try:
+                username = User.objects.get(username=username).username
+                username = username
+            except Exception as e:
+                messages.warning(request,"Invalid login details supplied")
+                return redirect(reverse('general:login'))
+        user = authenticate(username=username, password=password)
+        if user:
+            # Is the account active? It could have been disabled.
+            if user.is_active:
+    
+                # If the account is valid and active, we can log the user in.
+                # We'll send the user back to the homepage.
+                login(request, user)                  
+                if user.is_staff:
+                    response =  redirect(reverse('ynladmin:admin_pages', args=['events']))
+                    return response    
+                else:
+                    response = redirect(reverse('general:homepage'))
+                    return response
+            else:
+                # An inactive account was used - no logging in!
+                return HttpResponse("Your account is disabled.")
+        else:
+            # Bad login details were provided. So we can't log the user in.
+            print "Invalid login details: {0}, {1}".format(username, password)
+            messages.warning(request,"Invalid login details supplied")
+            return redirect(reverse('general:login'))
 
     # The request is not a HTTP POST, so display the login form.
     # This scenario would most likely be a HTTP GET.
@@ -159,6 +176,7 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'general/sign_in.html', {})
+
 
 
 @login_required
@@ -169,48 +187,78 @@ def user_logout(request):
     # Take the user back to the homepage.
     return redirect(reverse('general:homepage'))
 
+
+
 def register(request):
-	if request.method == "POST":
-		form = UserForm(request.POST)
-		rp = request.POST
+    if request.method == "POST":
+        form = UserForm(request.POST)
+        rp = request.POST
+        print rp
         #print "form", form
-		if User.objects.filter(username = rp.get('username')).exists():
-			print 'username exists'
-			return render(request, 'general/registration.html', {'form': form,'username_is_taken':True})                
-		if User.objects.filter(email = rp.get('email')).exists():
-			print 'email exists'                
-			return render(request, 'general/registration.html', {'form': form,'email_taken':True})                
-		else:
-			if form.is_valid():
-				user = form.save(commit=False)
-				password  = rp.get('password')
-				password1   = rp.get('password1')
-				if password != password1:
-					return render(request, 'general/registration.html', {'form': form,'password_mismatch':True})
-				if len(password) < 8:
-					return render(request, 'general/registration.html', {'form': form,'password_too_short':True})
-				# if password == rp.get('first_name'):
-				# 	return render(request, 'general/registration.html', {'form': form,'password_same_as_first_name':True})
-				if password.isalpha():
-					return render(request, 'general/registration.html', {'form': form,'password_should_be_alphanumeric':True})
-				# user = User.objects.create(username = rp.get('username'), email = rp.get('email').lower(),
-				# 	first_name = rp.get('first_name'), last_name = rp.get('last_name'))
-				user.set_password(user.password)
-				user.save()
-				''' try this '''
-				# new_user_acc_obj = UserAccount.objects.create(user=user)
-				
-				return redirect('general:login')
-			else:
-				print form.errors
-	else:
-		form = UserForm()
-	return render(request, 'general/registration.html', {'form': form})
+    	if User.objects.filter(username = rp.get('username')).exists():
+    		print 'username exists'
+    		return render(request, 'general/registration.html', {'form': form,'username_is_taken':True})                
+    	if User.objects.filter(email = rp.get('email')).exists():
+    		print 'email exists'                
+    		return render(request, 'general/registration.html', {'form': form,'email_taken':True})                
+    	else:
+    		if form.is_valid():
+    			user = form.save(commit=False)
+    			password  = rp.get('password')
+    			password1   = rp.get('password1')
+    			if password != password1:
+    				return render(request, 'general/registration.html', {'form': form,'password_mismatch':True})
+    			if len(password) < 8:
+    				return render(request, 'general/registration.html', {'form': form,'password_too_short':True})
+    			# if password == rp.get('first_name'):
+    			# 	return render(request, 'general/registration.html', {'form': form,'password_same_as_first_name':True})
+    			if password.isalpha():
+    				return render(request, 'general/registration.html', {'form': form,'password_should_be_alphanumeric':True})
+    			# user = User.objects.create(username = rp.get('username'), email = rp.get('email').lower(),
+    			# 	first_name = rp.get('first_name'), last_name = rp.get('last_name'))
+    			user.set_password(user.password)
+    			user.save()
+    			''' try this '''
+    			# new_user_acc_obj = UserAccount.objects.create(user=user)
+    			messages.success(request,"Registration was successful")
+    			return redirect('general:login')
+    		else:
+    			print form.errors
+    else:
+    	form = UserForm()
+    return render(request, 'general/registration.html', {'form': form})
+
+
+
+def get_simillar_values(request):
+    events_all = getAllOpenEvent(request)
+    datalist = events_all.values_list('title', flat=True).distinct()
+    new_datalist = ",".join([str(item) for item in datalist])
+    return events_all, new_datalist
+
+
+
+def events_page(request):
+    context = {}
+    
+    balance = account_standing(request,request.user)
+    context['balance'] = balance
+    
+    current_time = timezone.now()
+    events_all,new_datalist = get_simillar_values(request)
+
+    all_events = paginate_list(request,events_all,12)
+    context['all_events'] = all_events
+    context['datalist'] = new_datalist
+    context['current_time'] = current_time
+        
+    return render(request, 'general/events-page.html', context)
+
 
 
 def event_details(request,pk):
     context = {}
-    events_all = Event.objects.filter(deleted=False)
+    events_all = getAllOpenEvent(request)
     categories = []
     balance = account_standing(request,request.user)
     for event in events_all:
@@ -219,8 +267,8 @@ def event_details(request,pk):
         else:
             categories.append(event.category)
     context['categories'] = categories
-    events_all = Event.objects.filter(deleted=False)
     event_obj = Event.objects.get(pk=pk)
+    
     try:
         next_event = Event.get_previous_by_created_on(event_obj)
         if next_event.deleted:
@@ -229,6 +277,7 @@ def event_details(request,pk):
         	context['next_event'] = next_event
     except:
         pass
+    
     try:
         previous_event = Event.get_next_by_created_on(event_obj)
         if previous_event.deleted:
@@ -237,11 +286,13 @@ def event_details(request,pk):
         	context['previous_event'] = previous_event
     except:
         pass
+    
     try:
         user = UserAccount.objects.filter(user=request.user).exists()
         useraccount = user
     except:
         useraccount = None
+        
     print useraccount
     event_pk = event_obj.pk
     most_recent = events_all[0]
@@ -254,7 +305,8 @@ def event_details(request,pk):
     context['balance'] = balance
     context['useraccount']= useraccount
     
-    return render(request, 'general/magazine-single-article.html',context)
+    return render(request, 'general/events-detail-page.html',context)
+
 
 
 @login_required
@@ -320,6 +372,7 @@ def user_profile(request):
 	return render(request, 'general/profile.html', { 'form1':form1, 'form2':form2, 'user':user})
 
 
+
 @login_required
 @user_passes_test(staff_check_for_gameplay, login_url='/backend/admin/all/events/', redirect_field_name=None)
 def user_account(request):
@@ -344,9 +397,11 @@ def user_account(request):
     return render(request, 'general/user_account.html', {'user':user, 'balance':balance, 'game':game, 'game_won':game_won, 'game_count':game_count})
 
 
+
 def about_us(request):
 	
 	return render(request, 'general/about_page.html', {})
+
 
 
 def contact(request):
@@ -357,6 +412,7 @@ def contact(request):
 # 		print "I exist"
 # 	
 # 	return render(request, 'general/profile.html', {})
+
 
 
 @login_required
@@ -475,7 +531,7 @@ def like_comments(request,action,pk):
 			like_obj = Likes.objects.create(like=True,comment_obj=comment_obj,user=user_obj)
 		return redirect(request.META['HTTP_REFERER'])
 	return redirect(request.META['HTTP_REFERER'])
-
+    
 # @csrf_exempt
 # def reply_comment(request):
 #     print "I got here"
@@ -489,6 +545,78 @@ def like_comments(request,action,pk):
 #     reply_obj.save()
 #     comment = Comments.objects.filter(id=comment_id)
 #     return render(request, 'general_snippets/reply.html', {'comment':comment})
+
+
+
+def user_search(request,action):
+    
+    """
+    trending filter based on most played event
+    ending filter soon based on events ending in 24hours time
+    newest filter based on events less than 24hrs of start date
+    """
+    
+    context = {}
+    # print action
+    balance = account_standing(request,request.user)
+    context['balance'] = balance
+    current_time = timezone.now()
+    if request.method == 'POST':
+        print "i wanna search"
+        events_all, new_datalist = get_simillar_values(request)
+        rp = request.POST
+        print 'rp:',rp
+        
+        text = rp.get('query')
+        category = rp.get('category')
+        amount = rp.get('amount')
+        try:
+            days = int(rp.get('days'))
+        except:
+            days = rp.get('days')
+        
+        if category == "Category":
+            category = ""
+        if amount == "Amount to be Shared":
+            amount = ""
+            
+        events_all = searchQuery(events_all,text,category,amount,days)
+         
+    else:
+        if action == 'trending':
+            events_all, new_datalist = get_simillar_values(request)
+            events_all = events_all.filter(counter = events_all.aggregate(Max('counter'))['counter__max'])        
+        elif action == 'ending':
+            events_all, new_datalist = get_simillar_values(request)
+            plus_24hrs_time = current_time + timezone.timedelta(hours=24)
+            events_all = events_all.filter(end_date__range=(current_time,plus_24hrs_time))
+        elif action == "newest":
+            events_all, new_datalist = get_simillar_values(request)
+            minus_24hrs_time = current_time - timezone.timedelta(hours=24)
+            events_all = events_all.filter(start_date__lt=minus_24hrs_time)      
+        else:
+            events_all, new_datalist = get_simillar_values(request)
+            
+    all_events = paginate_list(request,events_all,12)
+    context['all_events'] = all_events
+    context['datalist'] = new_datalist
+    context['current_time'] = current_time
+        
+    template_name = 'general/events-page.html'
+    return render(request,template_name,context)
+
+
+
+
+
+
+
+
+
+
+
+
+    
     
     
     

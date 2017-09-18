@@ -196,7 +196,7 @@ def create_new_event(request):
 	template_name = 'ynladmin/events.html'
 	if request.method == 'POST':
 		rp = request.POST
-		# print 'rp:', rp
+		print 'rp:', rp
 		if rp.has_key('edit_event'):
 			print "i wanna edit"
 			event_obj = Event.objects.get(event_id=rp.get('event_track_num'))
@@ -205,7 +205,7 @@ def create_new_event(request):
 				print 'The form is valid'
 				start_date = rp.get('start_time')
 				end_date = rp.get('end_time')
-				if start_date >= end_date:
+				if start_date > end_date:
 					messages.error(request,'Unsuccessful...Start date cannot be less than or equal to end date')
 					return redirect(request.META['HTTP_REFERER'])
 				else:
@@ -231,8 +231,9 @@ def create_new_event(request):
 				print form.errors
 		else:
 			form = EventForm(request.POST, request.FILES)
-			if form.is_valid:
+			if form.is_valid():
 				print 'The form is valid'
+				print form
 				start_date = rp.get('start_time')
 				end_date = rp.get('end_time')
 				if start_date >= end_date:

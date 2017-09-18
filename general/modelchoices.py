@@ -1,12 +1,10 @@
 CATEGORY = (
 	('', 'Select Category'),
-	('SPORT', 'SPORT'),
-	('BUSINESS', 'BUSINESS'),
-	('FASHION', 'FASHION'),
-	('POLITICS', 'POLITICS'),
-	('ENTERTAINMENT', 'ENTERTAINMENT'),
-	('EDUCATION', 'EDUCATION'),
-	('STEM', 'STEM'),
+	('Sports', 'Sports'),
+	('Entertainment-LifeStyle', 'Entertainment & LifeStyle'),
+	('General', 'General'),
+	('Politics', 'Politics'),
+	('Business-Economy', 'Business & Economy'),
 )
 
 

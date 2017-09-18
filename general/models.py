@@ -59,6 +59,9 @@ class Event(models.Model):
 	event_decision			  = models.CharField(max_length=5,choices=CHOICES, null=True, blank=True)
 	validated                 = models.BooleanField(default=False)
 	decided                   = models.BooleanField(default=False)
+	published_date 			  = models.DateTimeField(null=True, blank=True)
+	counter                   = models.PositiveIntegerField(default=0)
+	total_amt                 = models.FloatField(max_length=15, default=0.0)
 
 	def __unicode__(self):
 	    return '%s' %(self.author)

@@ -42,18 +42,18 @@
    				$('#eventFormEdit').modal('show');
    				console.log('working');
 				
-			    tinymce.init({selector:'textarea',height: 300});
-				
-				$( ".id_date" ).datepicker({
-						changeMonth: true,
-						changeYear: true
+				$( ".datepicker" ).datepicker({
+				  changeMonth: true,
+				  changeYear: true
 			   });
-				  
+				
 			   $('.id_time').timepicker({
 					'timeFormat': 'h:i A',
 					'scrollDefault': 'now'
-			   });
-					
+				  });
+			   
+			    tinymce.init({selector:'textarea',height: 300});
+						
    			},
 
    			error:function(data){
@@ -164,5 +164,122 @@
              }
          })
      });
-
+   
+		 $('.bet_yes').click(function(){
+	 
+			 $('.bet_no').removeClass('active'); // remove the class from the currently selected
+			 $(this).addClass('active'); // add the class to the newly clicked link
+			 var choice = $(this).attr('play_type');
+			 $('#choice').val(choice);
+	 
+		 });
+		 
+		 
+		 $('.bet_no').click(function(){
+	 
+			 $('.bet_yes').removeClass('active'); // remove the class from the currently selected		 
+			 $(this).addClass('active'); // add the class to the newly clicked link
+			 var choice = $(this).attr('play_type');
+			 $('#choice').val(choice);
+			 
+		 });
+	 
+   
+		 $('.bet_yes2').click(function(){
+	 
+			 $('.bet_no2').removeClass('active'); // remove the class from the currently selected
+			 $(this).addClass('active'); // add the class to the newly clicked link
+			 var choice = $(this).attr('play_type');
+			 $('#choice2').val(choice);
+	 
+		 });
+		 
+		 
+		 $('.bet_no2').click(function(){
+	 
+			 $('.bet_yes2').removeClass('active'); // remove the class from the currently selected		 
+			 $(this).addClass('active'); // add the class to the newly clicked link
+			 var choice = $(this).attr('play_type');
+			 $('#choice2').val(choice);
+			 
+		 });
+   
+   function checkUserValues() {
+	  
+	  var choice = $('#choice').val();
+	  var bet_amount = $('#bet_amount').val();
+	  
+	  if ((bet_amount == "") && (choice == "")) {
+		  alert("Please enter the minimun amount of ₦200 or more for a game and select either 'YES' or 'NO' ");
+		  return false;
+	  }else if ((bet_amount < 200 ) && (choice != "")) {
+		  alert("Please enter the minimun amount of ₦200 or more for a game");
+		  return false;
+      }else if ((bet_amount > 200 ) && (choice == "")) {
+		  alert("Please select either 'YES' or 'NO' ");
+		  return false;
+      }else if ((bet_amount < 200 ) && (choice == "")) {
+		  alert("Please enter the minimun amount of ₦200 or more for a game and select either 'YES'' ");
+		  return false;
+      }else{
+		 var response = confirm("Please confirm that the option selected is " + choice + " and amount placed is " + bet_amount + " Naira")
+		 if (response) {
+			$('#user_play_choice').submit();
+		 }else{
+			return false;
+		 }
+     }
+   }
+   
+   function checkUserSelect() {
+	  
+	  var choice = $('#choice2').val();
+	  var bet_amount = $('#bet_amount2').val();
+	  
+	  if ((bet_amount == "") && (choice == "")) {
+		  alert("Please enter the minimun amount of ₦200 or more for a game and select either 'YES' or 'NO' ");
+		  return false;
+	  }else if ((bet_amount < 200 ) && (choice != "")) {
+		  alert("Please enter the minimun amount of ₦200 or more for a game");
+		  return false;
+      }else if ((bet_amount > 200 ) && (choice == "")) {
+		  alert("Please select either 'YES' or 'NO' ");
+		  return false;
+      }else if ((bet_amount < 200 ) && (choice == "")) {
+		  alert("Please enter the minimun amount of ₦200 or more for a game and select either 'YES'' ");
+		  return false;
+      }else{
+		 var response = confirm("Please confirm that the option selected is " + choice + " and amount placed is " + bet_amount + " Naira")
+		 if (response) {
+			$('#user_play_choice2').submit();
+		 }else{
+			return false;
+		 }
+     }
+   }
+   
+   
+   function searchQuery() {
+	  
+	  var amt = $('#searchQueryAmt option:selected').text();
+	  var days = $('#searchQueryDays').val();
+	  var cat = $('#searchQueryCat option:selected').text();
+	  var text = $('#searchQueryText').val();
+	  	  
+	  if ((amt == "Amount to be Shared" || amt == "") && (days == "") && (cat == "Category" || cat == "") && (text == "")){
+		  alert('Please enter a search parameter');
+		  return false;
+	  }else{
+		$('#userSearchForm').submit();
+	  }
+	
+   }
+   
 </script>
+
+
+
+
+
+
+

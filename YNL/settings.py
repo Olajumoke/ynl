@@ -257,8 +257,8 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GooglePlusAuth',
     
     'django.contrib.auth.backends.ModelBackend',
-    'backends.EmailAuthBackEnd',
-    'backends.UsernameAuthBackEnd',
+    # 'backends.EmailAuthBackEnd',
+    # 'backends.UsernameAuthBackEnd',
 )
 
 SOCIAL_AUTH_PIPELINE = (

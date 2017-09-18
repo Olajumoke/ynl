@@ -1,0 +1,97 @@
+
+.top-nav {
+  background-color: #274a10;
+  color: white;
+  padding-top: 0px;
+  text-align: right;
+  height: 40px;
+
+}
+
+.card-hgt{
+  height: 56px;
+}
+
+.bottom-nav {
+  background-color: #274a10;
+  color: white;
+  padding-top: 0px;
+  text-align: left;
+
+}
+
+.top-nav p {
+  padding-top: 10px;
+}
+
+.top-nav div {
+  /*height: 40px;*/
+  margin-top: 0px;
+}
+
+.top-nav .input-group {
+  margin-top: 7px;
+}
+
+ .card {
+   margin-top: 10px;
+ }
+
+ .card-col {
+   padding: 10px;
+ }
+
+a {
+  color: black;
+  cursor: pointer;
+}
+
+a:hover {
+  color: black;
+  text-decoration: none;
+}
+
+hr {
+  margin: 0;
+}
+
+div.card:hover {
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.btn-sq-lg {
+  width: 150px !important;
+  height: 150px !important;
+}
+
+.btn-sq {
+  width: 100px !important;
+  height: 100px !important;
+  font-size: 10px;
+}
+
+.btn-sq-sm {
+  width: 50px !important;
+  height: 50px !important;
+  font-size: 10px;
+}
+
+.btn-sq-xs {
+  width: 25px !important;
+  height: 25px !important;
+  padding:2px;
+}
+
+.yes {
+  color: green;
+}
+
+.no {
+  color: red;
+}
+
+.jumbotron {
+  background-image: url(../img/yes_no_BG.png);
+  background-size: cover;
+}
