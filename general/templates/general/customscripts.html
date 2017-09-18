@@ -10,11 +10,7 @@
 		if (text == "") {
 			alert("The Description Field is Required");
 			return false;
-			} else {
-			var str = text.replace(/&lt;/g, '<');
-			alert(str);
-			document.getElementById("id_event_msg_body").innerHTML = str;
-			}
+			} 
 	};
 	
 	//$('body').on('click', '#submit-form-events', function(e){
@@ -65,10 +61,10 @@
 									
                 });
 				
-			   $( ".datepicker" ).datepicker({
-				  changeMonth: true,
-				  changeYear: true
-			   });
+			//   $( ".datepicker" ).datepicker({
+			//	  changeMonth: true,
+			//	  changeYear: true
+			//   });
 				
 			   $('.id_time').timepicker({
 					'timeFormat': 'h:i A',

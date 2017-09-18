@@ -159,9 +159,11 @@
           <div class="col-12 col-md-12">
             <br>
             <h3>{{event.title}}</h3>
+						{% autoescape off %}
             <p>
               {{event.event_msg_body}}
             </p>
+						{% endautoescape %}
             
           </div>
 

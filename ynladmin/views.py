@@ -212,7 +212,7 @@ def create_new_event(request):
 				else:
 					print "you may proceed"
 					create_event_form = form.save(commit=False)
-					create_event_form.event_msg_body = str(re.sub('<[^<]+?>', '', rp.get('event_msg_body'))).replace('&nbsp;','')
+					#create_event_form.event_msg_body = str(re.sub('<[^<]+?>', '', rp.get('event_msg_body'))).replace('&nbsp;','')
 					print "the message:",create_event_form.event_msg_body
 					create_event_form.author = request.user
 					create_event_form.event_id = rp.get('event_track_num')
@@ -243,7 +243,7 @@ def create_new_event(request):
 				else:
 					#pass
 					create_event_form = form.save(commit=False)
-					create_event_form.event_msg_body = str(re.sub('<[^<]+?>', '', rp.get('event_msg_body'))).replace('&nbsp;','')
+					#create_event_form.event_msg_body = str(re.sub('<[^<]+?>', '', rp.get('event_msg_body'))).replace('&nbsp;','')
 					create_event_form.author = request.user
 					create_event_form.event_id = randomNumber(str(rp.get('category'))[:2])
 					create_event_form.save()

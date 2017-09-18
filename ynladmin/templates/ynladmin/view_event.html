@@ -59,12 +59,12 @@
 					{{event_form.publish.value}}
 				</div>
 				
-				{% autoescape off %}
+				<!--% autoescape off %}-->
 				<div class="form-group">
 				<label >Description:</label><br/>
-					{{event_form.event_msg_body.value}}
+					{{event_form.event_msg_body.value|safe}}
 				</div>
-				{% endautoescape %}
+				<!--% endautoescape %}-->
 				
 				<div class="form-group">
 				<label >Event Decision:</label>
