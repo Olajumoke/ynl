@@ -252,6 +252,7 @@ TEMPLATES = [
 
 
 AUTHENTICATION_BACKENDS = (
+    # 'backends.EmailAuthBackEnd',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.google.GooglePlusAuth',
@@ -320,14 +321,19 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    'YNL.middleware.AutoLogout', 
 ]    
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+AUTO_LOGOUT_DELAY = 1
+
 ROOT_URLCONF = 'YNL.urls'
 
 WSGI_APPLICATION = 'YNL.wsgi.application'
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/

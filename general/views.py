@@ -139,10 +139,12 @@ def user_login(request):
         password = request.POST.get('password')
         try:
             username = User.objects.get(email=username).username
+            print username
         except Exception as e:
             print "e", e
             try:
                 username = User.objects.get(username=username).username
+                print username
                 username = username
             except Exception as e:
                 messages.warning(request,"Invalid login details supplied")
