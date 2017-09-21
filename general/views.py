@@ -98,8 +98,11 @@ def homepage(request):
     #
     
     context['trending_events'] = events_all[0:3]
-    context['some_more_events'] = events_all[5]
-    context['current_time'] = current_time
+    try:
+        context['some_more_events'] = events_all[4]
+    except:
+        context['some_more_events'] = []
+    context['current_time'] = current_time.date()
     context['events'] = all_events
     context['balance'] = balance
     context['useraccount']= useraccount
@@ -163,7 +166,7 @@ def user_login(request):
                     response =  redirect(reverse('ynladmin:admin_pages', args=['events']))
                     return response    
                 else:
-                    response = redirect(reverse('general:homepage'))
+                    response = redirect(reverse('general:events'))
                     return response
             else:
                 # An inactive account was used - no logging in!

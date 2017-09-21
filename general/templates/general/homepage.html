@@ -19,47 +19,52 @@
     <!-- Bootstrap CSS -->
 	
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'newstatic/css/style.css' %}" >
-	<link rel="stylesheet" href="{% static 'awesomplete/awesomplete.css' %}" >
-	<script src="{% static 'awesomplete/awesomplete.js' %}" async></script>
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}" >
+	  <link rel="stylesheet" href="{% static 'awesomplete/awesomplete.css' %}" >
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'user/plugins/images/favicon.png' %}">
+	  <script src="{% static 'awesomplete/awesomplete.js' %}" async></script>
 	
 	
   </head>
-  <body>
-	<div id="fb-root"></div>
-	<script>(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=2352656298293778";
-	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
 
-    <!-- top nav bar -->
+  <body>
+  	<div id="fb-root"></div>
+    	<script>(function(d, s, id) {
+    	  var js, fjs = d.getElementsByTagName(s)[0];
+    	  if (d.getElementById(id)) return;
+    	  js = d.createElement(s); js.id = id;
+    	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=2352656298293778";
+    	  fjs.parentNode.insertBefore(js, fjs);
+    	}(document, 'script', 'facebook-jssdk'));</script>
+
+      <!-- top nav bar -->
 
 
    <div class="container-fluid top-nav">
       <div class="row">
         <div class="col-12 col-md-8">
-		  {% for message in messages %}
-			{% if message.tags == 'error' %}
-			  <p><span class="my-0 py-0 alert alert-danger">{{ message }}</span></p>
-			{% elif message.tags == 'warning' %}
-			  <p><span class="my-0 py-0 alert alert-warning">{{ message }}</span></p>
-			{% else %}
-			  <p><span class="my-0 py-0 alert alert-success">{{ message }}</span></p>
-			{% endif %}	
-		  {% endfor %}
+    		  <!--  for message in messages 
+    			if message.tags == 'error'
+    			  <p><span class="my-0 py-0 alert alert-danger"> message </span></p>
+    			 elif message.tags == 'warning' 
+    			  <p><span class="my-0 py-0 alert alert-warning"> message </span></p>
+    			 else 
+    			  <p><span class="my-0 py-0 alert alert-success"> message </span></p>
+    			 endif 	
+    		   endfor  -->
         </div>
 		
 		<!-- value|default_if_none:"nothing" -->
 		
 		{% if request.user.is_authenticated %}
-		
-			<div class="col-12 col-md-4">
-				<p><a style="color: white !important;" href="{% url 'general:user_account' %}"> Hi {{request.user.first_name}}, Wallet balance: ₦{{balance|floatformat:2|intcomma}}</a></p>
-			</div>
-		  
+		   
+		  <div class="col-12 col-md-4">
+          <p class="pt-1">
+          <a class="btn btn-sm btn-primary pb-1" href="{% url 'wallet:wallet' %}"><i class="fa fa-money" aria-hidden="true"></i> Top-up</a>
+          <a style="color: white !important;" href="{% url 'general:user_account' %}"> Hi {{request.user.first_name}}, Wallet balance: ₦{{balance|floatformat:2|intcomma}}</a>
+          </p>
+      </div>
+      
 		{% endif %}
 		
       </div>
@@ -69,7 +74,7 @@
     <!-- main nav bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
       <a class="navbar-brand" href="/">
-		<img src="{% static 'img/logo_dark.png' %}" width="30%" height="" alt="">
+		<img src="{% static 'img/ynllogo3.png' %}" width="50%" height="" alt="">
 	  </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -90,7 +95,7 @@
 		  
 		  
 		  {% if request.user.is_authenticated %}
-			<li onclick="return confirm('Please confirm this action')" class="nav-item"><a class="nav-link" href="{% url 'general:logout' %}"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Logout</a></li>
+			<li class="nav-item"><a class="nav-link" href="{% url 'general:logout' %}"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>Logout</a></li>
 			<li class="nav-item"><a class="nav-link" href="{% url 'general:user_account' %}"><i class="fa fa-user" aria-hidden="true">&nbsp;</i>My Account</a></li>
 		  {% else %}
 		  	<li class="nav-item"><a class="nav-link" href="{% url 'general:login' %}"><i class="fa fa-sign-in" aria-hidden="true">&nbsp;</i>Login</a></li>
@@ -109,12 +114,10 @@
 <!-- jumbotron saying what yes or no is in simple terms -->
     <div class="jumbotron text-center">
 	  
-	  
-		
-      <img src="{% static 'img/logo_dark.png' %}" class="img-fluid ">
-      <h1 class="display-3">Simple YES or NO!</h1>
+      <img src="{% static 'img/ynllogo5.png' %}" class="img-fluid ">
+      <h1 class="display-3">Simple YES or NO</h1>
       <!-- <hr class="my-4"> -->
-      <h4 class="">DON'T JUST READ THE NEWS, EARN MONEY BY PREDICTING OUTCOMES OF THE NEWS.</h4>
+      <h4 class="">DON'T JUST READ THE NEWS. EARN BIG, BY PREDICTING OUTCOMES OF NEWS STORIES.</h4>
 	  
 	  {% if not request.user.is_authenticated %}
       <p class="lead">
@@ -142,9 +145,10 @@
         <div class="col-12 col-sm-6 col-md-6 col-lg-4 card-col">
           <a href="{% url 'general:event_details' event.pk %}">
             <div class="card rounded-0">
-              <img class="card-img-top img-fluid rounded-0" style="width:360px;height:220px;" {% if event.event_image %} src="{{event.event_image.url}}"{% else %}src="http://via.placeholder.com/280x150"{% endif %} alt="Card image cap">
+              <img class="card-img-top img-fluid rounded-0" style="width:360px;height:220px;" {% if event.event_image %} src="{{event.event_image.url}}"{% else %} 
+              src="{% static 'user/plugins/images/defaulteventimage.jpeg' %}"{% endif %} alt="Card image cap">
               <div class="card-body">
-                <h6 class="card-title card-hgt">{{event.title}}</h6>
+                <h6 class="card-title card-hgt">{{event.bet_question}}</h6>
 				<div class="row" style="top:15px;">
                   <div class="col">
                     <p class="text-left mb-0">Yes</p>
@@ -199,11 +203,11 @@
 		<br><br>
 		<!-- how it works section -->
 		<div class="row">
-		  <div class="col-12 col-sm-6">
+		  <div class="col-12 col-sm-12 col-lg-6">
 			<img src="{% static 'img/how_it_works.png' %}" class="img-fluid" alt="">
 		  </div>
-		  <div class="col-12 col-sm-6">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/783EsrHchXA" frameborder="0" allowfullscreen></iframe>
+		  <div class="col-12 col-sm-12 col-lg-6">
+              <iframe width="100%" height="315" src="https://www.youtube.com/embed/W0zXx7p7gzg" frameborder="0" allowfullscreen></iframe>
 		  </div>
 		</div>
 	
@@ -218,21 +222,21 @@
 
 
 <!-- container for horizontal event lists -->
-  {% block moreEvntslist %}	
+{% block moreEvntslist %}	
   <div class="container">
 	
     <div class="row justify-content-center">
 
       <!-- list item begins here -->
-	  
+	   {% if some_more_events %}
       <div class="col-12 col-md-10 card-col">
         <div class="media flex-wrap">
           <a href="{% url 'general:event_details' some_more_events.pk %}">
-			<img class="d-flex align-self-start mr-3 img-fluid" style="width:300px;height:300px;" {% if some_more_events.event_image %}src="{{some_more_events.event_image.url}}"{% else %}src="http://via.placeholder.com/300x300"{% endif %} alt="Generic placeholder image"></a>
+			<img class="d-flex align-self-start mr-3 img-fluid" style="width:300px;height:300px;" {% if some_more_events.event_image %} src="{{some_more_events.event_image.url}}"{% else %} src="{% static 'user/plugins/images/defaulteventimage.jpeg'%}"{% endif %} alt="Generic placeholder image"></a>
 
           <div class="media-body">
-            <a href="#"><h5 class="mt-2">{{some_more_events.title}}</h5>
-            <p class="mb-0"><small class="text-muted ">Predictions starts on {{some_more_events.start_date}} <span class="font-weight-bold yes">{{some_more_events.start_time}}</span></small> <small class="text-muted">and Ends on {{some_more_events.end_date}} <span class="font-weight-bold no">{{event.end_time}}</span></small></p>
+            <a href="{% url 'general:event_details' some_more_events.pk %}"><h5 class="mt-2">{{some_more_events.bet_question}}</h5>
+            <p class="mb-0"><small class="text-muted ">Predictions starts on {{some_more_events.start_date}} <span class="font-weight-bold yes">{{some_more_events.start_time}}</span></small> <small class="text-muted">and Ends on {{some_more_events.end_date}} <span class="font-weight-bold no">{{some_more_events.end_time}}</span></small></p>
             <p class="font-weight-bold">
 			  {% if some_more_events.gameplay_total_value == None %}
 				  ₦0.00
@@ -310,6 +314,8 @@
 			  {% if not request.user.is_staff %}
 			   {% if not some_more_events.closed %}
 				{% if not some_more_events.end_date <= current_time %}
+
+
 			  
 				  <div class="col-11">
 					<form method="POST" action="{% url 'gameplay:betting' %}" class="form-inline" id="user_play_choice">
@@ -334,7 +340,7 @@
           </div>
         </div>
       </div>
-	    
+	    {% endif %}
   
       <!-- more news button  -->
       <div class="col-12 col-md-10 text-center">
@@ -350,7 +356,7 @@
 
 
 
-  {% endblock moreEvntslist %}
+{% endblock moreEvntslist %}
   
   
   {% block footer %}

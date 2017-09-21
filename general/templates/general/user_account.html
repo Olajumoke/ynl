@@ -25,6 +25,7 @@
     <link href="{% static 'user/css/style.css' %}" rel="stylesheet">
     <!-- color CSS -->
     <link href="{% static 'user/css/colors/green-dark.css' %}" id="theme" rel="stylesheet">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -84,7 +85,7 @@
                         {% if user.user_image %}
                         <div><img src="{{ user.user_image.url }}" alt="user-img" class="img-circle"></div> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user.first_name}} <span class="caret"></span></a>
                         {% else %}
-                        <div><img src="{% static 'user/plugins/images/users/varun.jpg' %}" alt="user-img" class="img-circle"></div> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user.first_name}} <span class="caret"></span></a>
+                        <div><img src="{% static 'user/plugins/images/userDefault.jpg' %}" alt="user-img" class="img-circle"></div> <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{request.user.first_name}} <span class="caret"></span></a>
                         {% endif %}
                         <ul class="dropdown-menu animated flipInY">
                                                 
@@ -95,7 +96,7 @@
                 <ul class="wp-side-menu">
                     <li> <a href="{% url 'general:user_account' %}"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Dashboard</span></a> </li>
                     <li> <a href="{% url 'wallet:wallet' %}"><i data-icon="?" class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >My Wallet</span></a> </li>
-                    <li> <a href="{% url 'general:messages' %}"><i data-icon="," class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >My Messages</span></a> </li>
+                    <!-- <li> <a href="{% url 'general:messages' %}"><i data-icon="," class="linea-icon linea-basic fa-fw"></i><span class="hide-menu" >My Messages</span></a> </li> -->
                     <li> <a href="{% url 'general:profile' %}"><i data-icon="P" class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Account Settings</span></a></li>
                     <!--<li> <a href="#"><i data-icon="," class="linea-icon linea-basic fa-fw"></i> <span class="hide-menu">Message Center</span></a></li>-->
                 </ul>
@@ -114,7 +115,7 @@
 
                 <!-- .row -->
                 <div class="row">
-                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
                         <div class="white-box">
                             <h3 class="box-title">Events Won</h3>
                             <ul class="list-inline two-part">
@@ -123,7 +124,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
                         <div class="white-box">
                             <h3 class="box-title">Played Events</h3>
                             <ul class="list-inline two-part">
@@ -133,7 +134,7 @@
                         </div>
                     </div>
                     
-                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
                         <div class="white-box">
                             <h3 class="box-title">Wallet Balance</h3>
                             <ul class="list-inline two-part">
@@ -143,7 +144,7 @@
                         </div>
                     </div>
                     <a href='#' data-toggle="modal" data-target="#myModal">
-                    <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <div class="col-lg-6 col-sm-6 col-xs-12">
                         <div class="white-box">
                             <h3 class="box-title">Refferals</h3>
                             <ul class="list-inline two-part">
@@ -167,7 +168,7 @@
                                         <tr>
                                             <th>Event</th>
                                             <th>Title</th>
-                                            <th>Date</th>
+                                            <th>Prediction Date</th>
                                             <th>Amount placed</th>
                                             <th>Choice</th>
                                             <th class="text-center">Status</th>
@@ -177,9 +178,9 @@
                                     <tbody>
                                         {% for games in game %}
                                         <tr>
-                                            <td><a href="javascript:void(0)" class="btn-link">{{games.event.event_id}}</a></td>
+                                            <td><a href="{% url 'general:event_details' games.event.pk %}" class="btn-link">{{games.event.event_id}}</a></td>
                                             <td>{{games.event.title}}</td>
-                                            <td><span class="text-muted"><i class="fa fa-clock-o"></i>{{games.date}}</span></td>
+                                            <td><span class="text-muted"><i class="fa fa-clock-o"></i>&nbsp;{{games.date}}</span></td>
                                             <td>₦{{games.amount|floatformat:2|intcomma}}</td>
                                             <td>{{games.choice}}</td>
                                             <td class="text-center">
@@ -248,7 +249,20 @@
     <!-- Menu Plugin JavaScript -->
     <script src="{% static 'user/js/wp-sidebar.js' %}"></script>
     <!--Style Switcher -->
-<script src="{% static 'user/plugins/bower_components/styleswitcher/jQuery.style.switcher.js' %}"></script>
+    <script src="{% static 'user/plugins/bower_components/styleswitcher/jQuery.style.switcher.js' %}"></script>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/59c22a324854b82732ff10cc/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
 </body>
 
 </html>

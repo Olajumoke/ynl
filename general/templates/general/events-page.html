@@ -71,9 +71,9 @@
         <div class="col-12 col-sm-6 col-md-6 col-lg-3 card-col">
           <a href="{% url 'general:event_details' event.pk %}">
             <div class="card rounded-0">
-              <img class="card-img-top img-fluid rounded-0" style="width:380px;height:160px;" {% if event.event_image %}src="{{event.event_image.url}}"{% else %}src="http://via.placeholder.com/300x300"{% endif %} alt="Card image cap">
+              <img class="card-img-top img-fluid rounded-0" style="width:380px;height:160px;" {% if event.event_image %}src="{{event.event_image.url}}"{% else %} src="{% static 'user/plugins/images/defaulteventimage.jpeg' %}"{% endif %} alt="Card image cap">
               <div class="card-body">
-                <h6 class="card-title card-hgt">{{event.title}}</h6>
+                <h6 class="card-title card-hgt">{{event.bet_question|truncatechars:80}}</h6>
 				<div class="row" style="top: 15px;">
                   <div class="col">
                     <p class="text-left mb-0">Yes</p>

@@ -9,9 +9,10 @@
 {% block trending %}
 	
 <div class="container-fluid text-center">
-  <a href="/"><img src="{% static 'newstatic/img/logo_dark.png' %}" class="img-fluid "></a>
+  <a href="/"><img src="{% static 'img/ynllogo5.png' %}" class="img-fluid "></a>
   <br><br>
   <p>Register with social media accounts</p>
+
   <div class="row">
 
     <div class="col-12">
@@ -24,6 +25,7 @@
     </div>
     <br><br>
   </div>
+  
   <div class="form-row justify-content-center">
     <div class="col-12 col-md-5">
       <form action="{% url 'general:register' %}" method="POST">
@@ -79,7 +81,7 @@
         <div class="form-group">
           <div class="form-check">
             <label class="form-check-label">
-              <input class="form-check-input" id="#checkbox1" type="checkbox"> By clicking on Sign up, you agree to YesorNoLIVE's terms and conditions.
+              <input class="form-check-input" id="#checkbox1" type="checkbox"> By clicking on 'Register', you agree to our terms and conditions.
             </label>
           </div>
         </div>
@@ -92,6 +94,9 @@
 
 {% block imageVideo %}
 {% endblock imageVideo %}
+
+{% block footer %}
+{% endblock footer %}
 
 {% block moreEvntslist %}
 {% endblock moreEvntslist %}

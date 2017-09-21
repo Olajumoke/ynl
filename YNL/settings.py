@@ -48,67 +48,30 @@ if os.environ.get('RDS_DB_NAME'):
         }
     }
 
+    #to configure s3 bucket to hold media and staic files in aws
+
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    STATICFILES_STORAGE  = 'storages.backends.s3boto.S3BotoStorage'
+
     AWS_ACCESS_KEY_ID           = os.environ['AWS_ACCESS_KEY_ID']
     AWS_SECRET_ACCESS_KEY       = os.environ['AWS_SECRET_KEY']
+    AWS_STORAGE_BUCKET_NAME     = 'yesornolivetest'
 
-    # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
 
-    # STATIC_ROOT = os.path.join(
-    #  os.path.dirname(
-    #   os.path.dirname(
-    #    os.path.abspath(__file__))), 'static')
-
-    STATIC_PATH = os.path.join(BASE_DIR, 'static')
-
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-    AWS_STORAGE_BUCKET_NAME = 'yesnolive'
-
-    AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-    STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-    STATICFILES_LOCATION = 'static'
-
-    #STATIC_URL  = "https://%s/%s/" %(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-    STATIC_URL  = "https://%s/" %AWS_S3_CUSTOM_DOMAIN
-
-    #STATIC_ROOT = "https://%s/%s/" %(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-    # STATIC_ROOT = "https://s3-eu-west-1.amazonaws.com/zaposta/static/"
-
-    # Example: "http://media.lawrence.com/static/"
-    #STATIC_URL = 'https://zaposta-live.s3.amazonaws.com/static/'
-    #STATIC_URL = 'https://zaposta.com.s3.amazonaws.com/static/'
-    #STATIC_URL = 'https://s3-eu-west-1.amazonaws.com/%s/static/' %AWS_STORAGE_BUCKET_NAME
-
-    # Additional locations of static files
-    STATICFILES_DIRS = (
-        STATIC_PATH,
+    # This will make sure that the file URL does not have unnecessary parameters like your access key.
+    AWS_QUERYSTRING_AUTH = False 
+    AWS_S3_CUSTOM_DOMAIN = AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com'
+    #static media settings
+    STATIC_URL = 'https://' + AWS_STORAGE_BUCKET_NAME + '.s3.amazonaws.com/'
+    MEDIA_URL = STATIC_URL + 'media/'
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
+    STATIC_ROOT = 'staticfiles'
+    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+    STATICFILES_FINDERS = (
+        'django.contrib.staticfiles.finders.FileSystemFinder',
+        'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     )
-
-    #MEDIA_ROOT = 'media' #os.path.join(BASE_DIR, "media")
-    #MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-    # URL that handles the media served from MEDIA_ROOT. Make sure to use a
-    # trailing slash.
-    # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-    #MEDIA_URL = 'https://s3-eu-west-1.amazonaws.com/zaposta-live/'
-    MEDIA_LOCATION = 'media'
-    #MEDIA_URL = "https://%s/%s/" %(AWS_S3_CUSTOM_DOMAIN, MEDIA_LOCATION)
-    MEDIA_ROOT = MEDIA_URL = "https://%s/" %AWS_S3_CUSTOM_DOMAIN
-    #STATIC_URL  = "https://%s/%s/" %(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-
-    #AWS_QUERYSTRING_AUTH = False
-
-    BROKER_TRANSPORT = 'sqs'
-    BROKER_TRANSPORT_OPTIONS = {
-        'region': 'eu-west-1a',
-    }
-    BROKER_USER = AWS_ACCESS_KEY_ID
-    BROKER_PASSWORD = AWS_SECRET_ACCESS_KEY
 
     SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
@@ -327,7 +290,7 @@ MIDDLEWARE_CLASSES = [
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-AUTO_LOGOUT_DELAY = 1
+AUTO_LOGOUT_DELAY = 10
 
 ROOT_URLCONF = 'YNL.urls'
 
